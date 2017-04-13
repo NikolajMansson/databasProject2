@@ -4,7 +4,7 @@ package sample;
  * Created by Victor on 2017-04-12.
  */
 public class Employee {
-    private final static Employee instance = new Employee("", "");
+    private final static Employee instance = new Employee ("", "");
     public static Employee getInstance() {
         return instance;
     }
