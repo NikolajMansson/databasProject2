@@ -8,7 +8,8 @@ public class EmployeeAccount extends Account {
     private static int gamesSold;
     private static double income;
     private String email;
-
+    private String id;
+    private String password;
 
 
     private final static sample.EmployeeAccount instance = new sample.EmployeeAccount ( SSN, "", "", "", "", "", gamesSold, income, "" );
@@ -17,8 +18,7 @@ public class EmployeeAccount extends Account {
         return instance;
     }
 
-    private String id;
-    private String password;
+
 
     public EmployeeAccount(int SSN, String firstName, String surName, String id, String password, String employmentDate, int gamesSold, double income, String email) {
         super ( SSN, firstName, surName, id, password );
@@ -46,12 +46,16 @@ public class EmployeeAccount extends Account {
         this.id = username;
     }
 
-    public String getPassword() {
+    public String getPassword(String password) {
+
         return password;
     }
+
+
 
     public void setPassword(String password) {
         this.password = password;
     }
+
 
 }

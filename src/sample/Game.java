@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.ArrayList;
+
 public class Game {
 
     private String gameTitle;
@@ -12,15 +14,25 @@ public class Game {
 
     private String descriptionOfPlot;
 
+    private ArrayList<Platform> platformList = new ArrayList<> (  );
 
-    public Game(String gameTitle, String genre, String developer, double price, String descriptionOfPlot) {
+
+    public Game(String gameTitle, String genre, String developer, double price, String descriptionOfPlot, Platform platform) {
         this.gameTitle=gameTitle;
         this.genre=genre;
         this.developer=developer;
         this.price = price;
         this.descriptionOfPlot = descriptionOfPlot;
+        platformList.add(platform);
     }
 
+    public void addPlatformToList(Platform platform){
+        platformList.add(platform);
+    }
+
+    public ArrayList<Platform> getPlatformList(){
+        return platformList;
+    }
     public String getGameTitle() {
         return gameTitle;
     }

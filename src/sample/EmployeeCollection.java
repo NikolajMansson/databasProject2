@@ -4,6 +4,8 @@ package sample;
  * 
  */
 public class EmployeeCollection extends Catcher {
+    DBConnection dbConnection = new DBConnection ();
+
 
     public EmployeeCollection() {
     }

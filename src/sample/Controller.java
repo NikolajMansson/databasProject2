@@ -15,26 +15,35 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML private TextField loginUsername;
-    @FXML private TextField loginPassword;
+    @FXML
+    private TextField loginUsername;
+    @FXML
+    private TextField loginPassword;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        EmployeeAccount.getInstance();
+        EmployeeAccount.getInstance ();
     }
 
     @FXML
     private void loginEmployeeAccount(ActionEvent ae) throws IOException {
-        EmployeeAccount.getInstance().setId(loginUsername.getText());
 
-        Node node = (Node)ae.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
+        DBConnection connection = new DBConnection ();
+        boolean testUserIdPassword = connection.searchForPassword ( loginUsername.getText (), loginPassword.getText () );
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneEmployee.fxml"));
-        Parent root = loader.load();
+        if (testUserIdPassword == true) {
+            DBConnection connection2 = new DBConnection ();
+            connection2.setDBURL(loginUsername.getText (), loginPassword.getText ());
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        Scene scene = new Scene(root, 500, 300);
-        stage.setScene(scene);
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployee.fxml" ) );
+            Parent root = loader.load ();
+
+            Scene scene = new Scene ( root, 500, 300 );
+            stage.setScene ( scene );
+        }
+
     }
 }

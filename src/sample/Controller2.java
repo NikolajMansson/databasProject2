@@ -25,6 +25,8 @@ public class Controller2 implements Initializable {
 
     @FXML
     private void returnToLogin(ActionEvent ae) throws IOException {
+        DBConnection connection = new DBConnection ();
+        connection.setDBURL("root","root");
         Node node = (Node)ae.getSource();
         Stage stage = (Stage)node.getScene().getWindow();
 

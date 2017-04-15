@@ -1,71 +1,54 @@
 package sample;
 
-import java.sql.Connection;
+import com.mysql.jdbc.Connection;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
 
 public class DBConnection {
 
-    public DBConnection() {
-    }
-    private java.sql.Statement statement;
-    private String answerToQuery;
-    private String DBURL=null;
 
+    String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+
+    Statement statement;
+    String correctPassword = null;
     public void setDBURL(String id, String password){
-        this.DBURL = String.format("jdbc:mysql://127.0.0.1:3306/GameStore?user="+id+"&password="+password+")");
+        this.DBURL = String.format("jdbc:mysql://127.0.0.1:3306/GameShop?user="+id+"&password="+password+")");
     }
 
-    public void DBConnection() {
+    public DBConnection() {
         try {
-            Connection c = (Connection) DriverManager.getConnection ( DBURL );
-            this.statement = c.createStatement ();
+            Connection c = (Connection) DriverManager.getConnection(DBURL);
+            statement = c.createStatement();
         } catch (SQLException ex) {
-            System.out.println ( "the connection fails" );
+            System.out.println("the connection fails");
         }
     }
-    public void setQuery(String query) {
+
+    public boolean searchForPassword(String name, String password)
+    {
         try {
-            ResultSet rs = statement.executeQuery ( query );
-        } catch (SQLException ex) {
-            System.out.println ( "error on executing the query" );
-        }
+            ResultSet rs = statement.executeQuery("SELECT UserPassword FROM Employees WHERE UserName ='" + name + "'");
 
-    }
 
-    public void setGameSearch(String query) {
-        try {
-            ResultSet rs = statement.executeQuery ( query );
-            ArrayList<String> result = new ArrayList<> (  );
-
-            while (rs.next ()) {
-                String toArray =  String.format("Title: " + rs.getString ( 1 ) + "Genre: " + rs.getString ( 2 ) + "Developer: " + rs.getString ( 3 ) + "Price: " + rs.getString ( 4 ) + "Description of Plot: " + rs.getString ( 5 ) );
-
-                result.add(toArray);
-
+            while(rs.next())
+            {
+                this.correctPassword = String.format(rs.getString(1));
+                System.out.println(correctPassword);
             }
-            StringBuilder builder = new StringBuilder ();
-            for (String string : result) {
 
-                if (builder.length () > 0) {
-                    builder.append ( " " );
-                }
-
-                builder.append ( String.format ( "%s%n", string ) );
-
+            if(correctPassword.equals( password )){
+                return true;
             }
-            this.answerToQuery = builder.toString ();
 
-        } catch (SQLException ex) {
-            System.out.println ( "error on executing the query" );
+
         }
-
+        catch (SQLException ex)
+        {
+            System.out.println("error on executing the query");
+        }
+        return false;
     }
-    public String getAnswerToQuery() {
-        return answerToQuery;
-    }
-
-
 }

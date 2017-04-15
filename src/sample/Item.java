@@ -15,8 +15,8 @@ public class Item extends Game {
 
     private String descriptionOfPlot;
 
-    public Item(String gameTitle, String genre, String developer, double price, String descriptionOfPlot, Game game) {
-        super (gameTitle, genre, developer, price, descriptionOfPlot);
+    public Item(String gameTitle, String genre, String developer, Platform platform, double price, String descriptionOfPlot, Game game) {
+        super (gameTitle, genre, developer, price, descriptionOfPlot, platform);
 
     }
 
