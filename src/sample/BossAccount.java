@@ -1,7 +1,5 @@
 package sample;
 
-import java.util.ArrayList;
-
 /**
  * 
  */
@@ -16,10 +14,5 @@ public class BossAccount extends EmployeeAccount {
         // TODO implement here
     }
 
-
-    public ArrayList<BossAccount> getBossArray() {
-        // TODO implement here
-        return null;
-    }
 
 }

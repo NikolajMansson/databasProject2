@@ -21,12 +21,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Employee.getInstance();
+        EmployeeAccount.getInstance();
     }
 
     @FXML
-    private void loginEmployee(ActionEvent ae) throws IOException {
-        Employee.getInstance().setUsername(loginUsername.getText());
+    private void loginEmployeeAccount(ActionEvent ae) throws IOException {
+        EmployeeAccount.getInstance().setId(loginUsername.getText());
 
         Node node = (Node)ae.getSource();
         Stage stage = (Stage)node.getScene().getWindow();

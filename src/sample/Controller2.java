@@ -19,8 +19,8 @@ public class Controller2 implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Employee.getInstance();
-        welcomeLabel.setText("Welcome " + Employee.getInstance().getUsername() + "!");
+        EmployeeAccount.getInstance();
+        welcomeLabel.setText("Welcome " + EmployeeAccount.getInstance().getId() + "!");
     }
 
     @FXML

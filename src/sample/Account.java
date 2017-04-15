@@ -2,16 +2,20 @@ package sample;
 
 public abstract class Account {
 
+    private int SSN;
+
+    private String firstName;
+
+    private String surName;
 
     private String id;
 
     private String password;
 
-    private Integer SSN;
-
-    private String firstName;
-
-    private String surName;
+    public Account(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
 
     public Account(int SSN, String firstName, String surName, String id, String password) {
         this.SSN = SSN;
@@ -20,12 +24,29 @@ public abstract class Account {
         this.id = id;
         this.password = password;
     }
-
-    public void getId() {
-        // TODO implement here
+    public void setFirstName(String firstName) {
+        this.firstName=firstName;
     }
-    public void getPassword() {
-        // TODO implement here
+    public void setSurName(String surName) {
+        this.surName=surName;
+    }
+    public void setPassword(String password) {
+        this.password=password;
+    }
+    public int getSSN(){
+        return SSN;
+    }
+    public String getFirstName(){
+        return firstName;
+    }
+    public String getSurName(){
+        return surName;
+    }
+    public String getId() {
+        return id;
+    }
+    public String getPassword() {
+       return password;
     }
 
 }

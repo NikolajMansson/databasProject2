@@ -1,6 +1,6 @@
 package sample;
 
-import java.util.*;
+import java.util.Date;
 
 public class Order extends Cart {
 
@@ -21,10 +21,6 @@ public class Order extends Cart {
 
     private Cart cart;
 
-
-    public void Order() {
-        // TODO implement here
-    }
 
     public void setCart(Cart cart) {
         // TODO implement here

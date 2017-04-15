@@ -1,6 +1,5 @@
 package sample;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -24,9 +23,6 @@ public class CustomerAccount extends Account {
         // TODO implement here
         return null;
     }
-    public ArrayList<CustomerAccount> getCustomerArray() {
-        // TODO implement here
-        return null;
-    }
+
 
 }
