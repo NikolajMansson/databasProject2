@@ -1,0 +1,40 @@
+CREATE USER 'bossStore'@'localhost';
+
+
+
+SET PASSWORD FOR 'bossStore'@'localhost' = PASSWORD('123');
+
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON * TO 'bossStore'@'localhost' WITH GRANT OPTION; 
+
+
+
+CREATE USER 'employee1Store'@'localhost';
+
+
+
+SET PASSWORD FOR 'employee1Store'@'localhost' = PASSWORD('123');
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee1Store'@'localhost'; 
+GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost'; 
+
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee1Store'@'localhost'; 
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'@'localhost'; 
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost'; 
+
+
+CREATE USER 'customer1Store'@'localhost';
+
+
+SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123');
+
+
+GRANT SELECT ON Game TO 'customer1Store'@'localhost'; 
+
+
