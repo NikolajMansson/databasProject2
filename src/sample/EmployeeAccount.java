@@ -1,6 +1,8 @@
 package sample;
 
-public class EmployeeAccount extends Account {
+import java.io.Serializable;
+
+public class EmployeeAccount extends Account implements Serializable{
     private static int SSN;
     private String firstName;
     private String surName;

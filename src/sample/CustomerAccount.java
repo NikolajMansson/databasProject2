@@ -1,11 +1,12 @@
 package sample;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 
  */
-public class CustomerAccount extends Account {
+public class CustomerAccount extends Account implements Serializable {
 
 
     public CustomerAccount(int SSN, String firstName, String surName, String id, String password) {
