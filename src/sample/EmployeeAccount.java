@@ -1,6 +1,8 @@
 package sample;
 
-public class EmployeeAccount extends Account {
+import java.io.Serializable;
+
+public class EmployeeAccount extends Account implements Serializable{
     private static int SSN;
     private String firstName;
     private String surName;
@@ -12,25 +14,16 @@ public class EmployeeAccount extends Account {
     private String password;
 
 
-    private final static sample.EmployeeAccount instance = new sample.EmployeeAccount ( SSN, "", "", "", "", "", gamesSold, income, "" );
+    private final static sample.EmployeeAccount instance = new sample.EmployeeAccount ( "", "" );
 
     public static sample.EmployeeAccount getInstance() {
         return instance;
     }
 
-
-
-    public EmployeeAccount(int SSN, String firstName, String surName, String id, String password, String employmentDate, int gamesSold, double income, String email) {
-        super ( SSN, firstName, surName, id, password );
-        this.SSN = SSN;
-        this.firstName = firstName;
-        this.surName= surName;
+    public EmployeeAccount(String id, String password) {
+        super (id, password );
         this.id = id;
         this.password = password;
-        this.employmentDate = employmentDate;
-        this.gamesSold = gamesSold;
-        this.income = income;
-        this.email = email;
     }
 
     @Override
@@ -38,24 +31,35 @@ public class EmployeeAccount extends Account {
         return id + " | " + password;
     }
 
-    public String getId() {
-        return id;
+    public String getEmploymentDate() {
+        return employmentDate;
     }
 
-    public void setId(String username) {
-        this.id = username;
+    public void setEmploymentDate(String employmentDate) {
+        this.employmentDate = employmentDate;
     }
 
-    public String getPassword(String password) {
-
-        return password;
+    public static int getGamesSold() {
+        return gamesSold;
     }
 
-
-
-    public void setPassword(String password) {
-        this.password = password;
+    public static void setGamesSold(int gamesSold) {
+        EmployeeAccount.gamesSold = gamesSold;
     }
 
+    public static double getIncome() {
+        return income;
+    }
 
+    public static void setIncome(double income) {
+        EmployeeAccount.income = income;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

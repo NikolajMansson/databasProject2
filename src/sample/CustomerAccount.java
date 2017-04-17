@@ -1,24 +1,18 @@
 package sample;
 
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 
- */
-public class CustomerAccount extends Account {
+public class CustomerAccount extends Account implements Serializable {
+    private String id;
+    private String password;
 
-
-    public CustomerAccount(int SSN, String firstName, String surName, String id, String password) {
-        super ( SSN, firstName, surName, id, password );
+    public CustomerAccount(String id, String password) {
+        super ( id, password );
+        this.id = id;
+        this.password = password;
     }
 
-    public void CustomerAccount() {
-        // TODO implement here
-    }
-
-    public void searchForGameInDB(Game game) {
-        // TODO implement here
-    }
     public Date registrationDate() {
         // TODO implement here
         return null;

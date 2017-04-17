@@ -1,6 +1,8 @@
 package sample;
 
-public abstract class Account {
+import java.io.Serializable;
+
+public abstract class Account implements Serializable{
 
     private int SSN;
 
@@ -17,12 +19,8 @@ public abstract class Account {
         this.password = password;
     }
 
-    public Account(int SSN, String firstName, String surName, String id, String password) {
+    public void setSSN(int SSN){
         this.SSN = SSN;
-        this.firstName = firstName;
-        this.surName = surName;
-        this.id = id;
-        this.password = password;
     }
     public void setFirstName(String firstName) {
         this.firstName=firstName;
