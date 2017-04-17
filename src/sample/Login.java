@@ -24,9 +24,12 @@ public class Login implements Initializable {
     private TextField loginPassword;
 
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        EmployeeAccount.getInstance ();
+       //EmployeeAccount.getInstance ();
+
     }
 
 
@@ -40,7 +43,8 @@ public class Login implements Initializable {
 
             //Nikolaj: Nedan rad berättar vilket account som är inloggat
 
-            account.setAccount ( loginUsername.getText (), loginPassword.getText () );
+            EmployeeAccount account = new EmployeeAccount (loginUsername.getText (), loginPassword.getText ());
+
             //Nikolaj: Nedan rad sparar vilken account som är inloggad, så att denna senare kan hämtas ner fil och användas för
             // sökningar gentemot databas av just denna användare
             try {

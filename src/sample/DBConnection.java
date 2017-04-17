@@ -36,7 +36,7 @@ public class DBConnection {
             while(rs.next())
             {
                 this.correctPassword = String.format(rs.getString(1));
-                System.out.println(correctPassword);
+
             }
 
             if(correctPassword.equals( password )){

@@ -14,17 +14,13 @@ public abstract class Account implements Serializable{
 
     private String password;
 
-    public Account(int SSN, String firstName, String surName, String id, String password) {
-        this.SSN = SSN;
-        this.firstName = firstName;
-        this.surName = surName;
+    public Account(String id, String password) {
         this.id = id;
         this.password = password;
     }
 
-    public void setAccount(String id, String password) {
-        this.id = id;
-        this.password = password;
+    public void setSSN(int SSN){
+        this.SSN = SSN;
     }
     public void setFirstName(String firstName) {
         this.firstName=firstName;
