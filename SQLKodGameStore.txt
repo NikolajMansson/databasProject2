@@ -10,4 +10,14 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'
 GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost'; 
 CREATE USER 'customer1Store'@'localhost';
 SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123');
-GRANT SELECT ON Game TO 'customer1Store'@'localhost'; 
+GRANT SELECT ON Game TO 'customer1Store'@'localhost';
+INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword) 
+VALUES (860502, 'Nikolaj', 'Mansson', 20170605, 0, 0, 'nikolaj.mansson@gmail.com', 'employee2Store', '123');
+CREATE USER 'employee2Store'@'localhost';
+SET PASSWORD FOR 'employee2Store'@'localhost' = PASSWORD('123');
+INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) 
+VALUES (890423, 'Sara', 'Hansson', 20170105, 'customer2Store', '123', 'sara.hansson@gmail.com');
+CREATE USER 'customer2Store'@'localhost';
+SET PASSWORD FOR 'customer2Store'@'localhost' = PASSWORD('123');
+INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot) 
+VALUES ('Vargen', 'Thriller', 'Cinamax', 'Berättelse om skjuten varg');
