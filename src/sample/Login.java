@@ -24,11 +24,9 @@ public class Login implements Initializable {
     private TextField loginPassword;
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       //EmployeeAccount.getInstance ();
+        //EmployeeAccount.getInstance ();
 
     }
 
@@ -36,40 +34,68 @@ public class Login implements Initializable {
     @FXML
     private void loginAsEmployee(ActionEvent ae) throws IOException {
 
-        DBConnection connection = new DBConnection ();
-        boolean testUserIdPassword = connection.searchForPassword ( loginUsername.getText (), loginPassword.getText () );
+        DBConnection connection = new DBConnection();
+        boolean testUserIdPassword = connection.searchForPassword(loginUsername.getText(), loginPassword.getText());
 
         if (testUserIdPassword == true) {
 
             //Nikolaj: Nedan rad berättar vilket account som är inloggat
 
-            EmployeeAccount account = new EmployeeAccount (loginUsername.getText (), loginPassword.getText ());
+            EmployeeAccount account = new EmployeeAccount(loginUsername.getText(), loginPassword.getText());
 
             //Nikolaj: Nedan rad sparar vilken account som är inloggad, så att denna senare kan hämtas ner fil och användas för
             // sökningar gentemot databas av just denna användare
             try {
-                main.setMyUser ( account );
+                main.setMyUser(account);
             } catch (IOException e) {
-                e.printStackTrace ();
+                e.printStackTrace();
             }
 
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
+            Node node = (Node) ae.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployee.fxml" ) );
-            Parent root = loader.load ();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneEmployee.fxml"));
+            Parent root = loader.load();
 
-            Scene scene = new Scene ( root, 500, 300 );
-            stage.setScene ( scene );
+            Scene scene = new Scene(root, 500, 300);
+            stage.setScene(scene);
         }
 
     }
-    public void loginAsCustomer(Account id, Account password, Boolean isGuest) {
+
+    public void loginAsCustomer(Account id, Account password) {
         // TODO implement here
     }
 
-    public void loginAsBoss(Account id, Account password) {
-        // TODO implement here
-    }
+    @FXML
+    public void loginAsBoss(ActionEvent ae) throws IOException {
 
+        DBConnection connection = new DBConnection();
+        boolean testUserIdPassword = connection.searchForPassword(loginUsername.getText(), loginPassword.getText());
+
+        if (testUserIdPassword == true) {
+
+            //Nikolaj: Nedan rad berättar vilket account som är inloggat
+
+            BossAccount account = new BossAccount(loginUsername.getText(), loginPassword.getText());
+
+            //Nikolaj: Nedan rad sparar vilken account som är inloggad, så att denna senare kan hämtas ner fil och användas för
+            // sökningar gentemot databas av just denna användare
+            try {
+                main.setMyUser(account);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Node node = (Node) ae.getSource();
+            Stage stage = (Stage) node.getScene().getWindow();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneBoss.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root, 500, 300);
+            stage.setScene(scene);
+        }
+
+    }
 }

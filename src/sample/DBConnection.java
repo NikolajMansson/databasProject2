@@ -51,28 +51,4 @@ public class DBConnection {
         }
         return false;
     }
-
-    public void searchForGames(String gameTitle)
-    {
-        try {
-            ResultSet rs = statement.executeQuery("SELECT Game_Title FROM Item WHERE Game_Title ='" + gameTitle + "'");
-
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("error on executing the query");
-        }
-    }
-
-    public void addGameToList(String gameTitle, String genre, String developer, String description, String platform)
-    {
-        try {
-            ResultSet rs = statement.executeQuery("INSERT INTO Game (Title, Genre, Developer, DescriptionOfPlot) VALUES ('" + gameTitle +"', '" + genre +"', '" + developer + "', '" + description + "');");
-
-        }
-        catch (SQLException ex)
-        {
-            System.out.println("error on executing the query");
-        }
-    }
 }

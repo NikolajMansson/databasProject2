@@ -21,7 +21,7 @@
       <AnchorPane prefHeight="300.0" prefWidth="500.0">
          <children>
             <Button layoutX="418.0" layoutY="194.0" mnemonicParsing="false" text="Customer" />
-            <Button layoutX="432.0" layoutY="261.0" mnemonicParsing="false" onAction="#loginAsBoss" text="Boss" />
+            <Button layoutX="432.0" layoutY="261.0" mnemonicParsing="false" text="Boss" />
             <Button layoutX="418.0" layoutY="229.0" mnemonicParsing="false" onAction="#loginAsEmployee" text="Employee" />
             <Label layoutX="221.0" layoutY="14.0" text="Login">
                <font>
