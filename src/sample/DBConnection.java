@@ -51,4 +51,28 @@ public class DBConnection {
         }
         return false;
     }
+    public boolean searchForPasswordCustomer(String name, String password)
+    {
+        try {
+            ResultSet rs = statement.executeQuery("SELECT UserPassword FROM Customer WHERE UserName ='" + name + "'");
+
+
+            while(rs.next())
+            {
+                this.correctPassword = String.format(rs.getString(1));
+
+            }
+
+            if(correctPassword.equals( password )){
+                return true;
+            }
+
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println("error on executing the query");
+        }
+        return false;
+    }
 }
