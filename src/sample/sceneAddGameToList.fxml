@@ -20,7 +20,7 @@
    <children>
       <AnchorPane prefHeight="466.0" prefWidth="500.0">
          <children>
-            <Button fx:id="cancel" layoutX="420.0" layoutY="408.0" mnemonicParsing="false" text="Cancel" onAction="#cancel" />
+            <Button fx:id="cancel" layoutX="420.0" layoutY="408.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             <Button fx:id="add" layoutX="353.0" layoutY="408.0" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="52.0" text="Add" />
             <Label layoutX="159.0" layoutY="23.0" text="Add Game to List">
                <font>
@@ -35,8 +35,6 @@
             <TextField fx:id="developer" layoutX="140.0" layoutY="166.0" prefHeight="25.0" prefWidth="332.0" />
             <Label layoutX="37.0" layoutY="170.0" text="Developer" />
             <TextArea fx:id="description" layoutX="140.0" layoutY="213.0" prefHeight="87.0" prefWidth="332.0" />
-            <TextField fx:id="platform" layoutX="140.0" layoutY="321.0" />
-            <Label layoutX="37.0" layoutY="325.0" text="Platform" />
          </children>
       </AnchorPane>
    </children>

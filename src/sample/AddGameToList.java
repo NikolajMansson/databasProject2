@@ -27,12 +27,12 @@ public class AddGameToList implements Initializable {
     private TextField developer;
     @FXML
     private TextArea description;
-    @FXML
-    private TextField platform;
+
 
     @FXML public void add()
     {
-
+        DBConnection connection = new DBConnection ();
+        connection.addGameToList(gameTitle.getText (), genre.getText (), developer.getText(), description.getText ());
     }
 
     @FXML public void cancel()

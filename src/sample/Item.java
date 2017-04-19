@@ -15,15 +15,18 @@ public class Item extends Game {
 
     private String descriptionOfPlot;
 
-    public Item(String gameTitle, String genre, String developer, Platform platform, double price, String descriptionOfPlot, Game game) {
+    private int articleNumber=0;
+
+    public Item(String gameTitle, String genre, String developer, Platform platform, double price, String descriptionOfPlot) {
         super (gameTitle, genre, developer, price, descriptionOfPlot, platform);
 
+        this.articleNumber++;
+
     }
 
-    private Integer itemId;
-
-    public void removeItem(Integer itemId) {
-        // TODO implement here
+    public int getArticleNumber(){
+        return articleNumber;
     }
+
 
 }

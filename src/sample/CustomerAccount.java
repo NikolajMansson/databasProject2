@@ -1,11 +1,11 @@
 package sample;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class CustomerAccount extends Account implements Serializable {
     private String id;
     private String password;
+    private String registrationDate;
 
     public CustomerAccount(String id, String password) {
         super ( id, password );
@@ -13,9 +13,12 @@ public class CustomerAccount extends Account implements Serializable {
         this.password = password;
     }
 
-    public Date registrationDate() {
-        // TODO implement here
-        return null;
+    public void setRegistrationDate(String registrationDate){
+        this.registrationDate=registrationDate;
+    }
+
+    public String getregistrationDate() {
+        return registrationDate;
     }
 
 

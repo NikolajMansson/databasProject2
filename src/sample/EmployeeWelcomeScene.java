@@ -24,8 +24,6 @@ public class EmployeeWelcomeScene implements Initializable {
         readUser.openFile ();
         this.account = (EmployeeAccount) readUser.readRecords ();
         readUser.closeFile ();
-     //   EmployeeAccount.getInstance();
-       // welcomeLabel.setText("Welcome " + EmployeeAccount.getInstance().getId() + "!");
         welcomeLabel.setText("Welcome " + account.getId() + "!");
     }
 

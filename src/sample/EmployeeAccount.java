@@ -13,13 +13,6 @@ public class EmployeeAccount extends Account implements Serializable{
     private String id;
     private String password;
 
-
-    private final static sample.EmployeeAccount instance = new sample.EmployeeAccount ( "", "" );
-
-    public static sample.EmployeeAccount getInstance() {
-        return instance;
-    }
-
     public EmployeeAccount(String id, String password) {
         super (id, password );
         this.id = id;
