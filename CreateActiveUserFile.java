@@ -37,9 +37,7 @@ public class CreateActiveUserFile implements Serializable {
             System.err.println ( "Invalid input. Please try again" );
         } catch (IOException ioException) {
             System.err.println ( "Error writing to file. Terminating" );
-            {
-            }
-
+        
         }
     }
 
