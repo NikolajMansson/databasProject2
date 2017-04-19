@@ -28,5 +28,10 @@ public class Item extends Game {
         return articleNumber;
     }
 
+    public double getPrice(){
+        //Hämta och returnera från databas
+        return price;
+    }
+
 
 }

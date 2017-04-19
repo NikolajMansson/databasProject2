@@ -108,6 +108,10 @@ public class DBConnection {
     public void removeItem(int articleId) {
         // TODO implement here
     }
+
+    public void addOrderToList(Order order){
+        // TODO implement here
+    }
 }
 
 

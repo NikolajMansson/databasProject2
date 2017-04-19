@@ -36,33 +36,18 @@ public class Cart {
         return null;
     }
 
-    public Double getItemPrice(Item item) {
+    public double getPricePerItem() {
         // TODO implement here
-        return null;
-    }
-
-    public Double getItemItemTotalPrice(Integer amountOfItems, Item item) {
-        // TODO implement here
-        return null;
-    }
-
-    public String getGameName() {
-        // TODO implement here
-        return "";
-    }
-
-    public String getPlatformName() {
-        // TODO implement here
-        return "";
-    }
-
-    public void getPricePerItem() {
-        // TODO implement here
+        return Double.parseDouble ( null );
     }
 
     public Double getPricePerItem(Game itemID) {
         // TODO implement here
         return null;
+    }
+
+    public void sendOrderToDB(Order order){
+        //Lägg till metod i DB för att lägga in en order
     }
 
 }
