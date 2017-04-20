@@ -36,6 +36,11 @@ public class AddItemToList {
     @FXML
     public void add() {
         DBConnection connection = new DBConnection ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
         Platform platform = new Platform(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
         connection.addPlatformToList(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
         int price = Integer.parseInt ( priceTextField.getText () );
