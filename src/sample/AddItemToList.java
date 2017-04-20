@@ -37,6 +37,7 @@ public class AddItemToList {
     public void add() {
         DBConnection connection = new DBConnection ();
         Platform platform = new Platform(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
+        connection.addPlatformToList(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
         int price = Integer.parseInt ( priceTextField.getText () );
         Item item = new Item(gameTitle.getText (), price, platform);
         connection.addItemToList (gameTitle.getText (), platform.getAbbreviation (), item.getArticleNumber (), item.getPrice ());
