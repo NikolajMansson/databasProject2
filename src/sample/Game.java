@@ -10,29 +10,43 @@ public class Game {
 
     private String developer;
 
-    private double price;
-
     private String descriptionOfPlot;
 
-    private ArrayList<Platform> platformList = new ArrayList<> (  );
+    private ArrayList<Platform> platformList = new ArrayList<> ();
 
 
-    public Game(String gameTitle, String genre, String developer, double price, String descriptionOfPlot, Platform platform) {
-        this.gameTitle=gameTitle;
-        this.genre=genre;
-        this.developer=developer;
-        this.price = price;
+    public Game(String gameTitle) {
+        this.gameTitle = gameTitle;
+    }
+
+    public void setGameTitle(String gameTitle) {
+        this.gameTitle = gameTitle;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public void setDescriptionOfPlot(String descriptionOfPlot) {
         this.descriptionOfPlot = descriptionOfPlot;
-        platformList.add(platform);
     }
 
-    public void addPlatformToList(Platform platform){
-        platformList.add(platform);
+    public void setPlatformList(ArrayList<Platform> platformList) {
+        this.platformList = platformList;
     }
 
-    public ArrayList<Platform> getPlatformList(){
+    public void addPlatformToList(Platform platform) {
+        platformList.add ( platform );
+    }
+
+    public ArrayList<Platform> getPlatformList() {
         return platformList;
     }
+
     public String getGameTitle() {
         return gameTitle;
     }
@@ -45,11 +59,9 @@ public class Game {
         return developer;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public String getDescriptionOfPlot() {
         return descriptionOfPlot;
     }
+
+
 }

@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
-    public static Account account;
-    public static Main main;
 
     @FXML
     private TextField loginUsername;
@@ -24,29 +22,22 @@ public class Login implements Initializable {
     private TextField loginPassword;
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       //EmployeeAccount.getInstance ();
 
     }
 
 
     @FXML
     private void loginAsEmployee(ActionEvent ae) throws IOException {
-
+        Main main = new Main ();
         DBConnection connection = new DBConnection ();
-        boolean testUserIdPassword = connection.searchForPassword ( loginUsername.getText (), loginPassword.getText () );
+        boolean testUserIdPassword = connection.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
 
         if (testUserIdPassword == true) {
 
-            //Nikolaj: Nedan rad berättar vilket account som är inloggat
+            EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText () );
 
-            EmployeeAccount account = new EmployeeAccount (loginUsername.getText (), loginPassword.getText ());
-
-            //Nikolaj: Nedan rad sparar vilken account som är inloggad, så att denna senare kan hämtas ner fil och användas för
-            // sökningar gentemot databas av just denna användare
             try {
                 main.setMyUser ( account );
             } catch (IOException e) {
@@ -64,12 +55,37 @@ public class Login implements Initializable {
         }
 
     }
-    public void loginAsCustomer(Account id, Account password, Boolean isGuest) {
+
+    public void loginAsCustomer(ActionEvent ae) throws IOException {
         // TODO implement here
     }
 
-    public void loginAsBoss(Account id, Account password) {
-        // TODO implement here
-    }
+    @FXML
+    public void loginAsBoss(ActionEvent ae) throws IOException {
+        Main main = new Main ();
 
+        DBConnection connection = new DBConnection ();
+        boolean testUserIdPassword = connection.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
+
+        if (testUserIdPassword == true) {
+
+            BossAccount account = new BossAccount ( loginUsername.getText (), loginPassword.getText () );
+
+            try {
+                main.setMyUser ( account );
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
+
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBoss.fxml" ) );
+            Parent root = loader.load ();
+
+            Scene scene = new Scene ( root, 500, 300 );
+            stage.setScene ( scene );
+        }
+
+    }
 }

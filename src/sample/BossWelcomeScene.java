@@ -14,16 +14,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeWelcomeScene implements Initializable {
+public class BossWelcomeScene implements Initializable {
     @FXML
     private Label welcomeLabel;
     ReadActiveUserFile readUser = new ReadActiveUserFile ();
-    EmployeeAccount account = new EmployeeAccount ( "", "" );
+    BossAccount account = new BossAccount ( "", "" );
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         readUser.openFile ();
-        this.account = (EmployeeAccount) readUser.readRecords ();
+        this.account = (BossAccount) readUser.readRecords ();
         readUser.closeFile ();
         DBConnection connection = new DBConnection ();
         welcomeLabel.setText ( "Welcome " + connection.searchForName(account.getUserName()) + "!" );
@@ -39,6 +39,33 @@ public class EmployeeWelcomeScene implements Initializable {
 
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
+
+    }
+
+    @FXML
+    private void addEmployee(ActionEvent ae) throws IOException {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddEmployee.fxml" ) );
+        Parent root = loader.load ();
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
+
+    }
+
+    @FXML
+    private void addCustomer(ActionEvent ae) throws IOException {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddCustomer.fxml" ) );
+        Parent root = loader.load ();
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
+
     }
 
     @FXML
@@ -60,6 +87,19 @@ public class EmployeeWelcomeScene implements Initializable {
         Stage stage = (Stage) node.getScene ().getWindow ();
 
         FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddGameToStock.fxml" ) );
+        Parent root = loader.load ();
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
+
+    }
+
+    @FXML
+    private void openCart(ActionEvent ae) throws IOException {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCart.fxml" ) );
         Parent root = loader.load ();
 
         Scene scene = new Scene ( root, 500, 300 );
