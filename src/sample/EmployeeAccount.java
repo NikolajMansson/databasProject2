@@ -10,18 +10,18 @@ public class EmployeeAccount extends Account implements Serializable {
     private static int gamesSold;
     private static double income;
     private String email;
-    private String id;
+    private String userName;
     private String password;
 
-    public EmployeeAccount(String id, String password) {
-        super ( id, password );
-        this.id = id;
+    public EmployeeAccount(String userName, String password) {
+        super (userName, password );
+        this.userName = userName;
         this.password = password;
     }
 
     @Override
     public String toString() {
-        return id + " | " + password;
+        return userName + " | " + password;
     }
 
     public String getEmploymentDate() {

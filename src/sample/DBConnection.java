@@ -132,6 +132,24 @@ public class DBConnection {
     public void addOrderToList(Order order) {
         // TODO implement here
     }
+
+    public String searchForName(String id) {
+        String firstName;
+        try {
+            ResultSet rs = statement.executeQuery ( "SELECT FirstName FROM Employees WHERE UserName ='" + id + "'" );
+
+
+            while (rs.next ()) {
+                firstName = String.format ( rs.getString ( 1 ) );
+                return firstName;
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println ( "error on executing the query" );
+        }
+        return null;
+    }
 }
 
 

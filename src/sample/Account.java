@@ -10,12 +10,12 @@ public abstract class Account implements Serializable {
 
     private String surName;
 
-    private String id;
+    private String userName;
 
     private String password;
 
-    public Account(String id, String password) {
-        this.id = id;
+    public Account(String userName, String password) {
+        this.userName = userName;
         this.password = password;
     }
 
@@ -47,8 +47,8 @@ public abstract class Account implements Serializable {
         return surName;
     }
 
-    public String getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {
