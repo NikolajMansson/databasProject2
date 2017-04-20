@@ -1,90 +1,173 @@
 CREATE USER 'bossStore'@'localhost';
 
+
+
 SET PASSWORD FOR 'bossStore'@'localhost' = PASSWORD('123');
+
+
+
 
 
 INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, UserType) 
 
+
+
 VALUES (790312, 'Elin', 'Kristiansson', 20050305, 0, 0, 'elin.kristiansson@gmail.com', 'bossStore', '123', 'Boss');
+
 GRANT ALL PRIVILEGES ON * TO 'bossStore'@'localhost' IDENTIFIED BY '123' WITH GRANT OPTION; 
+
+
+
 
 
 CREATE USER 'employee1Store'@'localhost';
 
+
+
 SET PASSWORD FOR 'employee1Store'@'localhost' = PASSWORD('123');
+
 INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, UserType) 
+
+
 
 VALUES (860502, 'Nicklas', 'Karlsson', 20170605, 0, 0, 'nicklas.karlsson@gmail.com', 'employee1Store', '123', 'Salesman');
 
 
+
+
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee1Store'@'localhost'; 
+
+
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost'; 
 
+
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee1Store'@'localhost'; 
 
+
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'@'localhost'; 
+
+
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost'; 
 
 
 
+
+
+
+
 CREATE USER 'employee2Store'@'localhost';
 
+
+
 SET PASSWORD FOR 'employee2Store'@'localhost' = PASSWORD('123');
+
 INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, UserType) 
 
+
+
 VALUES (820412, 'Jonas', 'Josefsson', 20170305, 0, 0, 'jonas.josefsson@gmail.com', 'employee2Store', '123', 'Salesman');
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee2Store'@'localhost'; 
+
+
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee2Store'@'localhost'; 
 
+
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee2Store'@'localhost'; 
 
+
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee2Store'@'localhost'; 
+
+
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee2Store'@'localhost'; 
 
 
 
-
 CREATE USER 'customer1Store'@'localhost';
 
+
+
 SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123');
+
+
 
 GRANT SELECT ON Game TO 'customer1Store'@'localhost';
 
 
+
+
+
 INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) 
+
+
 
 VALUES (890423, 'Sara', 'Hansson', 20170105, 'customer1Store', '123', 'sara.hansson@gmail.com');
 
 
-
 CREATE USER 'customer2Store'@'localhost';
+
+
 
 SET PASSWORD FOR 'customer2Store'@'localhost' = PASSWORD('123');
 
+
+
 GRANT SELECT ON Game TO 'customer2Store'@'localhost';
 
+
+
 INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) 
+
+
 
 VALUES (850321, 'Kristina', 'Henriksen', 20170529, 'customer2Store', '123', 'kristina.henriksen@gmail.com');
 
 
 
- 
 INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot) 
+
+
 
 VALUES ('The Wolf', 'RPG', 'Ubisoft', 'Vargjakt i Norrland');
 
+
+
 INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot) 
 
+
+
 VALUES ('NHL2016', 'Sportspel', 'EA Sports', 'Hockeyspel');
+
+
 
 INSERT INTO Platform(Abbreviation, Fullname, Developer) 
 
 VALUES ('XBOX1', 'Xbox One', 'Microsoft');
 
- UPDATE Item SET price=299.00 WHERE Game_Title='NHL2016' AND Platform_Abbreviation='XBOX1';
- UPDATE Item SET price=99.00 WHERE Game_Title='The Wolf' AND Platform_Abbreviation='XBOX1';
+
+INSERT INTO Item (Game_Title, Platform_Abbreviation, ArticleNumber, price, amountOfItems) VALUES 
+((SELECT Title FROM GAME WHERE Title = 'NHL2016'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 1, 299.00, 10);
+
+INSERT INTO Item (Game_Title, Platform_Abbreviation, ArticleNumber, price, amountOfItems) VALUES 
+((SELECT Title FROM GAME WHERE Title = 'The Wolf'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 2, 99.00, 15);
+
+INSERT INTO GuestOrder (OrderNumber, Employees_UserName, Item_ArticleNumber, DateOfOrder) VALUES 
+(1, (SELECT UserName FROM employees WHERE UserName = 'employee2Store'), (SELECT ArticleNumber FROM Item WHERE ArticleNumber = '1'), 20160317);
+
+INSERT INTO GuestOrder (OrderNumber, Employees_UserName, Item_ArticleNumber, DateOfOrder) VALUES 
+(1, (SELECT UserName FROM employees WHERE UserName = 'employee2Store'), (SELECT ArticleNumber FROM Item WHERE ArticleNumber = '2'), 20160317);
+
+UPDATE Item SET amountOfItems=14 WHERE ArticleNumber=1 AND Game_Title='NHL2016' AND Platform_Abbreviation='XBOX1';
+UPDATE Item SET amountOfItems=14 WHERE ArticleNumber=2 AND Game_Title='The Wolf' AND Platform_Abbreviation='XBOX1';
+
+SELECT sum(price) FROM item, guestorder WHERE ArticleNumber=Item_ArticleNumber AND OrderNumber=1;
+
