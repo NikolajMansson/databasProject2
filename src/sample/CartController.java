@@ -31,15 +31,15 @@ public class CartController implements Initializable {
     @FXML
     private PasswordField password;
 
-    DBConnection dbc = new DBConnection();
+    DBConnection dbc = new DBConnection ();
 
-    @FXML public void add()
-    {
+    @FXML
+    public void add() {
 
     }
 
-    @FXML public void cancel()
-    {
+    @FXML
+    public void cancel() {
 
     }
 

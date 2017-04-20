@@ -46,7 +46,7 @@ public class Cart {
         return null;
     }
 
-    public void sendOrderToDB(Order order){
+    public void sendOrderToDB(Order order) {
         //Lägg till metod i DB för att lägga in en order
     }
 

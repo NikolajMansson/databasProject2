@@ -2,7 +2,7 @@ package sample;
 
 import java.io.Serializable;
 
-public abstract class Account implements Serializable{
+public abstract class Account implements Serializable {
 
     private int SSN;
 
@@ -19,32 +19,40 @@ public abstract class Account implements Serializable{
         this.password = password;
     }
 
-    public void setSSN(int SSN){
+    public void setSSN(int SSN) {
         this.SSN = SSN;
     }
+
     public void setFirstName(String firstName) {
-        this.firstName=firstName;
+        this.firstName = firstName;
     }
+
     public void setSurName(String surName) {
-        this.surName=surName;
+        this.surName = surName;
     }
+
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
-    public int getSSN(){
+
+    public int getSSN() {
         return SSN;
     }
-    public String getFirstName(){
+
+    public String getFirstName() {
         return firstName;
     }
-    public String getSurName(){
+
+    public String getSurName() {
         return surName;
     }
+
     public String getId() {
         return id;
     }
+
     public String getPassword() {
-       return password;
+        return password;
     }
 
 }

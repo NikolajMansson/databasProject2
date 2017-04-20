@@ -34,13 +34,14 @@ public class RegisterCustomer implements Initializable {
     @FXML
     private PasswordField password;
 
-    @FXML public void add()
-    {   DBConnection connection = new DBConnection ();
-        connection.addCustomerToList(ssn.getText(), firstName.getText(), surname.getText(), registrationDate.getText(), email.getText(), username.getText(), password.getText());
+    @FXML
+    public void add() {
+        DBConnection connection = new DBConnection ();
+        connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText (), email.getText (), username.getText (), password.getText () );
     }
 
-    @FXML public void cancel()
-    {
+    @FXML
+    public void cancel() {
 
     }
 

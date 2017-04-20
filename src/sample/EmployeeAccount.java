@@ -2,7 +2,7 @@ package sample;
 
 import java.io.Serializable;
 
-public class EmployeeAccount extends Account implements Serializable{
+public class EmployeeAccount extends Account implements Serializable {
     private static int SSN;
     private String firstName;
     private String surName;
@@ -14,7 +14,7 @@ public class EmployeeAccount extends Account implements Serializable{
     private String password;
 
     public EmployeeAccount(String id, String password) {
-        super (id, password );
+        super ( id, password );
         this.id = id;
         this.password = password;
     }

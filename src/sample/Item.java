@@ -1,7 +1,7 @@
 package sample;
 
 /**
- * 
+ *
  */
 public class Item extends Game {
 
@@ -15,22 +15,29 @@ public class Item extends Game {
 
     private String descriptionOfPlot;
 
-    private int articleNumber=0;
+    private int articleNumber = 0;
 
-    public Item(String gameTitle, String genre, String developer, Platform platform, double price, String descriptionOfPlot) {
-        super (gameTitle, genre, developer, price, descriptionOfPlot, platform);
+    Platform platform;
+
+    public Item(String gameTitle, double price, Platform platform) {
+        super ( gameTitle);
 
         this.articleNumber++;
-
+        this.gameTitle = gameTitle;
+        this.platform = platform;
+        this.price = price;
     }
 
-    public int getArticleNumber(){
+    public int getArticleNumber() {
         return articleNumber;
     }
 
-    public double getPrice(){
-        //Hämta och returnera från databas
+    public double getPrice() {
         return price;
+    }
+
+    public Platform getPlatform(){
+        return platform;
     }
 
 

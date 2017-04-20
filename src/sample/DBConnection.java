@@ -49,6 +49,7 @@ public class DBConnection {
         }
         return false;
     }
+
     public boolean searchForPasswordCustomer(String id, String password) {
         try {
             ResultSet rs = statement.executeQuery ( "SELECT UserPassword FROM Customer WHERE UserName ='" + id + "'" );
@@ -72,7 +73,7 @@ public class DBConnection {
 
     public void addEmployeeToList(String ssn, String firstName, String surname, String employmentDate, String email, String username, String password) {
         try {
-                    statement.executeQuery ( "INSERT INTO employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, " +
+            statement.executeQuery ( "INSERT INTO employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, " +
                     "Income, Email, UserName, UserPassword) VALUES (" + ssn + ", '" + firstName + "', '" + surname + "', "
                     + employmentDate + ", 0, 0, '" + email + "', '" + username + "', '" + password +
                     "'); CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
@@ -84,7 +85,7 @@ public class DBConnection {
 
     public void addCustomerToList(String ssn, String firstName, String surname, String registrationDate, String email, String username, String password) {
         try {
-                    statement.executeQuery ( "INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate,  " +
+            statement.executeQuery ( "INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate,  " +
                     "Email, UserName, UserPassword) VALUES (" + ssn + ", '" + firstName + "', '" + surname + "', "
                     + registrationDate + ", '" + email + "', '" + username + "', '" + password +
                     "'); CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
@@ -105,11 +106,30 @@ public class DBConnection {
         }
     }
 
+    public void addItemToList(String title, String platform, int articleNumber, double price){
+        try {
+            statement.executeQuery ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, ArticleNumber, price)" +
+                    " VALUES ('" + title + "', '" + platform + "', '" + articleNumber + "', '"
+                    + price + "');");
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+    }
+
+    public void addPlatformToList(String abbreviation, String fullname, String maker){
+        try {
+            statement.executeQuery ( "INSERT INTO Item(Abbreviation, FullName, Developer)" +
+                    " VALUES ('" + abbreviation + "', '" + fullname + "', '" + maker + "');");
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+    }
+
     public void removeItem(int articleId) {
         // TODO implement here
     }
 
-    public void addOrderToList(Order order){
+    public void addOrderToList(Order order) {
         // TODO implement here
     }
 }

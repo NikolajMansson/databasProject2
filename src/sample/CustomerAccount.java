@@ -13,8 +13,8 @@ public class CustomerAccount extends Account implements Serializable {
         this.password = password;
     }
 
-    public void setRegistrationDate(String registrationDate){
-        this.registrationDate=registrationDate;
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getregistrationDate() {

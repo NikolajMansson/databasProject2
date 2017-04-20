@@ -17,13 +17,12 @@ public class Order extends Cart {
     private Cart cart;
 
     public Order(int orderNumber, CustomerAccount id, EmployeeAccount employeeSSN, String dateOfOrder, Cart cart) {
-        this.orderNumber =orderNumber;
+        this.orderNumber = orderNumber;
         this.id = id;
         this.employeeSSN = employeeSSN;
         this.dateOfOrder = dateOfOrder;
         this.cart = cart;
     }
-
 
 
 }
