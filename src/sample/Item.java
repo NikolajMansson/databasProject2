@@ -7,13 +7,7 @@ public class Item extends Game {
 
     private String gameTitle;
 
-    private String genre;
-
-    private String developer;
-
     private double price;
-
-    private String descriptionOfPlot;
 
     private int articleNumber = 0;
 
