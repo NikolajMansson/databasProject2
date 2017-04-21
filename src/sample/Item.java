@@ -1,5 +1,7 @@
 package sample;
 
+
+
 /**
  *
  */
@@ -11,6 +13,8 @@ public class Item extends Game {
 
     private int articleNumber = 0;
 
+
+
     Platform platform;
 
     public Item(String gameTitle, double price, Platform platform) {
@@ -20,6 +24,8 @@ public class Item extends Game {
         this.gameTitle = gameTitle;
         this.platform = platform;
         this.price = price;
+
+
     }
 
     public int getArticleNumber() {

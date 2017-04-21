@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DBConnection {
 
@@ -162,6 +163,38 @@ public class DBConnection {
             System.out.println ( "error on executing the query" );
         }
         return null;
+    }
+
+    public void searchforGameTitle(String title)
+    {
+
+    }
+
+
+    //unstable code
+    public void defaultSearch()
+    {
+        try
+        {
+            ArrayList<String> gameTitleInLibrary = new ArrayList<>();
+            ArrayList<Integer> articlenumbers = new ArrayList<>();
+            ArrayList<String> platformlist = new ArrayList<>();
+            ArrayList<Double> prices = new ArrayList<>();
+
+            ResultSet rs = statement.executeQuery("SELECT ArticleNumber,Game_Title,Platform_Abbreviation,price FROM item" );
+
+            while (rs.next())
+            {
+
+                gameTitleInLibrary.add(rs.getString(1));
+                articlenumbers.add(rs.getInt(1));
+                platformlist.add(rs.getString(1));
+                prices.add(rs.getDouble(1));
+            }
+        } catch (SQLException e) {
+            System.out.println ( "error on executing the query" );
+        }
+
     }
 }
 

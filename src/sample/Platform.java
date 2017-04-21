@@ -28,4 +28,8 @@ public class Platform {
     public String getMaker() {
         return maker;
     }
+
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
 }
