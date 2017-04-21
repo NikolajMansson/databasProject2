@@ -24,6 +24,10 @@
                   <Font size="24.0" />
                </font>
             </Label>
+            <Button layoutX="49.0" layoutY="91.0" mnemonicParsing="false" onAction="#addGameToDB" text="Register Game to Catalog" />
+            <Button layoutX="55.0" layoutY="125.0" mnemonicParsing="false" onAction="#addGameToStock" text="Register Game to Store" />
+            <Button layoutX="333.0" layoutY="91.0" mnemonicParsing="false" text="Game Search" />
+            <Button layoutX="323.0" layoutY="125.0" mnemonicParsing="false" text="Customer Search" />
          </children>
       </AnchorPane>
    </children>

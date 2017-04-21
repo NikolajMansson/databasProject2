@@ -13,16 +13,16 @@ public class Main extends Application {
     public static CreateActiveUserFile createActiveUserFile = new CreateActiveUserFile ();
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sceneLogin.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 500, 300));
-        primaryStage.show();
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load ( getClass ().getResource ( "sceneLogin.fxml" ) );
+        primaryStage.setTitle ( "Hello World" );
+        primaryStage.setScene ( new Scene ( root, 500, 300 ) );
+        primaryStage.show ();
     }
 
 
     public static void main(String[] args) {
-        launch(args);
+        launch ( args );
     }
 
     public static void setMyUser(Account account) throws IOException {

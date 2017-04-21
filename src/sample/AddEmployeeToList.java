@@ -29,17 +29,26 @@ public class AddEmployeeToList implements Initializable {
     @FXML
     private TextField username;
     @FXML
+    private TextField employementDate;
+    @FXML
     private PasswordField password;
 
-    DBConnection dbc = new DBConnection();
+    DBConnection dbc = new DBConnection ();
 
-    @FXML public void add()
-    {
-
+    @FXML
+    public void add() {
+        DBConnection connection = new DBConnection ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
+        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employementDate.getText (),
+                email.getText (), username.getText (), password.getText () );
     }
 
-    @FXML public void cancel()
-    {
+    @FXML
+    public void cancel() {
 
     }
 

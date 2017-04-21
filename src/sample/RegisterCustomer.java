@@ -29,17 +29,24 @@ public class RegisterCustomer implements Initializable {
     @FXML
     private TextField username;
     @FXML
+    private TextField registrationDate;
+
+    @FXML
     private PasswordField password;
 
-    DBConnection dbc = new DBConnection();
-
-    @FXML public void add()
-    {
-
+    @FXML
+    public void add() {
+        DBConnection connection = new DBConnection ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
+        connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText (), email.getText (), username.getText (), password.getText () );
     }
 
-    @FXML public void cancel()
-    {
+    @FXML
+    public void cancel() {
 
     }
 

@@ -1,29 +1,38 @@
 package sample;
 
 /**
- * 
+ *
  */
 public class Item extends Game {
 
     private String gameTitle;
 
-    private String genre;
-
-    private String developer;
-
     private double price;
 
-    private String descriptionOfPlot;
+    private int articleNumber = 0;
 
-    public Item(String gameTitle, String genre, String developer, Platform platform, double price, String descriptionOfPlot, Game game) {
-        super (gameTitle, genre, developer, price, descriptionOfPlot, platform);
+    Platform platform;
 
+    public Item(String gameTitle, double price, Platform platform) {
+        super ( gameTitle);
+
+        this.articleNumber++;
+        this.gameTitle = gameTitle;
+        this.platform = platform;
+        this.price = price;
     }
 
-    private Integer itemId;
-
-    public void removeItem(Integer itemId) {
-        // TODO implement here
+    public int getArticleNumber() {
+        return articleNumber;
     }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public Platform getPlatform(){
+        return platform;
+    }
+
 
 }
