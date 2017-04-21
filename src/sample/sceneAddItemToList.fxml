@@ -36,6 +36,8 @@
             <TextField fx:id="makerOfPlatform" layoutX="189.0" layoutY="293.0" />
             <Label layoutX="34.0" layoutY="254.0" text="Platforms abbreviation" />
             <Label layoutX="34.0" layoutY="297.0" text="Maker of platform" />
+            <TextField fx:id="amountOfItemsTextField" layoutX="189.0" layoutY="336.0" />
+            <Label layoutX="34.0" layoutY="340.0" text="Amount of items" />
          </children>
       </AnchorPane>
    </children>

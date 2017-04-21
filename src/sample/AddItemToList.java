@@ -30,6 +30,8 @@ public class AddItemToList {
     TextField abbreviationTextField;
     @FXML
     TextField makerOfPlatform;
+    @FXML
+    TextField amountOfItemsTextField;
 
 
 
@@ -41,11 +43,8 @@ public class AddItemToList {
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-        Platform platform = new Platform(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
         connection.addPlatformToList(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
-        int price = Integer.parseInt ( priceTextField.getText () );
-        Item item = new Item(gameTitle.getText (), price, platform);
-        connection.addItemToList (gameTitle.getText (), platform.getAbbreviation (), item.getArticleNumber (), item.getPrice ());
+        connection.addItemToList (gameTitle.getText (), abbreviationTextField.getText (),  priceTextField.getText (),amountOfItemsTextField.getText()  );
     }
 
     @FXML
