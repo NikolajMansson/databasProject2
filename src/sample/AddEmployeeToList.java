@@ -38,6 +38,11 @@ public class AddEmployeeToList implements Initializable {
     @FXML
     public void add() {
         DBConnection connection = new DBConnection ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employementDate.getText (),
                 email.getText (), username.getText (), password.getText () );
     }

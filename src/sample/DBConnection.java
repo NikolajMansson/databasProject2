@@ -72,32 +72,47 @@ public class DBConnection {
     }
 
     public void addEmployeeToList(String ssn, String firstName, String surname, String employmentDate, String email, String username, String password) {
+
         try {
-            statement.executeQuery ( "INSERT INTO employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, " +
-                    "Income, Email, UserName, UserPassword) VALUES (" + ssn + ", '" + firstName + "', '" + surname + "', "
-                    + employmentDate + ", 0, 0, '" + email + "', '" + username + "', '" + password +
-                    "'); CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
-            );
+
+            statement.executeUpdate ( "INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, UserType) VALUES (790312, 'Elin', 'Kristiansson', 20050305, 0, 0, 'elin.kristiansson@gmail.com', 'boss3Store', '123', 'Boss'); " );
+
+
+
+
         } catch (SQLException ex) {
+
             System.out.println ( "error on executing the query" );
+
         }
+
     }
 
     public void addCustomerToList(String ssn, String firstName, String surname, String registrationDate, String email, String username, String password) {
+
         try {
+
             statement.executeQuery ( "INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate,  " +
+
                     "Email, UserName, UserPassword) VALUES (" + ssn + ", '" + firstName + "', '" + surname + "', "
+
                     + registrationDate + ", '" + email + "', '" + username + "', '" + password +
+
                     "'); CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
+
             );
+
         } catch (SQLException ex) {
+
             System.out.println ( "error on executing the query" );
+
         }
+
     }
 
     public void addGameToList(String title, String genre, String developer, String descriptionOfPlot) {
         try {
-            statement.executeQuery ( "INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot)" +
+            statement.executeUpdate ( "INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot)" +
                     " VALUES ('" + title + "', '" + genre + "', '" + developer + "', '"
                     + descriptionOfPlot + "');"
             );
@@ -106,11 +121,9 @@ public class DBConnection {
         }
     }
 
-    public void addItemToList(String title, String platform, int articleNumber, double price){
+    public void addItemToList(String title, String platform, String price, String amountOfItems){
         try {
-            statement.executeQuery ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, ArticleNumber, price)" +
-                    " VALUES ('" + title + "', '" + platform + "', '" + articleNumber + "', '"
-                    + price + "');");
+            statement.executeUpdate ( "INSERT INTO Item (Game_Title, Platform_Abbreviation, price, amountOfItems) VALUES  ((SELECT Title FROM GAME WHERE Title = 'NHL2016'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 299.00, 10);");
         } catch (SQLException e) {
             e.printStackTrace ();
         }
@@ -118,7 +131,7 @@ public class DBConnection {
 
     public void addPlatformToList(String abbreviation, String fullname, String maker){
         try {
-            statement.executeQuery ( "INSERT INTO Item(Abbreviation, FullName, Developer)" +
+            statement.executeUpdate ( "INSERT INTO Item(Abbreviation, FullName, Developer)" +
                     " VALUES ('" + abbreviation + "', '" + fullname + "', '" + maker + "');");
         } catch (SQLException e) {
             e.printStackTrace ();

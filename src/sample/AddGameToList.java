@@ -37,14 +37,15 @@ public class AddGameToList implements Initializable {
 
 
     @FXML
-    pub DBConnection connection = new DBConnection ();
+    public void add(ActionEvent ae) throws IOException {
+    DBConnection connection = new DBConnection ();
     ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
     Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
-    }
+}
 
     @FXML
     public void cancel(ActionEvent ae) throws IOException {

@@ -44,7 +44,7 @@ public class AddItemToList {
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addPlatformToList(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
-        connection.addItemToList (gameTitle.getText (), abbreviationTextField.getText (),  priceTextField.getText (),amountOfItemsTextField.getText()  );
+        connection.addItemToList (gameTitle.getText (), abbreviationTextField.getText (), priceTextField.getText () ,amountOfItemsTextField.getText()  );
     }
 
     @FXML
