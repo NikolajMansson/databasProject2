@@ -44,7 +44,6 @@ public class RegisterCustomer implements Initializable {
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText (), email.getText (), username.getText (), password.getText () );
     }
-
     @FXML
     public void cancel() {
 

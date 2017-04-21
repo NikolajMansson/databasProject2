@@ -2,6 +2,7 @@ package sample;
 
 import com.mysql.jdbc.Connection;
 
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,9 +73,11 @@ public class DBConnection {
 
     public void addEmployeeToList(String ssn, String firstName, String surname, String employmentDate, String email, String username, String password) {
         try {
-            statement.executeUpdate ( "INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, UserType) VALUES (790312, 'Elin', 'Kristiansson', 20050305, 0, 0, 'elin.kristiansson@gmail.com', 'boss3Store', '123', 'Boss'); " );
-            //"CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
-
+            statement.executeQuery ( "INSERT INTO employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, " +
+                    "Income, Email, UserName, UserPassword) VALUES (" + ssn + ", '" + firstName + "', '" + surname + "', "
+                    + employmentDate + ", 0, 0, '" + email + "', '" + username + "', '" + password +
+                    "'); CREATE USER'" + username + "'@'localhost'; SET PASSWORD FOR '" + username + "'@'localhost' = PASSWORD('" + password + "');"
+            );
         } catch (SQLException ex) {
             System.out.println ( "error on executing the query" );
         }
@@ -94,37 +97,31 @@ public class DBConnection {
 
     public void addGameToList(String title, String genre, String developer, String descriptionOfPlot) {
         try {
-            statement.executeUpdate ( "INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot)" +
+            statement.executeQuery ( "INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot)" +
                     " VALUES ('" + title + "', '" + genre + "', '" + developer + "', '"
                     + descriptionOfPlot + "');"
             );
         } catch (SQLException ex) {
-            System.out.println ( "error on executing update" );
+            System.out.println ( "error on executing the query" );
         }
     }
 
-    public void addItemToList(String title, String platform, String price, String amountOfItems) {
-
+    public void addItemToList(String title, String platform, int articleNumber, double price){
         try {
-            statement.executeUpdate ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, price, amountOfItems) VALUES ((SELECT Title FROM Game WHERE Title = 'The Wolf'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 219.00, 3);" );
-
-
-        } catch (SQLException ex) {
-            System.out.println ( "error on executing item input" );
-        }
-        try {
-            statement.executeUpdate ( "UPDATE Item SET amountOfItems=3 WHERE Game_Title= 'The Wolf' and Platform_Abbreviation='XBOX1';" );
-        } catch (SQLException ex) {
-            System.out.println ( "Error on executing item update" );
-        }
-    }
-
-
-    public void addPlatformToList(String abbreviation, String fullname, String maker) {
-        try {
-            statement.executeUpdate ( "INSERT INTO Platform(Abbreviation, Fullname, Developer) VALUES ('PS6', 'PlayStation 6', 'Sony');" );
+            statement.executeQuery ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, ArticleNumber, price)" +
+                    " VALUES ('" + title + "', '" + platform + "', '" + articleNumber + "', '"
+                    + price + "');");
         } catch (SQLException e) {
-            System.out.println ( "Error on executing platform update" );
+            e.printStackTrace ();
+        }
+    }
+
+    public void addPlatformToList(String abbreviation, String fullname, String maker){
+        try {
+            statement.executeQuery ( "INSERT INTO Item(Abbreviation, FullName, Developer)" +
+                    " VALUES ('" + abbreviation + "', '" + fullname + "', '" + maker + "');");
+        } catch (SQLException e) {
+            e.printStackTrace ();
         }
     }
 

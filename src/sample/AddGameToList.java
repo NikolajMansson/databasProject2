@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,15 +19,12 @@ import java.util.ResourceBundle;
  * Created by L J on 4/18/2017.
  */
 public class AddGameToList implements Initializable {
-    @FXML public Button addItemsButton;
-    @FXML public Button addGameButton;
-    @FXML public Button cancelButton;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+    DBConnection dbc = new DBConnection ();
 
     @FXML
     private TextField gameTitle;
@@ -41,11 +37,10 @@ public class AddGameToList implements Initializable {
 
 
     @FXML
-    public void addGame() {
-        DBConnection connection = new DBConnection ();
-        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+    pub DBConnection connection = new DBConnection ();
+    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
-        Account account = readActiveUserFile.readRecords ();
+    Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
@@ -57,18 +52,6 @@ public class AddGameToList implements Initializable {
         Stage stage = (Stage) node.getScene ().getWindow ();
 
         FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
-        Parent root = loader.load ();
-
-        Scene scene = new Scene ( root, 500, 300 );
-        stage.setScene ( scene );
-    }
-
-    @FXML
-    public void addItems(ActionEvent ae) throws IOException {
-        Node node = (Node) ae.getSource ();
-        Stage stage = (Stage) node.getScene ().getWindow ();
-
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddItemToList.fxml" ) );
         Parent root = loader.load ();
 
         Scene scene = new Scene ( root, 500, 300 );
