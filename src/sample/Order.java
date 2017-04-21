@@ -1,10 +1,12 @@
 package sample;
 
+import java.util.Date;
+
 public class Order extends Cart {
 
     private Integer orderNumber;
 
-    private CustomerAccount id;
+    private CustomerAccount userID;
 
     private Double totalPrice;
 
@@ -12,13 +14,19 @@ public class Order extends Cart {
 
     private EmployeeAccount employeeSSN;
 
-    private String dateOfOrder;
+    private Date dateOfOrder;
 
     private Cart cart;
 
-    public Order(int orderNumber, CustomerAccount id, EmployeeAccount employeeSSN, String dateOfOrder, Cart cart) {
+    public Order(int orderNumber, EmployeeAccount employeeSSN, Date dateOfOrder, Cart cart) {
         this.orderNumber = orderNumber;
-        this.id = id;
+        this.employeeSSN = employeeSSN;
+        this.dateOfOrder = dateOfOrder;
+        this.cart = cart;
+    }
+    public Order(int orderNumber, CustomerAccount userID, EmployeeAccount employeeSSN, Date dateOfOrder, Cart cart) {
+        this.orderNumber = orderNumber;
+        this.userID = userID;
         this.employeeSSN = employeeSSN;
         this.dateOfOrder = dateOfOrder;
         this.cart = cart;
