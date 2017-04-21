@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,11 +24,22 @@ public class CartController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        for (int i = 0; i < Singleton.getInstance().getArticlenumber().size(); i++)
+        {
+            cartArea.appendText(Integer.valueOf(Singleton.getInstance().getArticlenumber().get(i)) + "\t\t\t" +
+                    String.valueOf(Singleton.getInstance().getGametitles().get(i)) + "\t\t\t" +
+                    String.valueOf(Singleton.getInstance().getPlatforms().get(i)) + "\t\t\t" +
+                    Integer.valueOf(Singleton.getInstance().getQuantities().get(i)) + "\t\t\t" +
+                    Double.valueOf(Singleton.getInstance().getPriceperitem().get(i)) + "\t\t\t" +
+                    Double.valueOf(Singleton.getInstance().getTotalpriceperitem().get(i)) + "\n");
+        }
+
         calculatetotalprice(Singleton.getInstance().getTotalpriceperitem());
 
     }
 
 
+    @FXML private TextArea cartArea;
     @FXML private Label totalPrice;
 
 
