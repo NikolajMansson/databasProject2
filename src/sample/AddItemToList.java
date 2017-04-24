@@ -36,7 +36,7 @@ public class AddItemToList {
 
 
     @FXML
-    public void add() {
+    public void add(ActionEvent ae) {
         DBConnection connection = new DBConnection ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
@@ -44,7 +44,7 @@ public class AddItemToList {
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addPlatformToList(abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText ());
-        connection.addItemToList (gameTitle.getText (), abbreviationTextField.getText (), priceTextField.getText () ,amountOfItemsTextField.getText()  );
+        connection.addItemToList ( abbreviationTextField.getText (), priceTextField.getText ()  ,  amountOfItemsTextField.getText () , gameTitle.getText () );
     }
 
     @FXML
