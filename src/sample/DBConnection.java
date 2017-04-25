@@ -68,6 +68,7 @@ public class DBConnection {
         return false;
     }
 
+
     public void addEmployeeToList(String ssn, String firstName, String surname, String employmentDate, String email, String username, String password) {
 
         try {
@@ -127,9 +128,6 @@ public class DBConnection {
     public void addGameToList(String title, String genre, String developer, String descriptionOfPlot) {
 
         try {
-            /*statement.executeUpdate ( "INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot)" +
-                    " VALUES ('" + title + "', '" + genre + "', '" + developer + "', '"
-                    + descriptionOfPlot + "');"*/
             String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
             Connection c = (Connection) DriverManager.getConnection ( DBURL );
             try (java.sql.PreparedStatement pst = c.prepareStatement ( "INSERT INTO Game (Title, Genre, Developer, DescriptionOfPlot) VALUES (?, ?, ?, ?);" )) {
@@ -174,9 +172,7 @@ public class DBConnection {
                 pst.setString ( 2, fullname );
                 pst.setString ( 3, maker );
                 pst.executeUpdate ();
-               /* statement.executeUpdate ( "INSERT INTO Platform " +
-                        " VALUES (" + "\"" + abbreviation + "\"" + "," + "\"" + fullname + "\"" + "," + "\"" + maker + "\"" + ")" );
-           */
+
             } catch (SQLException e) {
                 e.printStackTrace ();
             }
@@ -185,9 +181,65 @@ public class DBConnection {
         }
     }
 
-    public void removeItem(int articleId) {
-        // TODO implement here
+    public void decreaseItemAmount(int amountOfItems, int articleId) {
+        try {
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try (java.sql.PreparedStatement pst = c.prepareStatement ( "UPDATE Item SET amountOfItems=? WHERE ArticleID = ?;" )) {
+                pst.setInt ( 1, amountOfItems );
+                pst.setInt ( 2, articleId );
+                pst.executeUpdate ();
+            } catch (SQLException e) {
+                e.printStackTrace ();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
     }
+
+    public void removeGame(String title) {
+
+        try {
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try (java.sql.PreparedStatement pst = c.prepareStatement ( "DELETE FROM Game WHERE Title = ?;" )) {
+                pst.setString ( 1, title );
+                pst.executeUpdate ();
+            } catch (SQLException e) {
+                e.printStackTrace ();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+    }
+
+    public void removeEmployee(String userName) {
+        try {
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try (java.sql.PreparedStatement pst = c.prepareStatement ( "DELETE FROM Employees WHERE UserName = ?" )) {
+                pst.setString ( 1, userName );
+                pst.executeUpdate ();
+            } catch (SQLException e) {
+                e.printStackTrace ();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+    }
+
+    public void increaseEmployeeIncome(String userName){
+        try {
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try (java.sql.PreparedStatement pst = c.prepareStatement ( "UPDATE Employees SET Income=? WHERE UserName = ?;" )) {
+                pst.setString ( 1, userName );
+                pst.executeUpdate ();
+            } catch (SQLException e) {
+                e.printStackTrace ();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        }
+
+    }
+
 
     public void addOrderToList(Order order) {
         // TODO implement here
@@ -211,9 +263,6 @@ public class DBConnection {
         return null;
     }
 
-    public void searchforGameTitle(String title) {
-
-    }
 
 
     //unstable code
