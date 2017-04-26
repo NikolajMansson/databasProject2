@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -35,14 +36,19 @@ public class RegisterCustomer implements Initializable {
     private PasswordField password;
 
     @FXML
-    public void add() {
+    public void add(ActionEvent ae) {
         DBConnection connection = new DBConnection ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-        connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText (), email.getText (), username.getText (), password.getText () );
+
+
+            connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText(), email.getText (), username.getText (), password.getText () );
+
+
+
     }
     @FXML
     public void cancel() {

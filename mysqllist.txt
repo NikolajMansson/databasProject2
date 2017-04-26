@@ -1,0 +1,29 @@
+//If search TextField is null, then
+
+SELECT * FROM Item ORDER BY ArticleNo
+SELECT * FROM Item ORDER BY Game_Title
+SELECT * FROM Item ORDER BY Game_Title DESC
+
+
+SELECT * FROM Item ORDER BY Plarform_Abbreviation
+SELECT * FROM Item ORDER BY Plarform_Abbreviation DESC
+
+SELECT * FROM Item,Game WHERE Game_Title=Title  ORDER BY Developer
+SELECT * FROM Item,Game WHERE Game_Title=Title  ORDER BY Developer DESC
+
+
+//If search TextField contains a text, then
+
+
+SELECT * FROM Item WHERE Game_Title LIKE ' (input)% ' ORDER BY ArticleNo
+SELECT * FROM Item WHERE Game_Title LIKE ' (input)% ' ORDER BY Game_Title
+SELECT * FROM Item WHERE Game_Title LIKE ' (input)% ' ORDER BY Game_Title DESC
+
+SELECT * FROM Item WHERE Platform_Abbreviation LIKE ' (input)% ' ORDER BY ArticleNo
+SELECT * FROM Item WHERE Platform_Abbreviation LIKE ' (input)% ' ORDER BY Platform_Abbreviation
+SELECT * FROM Item WHERE Platform_Abbreviation LIKE ' (input)% ' ORDER BY Platform_Abbreviation DESC
+
+SELECT * FROM Item,Game WHERE Game_Title=Title AND Developer LIKE ' (input)% ' ORDER BY ArticleNo
+SELECT * FROM Item,Game WHERE Game_Title=Title AND Developer LIKE ' (input)% ' ORDER BY Developer
+SELECT * FROM Item,Game WHERE Game_Title=Title AND Developer LIKE ' (input)% ' ORDER BY Developer DESC
+ 

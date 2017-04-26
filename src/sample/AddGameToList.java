@@ -24,8 +24,6 @@ public class AddGameToList implements Initializable {
 
     }
 
-    DBConnection dbc = new DBConnection ();
-
     @FXML
     private TextField gameTitle;
     @FXML
@@ -38,14 +36,26 @@ public class AddGameToList implements Initializable {
 
     @FXML
     public void add(ActionEvent ae) throws IOException {
-    DBConnection connection = new DBConnection ();
-    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        DBConnection connection = new DBConnection ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
-    Account account = readActiveUserFile.readRecords ();
+        Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
-}
+    }
+
+    @FXML
+    public void addItemToListScene(ActionEvent ae) throws IOException {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddGameToStock.fxml" ) );
+        Parent root = loader.load ();
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
+    }
 
     @FXML
     public void cancel(ActionEvent ae) throws IOException {
