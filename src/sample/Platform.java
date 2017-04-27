@@ -32,4 +32,8 @@ public class Platform {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }

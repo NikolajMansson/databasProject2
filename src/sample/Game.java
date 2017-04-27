@@ -16,7 +16,7 @@ public class Game {
 
 
     public Game(String gameTitle) {
-        this.gameTitle = gameTitle;
+        setGameTitle (gameTitle);
     }
 
     public void setGameTitle(String gameTitle) {
