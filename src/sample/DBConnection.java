@@ -264,88 +264,78 @@ public class DBConnection {
     }
 
 
-    //unstable code
-    public void defaultSearch() {
-        try {
-            ArrayList<String> gameTitleInLibrary = new ArrayList<> ();
-            ArrayList<Integer> articlenumbers = new ArrayList<> ();
-            ArrayList<String> platformlist = new ArrayList<> ();
-            ArrayList<Double> prices = new ArrayList<> ();
-
-            ResultSet rs = statement.executeQuery ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title ORDER BY ArticleNo" );
-
-            while (rs.next ()) {
-
-                gameTitleInLibrary.add ( rs.getString ( 1 ) );
-                articlenumbers.add ( rs.getInt ( 1 ) );
-                platformlist.add ( rs.getString ( 1 ) );
-                prices.add ( rs.getDouble ( 1 ) );
-            }
-        } catch (SQLException e) {
-            System.out.println ( "error on executing the query" );
-        }
-
-
-    }
-
-    public ArrayList<SearchResultItem> getItemDefaultSearch() {
+    public ArrayList<SearchResultItem> getItemDefaultSearch(boolean ascending) {
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
         try {
             String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
             Connection c = (Connection) DriverManager.getConnection ( DBURL );
+
             try {
-                PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title ORDER BY ArticleNo" );
-
-
+                if (ascending == true) {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title ORDER BY ArticleNo" );
                     resultSet = pst.executeQuery ();
+                } else {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title ORDER BY ArticleNo DESC" );
+                    resultSet = pst.executeQuery ();
+                }
 
 
-                    results = new ArrayList<> ();
+                results = new ArrayList<> ();
 
-                    while (resultSet.next ()) {
-                        results.add ( new SearchResultItem (
-                                resultSet.getInt ( "ArticleNo" ),
-                                resultSet.getString ( "Game_Title" ),
-                                resultSet.getString ( "Platform_Abbreviation" ),
-                                resultSet.getString ( "Developer" ),
-                                resultSet.getString ( "DescriptionOfPlot" ),
-                                resultSet.getDouble ( "Price" ) ) );
-                    }
+                while (resultSet.next ()) {
+                    results.add ( new SearchResultItem (
+                            resultSet.getInt ( "ArticleNo" ),
+                            resultSet.getString ( "Game_Title" ),
+                            resultSet.getString ( "Platform_Abbreviation" ),
+                            resultSet.getString ( "Developer" ),
+                            resultSet.getString ( "DescriptionOfPlot" ),
+                            resultSet.getDouble ( "Price" ) ) );
+                }
                 return results;
-
-
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace ();
-            } finally {
-                try {
-                    resultSet.close ();
-                } catch (SQLException sqlException) {
-                    sqlException.printStackTrace ();
-
-                }
             }
-        } catch (
-                SQLException e)
 
-        {
-            e.printStackTrace ();
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace ();
+        } finally {
+            try {
+                resultSet.close ();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace ();
+
+            }
         }
         return null;
     }
 
-    public ArrayList<SearchResultItem> getItemTextSearch(String text) {
+
+
+    public ArrayList<SearchResultItem> getItemTitleSearch(String text, boolean ascending) {
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
         try {
             String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
             Connection c = (Connection) DriverManager.getConnection ( DBURL );
             try {
-                PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? ORDER BY ArticleNo ?" );
+                if (ascending == true) {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? ORDER BY ArticleNo" );
 
-                pst.setString ( 1, text + "%" );
+                    pst.setString ( 1, text + "%" );
 
-                resultSet = pst.executeQuery ();
+                    resultSet = pst.executeQuery ();
+                }
+                else {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? ORDER BY ArticleNo DESC" );
+
+                    pst.setString ( 1, text + "%" );
+
+                    resultSet = pst.executeQuery ();
+
+                }
+
 
 
                 results = new ArrayList<> ();
@@ -380,6 +370,147 @@ public class DBConnection {
         }
         return null;
     }
+
+    public ArrayList<SearchResultItem> getItemPlatformSearch(String text, boolean ascending) {
+        ArrayList<SearchResultItem> results = null;
+        ResultSet resultSet = null;
+        try {
+            String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try {
+                if (ascending == true) {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? ORDER BY ArticleNo" );
+
+                    pst.setString ( 1, text + "%" );
+
+                    resultSet = pst.executeQuery ();
+                }
+                else {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? ORDER BY ArticleNo DESC" );
+
+                    pst.setString ( 1, text + "%" );
+
+                    resultSet = pst.executeQuery ();
+
+                }
+
+
+
+                results = new ArrayList<> ();
+
+                while (resultSet.next ()) {
+                    results.add ( new SearchResultItem (
+                            resultSet.getInt ( "ArticleNo" ),
+                            resultSet.getString ( "Game_Title" ),
+                            resultSet.getString ( "Platform_Abbreviation" ),
+                            resultSet.getString ( "Developer" ),
+                            resultSet.getString ( "DescriptionOfPlot" ),
+                            resultSet.getDouble ( "Price" ) ) );
+                }
+                return results;
+
+
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace ();
+            } finally {
+                try {
+                    resultSet.close ();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace ();
+
+                }
+            }
+        } catch (
+                SQLException e)
+
+        {
+            e.printStackTrace ();
+        }
+        return null;
+    }
+    public ArrayList<SearchResultItem> getItemDeveloperSearch(String text, boolean ascending) {
+        ArrayList<SearchResultItem> results = null;
+        ResultSet resultSet = null;
+        try {
+            String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+            Connection c = (Connection) DriverManager.getConnection ( DBURL );
+            try {
+                if (ascending == true) {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? ORDER BY ArticleNo" );
+
+                    pst.setString ( 1, text + "%" );
+
+                    resultSet = pst.executeQuery ();
+                }
+                else {
+                    PreparedStatement pst = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? ORDER BY ArticleNo DESC" );
+
+                    pst.setString ( 1, text + "%" );
+
+                    resultSet = pst.executeQuery ();
+
+                }
+
+
+
+                results = new ArrayList<> ();
+
+                while (resultSet.next ()) {
+                    results.add ( new SearchResultItem (
+                            resultSet.getInt ( "ArticleNo" ),
+                            resultSet.getString ( "Game_Title" ),
+                            resultSet.getString ( "Platform_Abbreviation" ),
+                            resultSet.getString ( "Developer" ),
+                            resultSet.getString ( "DescriptionOfPlot" ),
+                            resultSet.getDouble ( "Price" ) ) );
+                }
+                return results;
+
+
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace ();
+            } finally {
+                try {
+                    resultSet.close ();
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace ();
+
+                }
+            }
+        } catch (
+                SQLException e)
+
+        {
+            e.printStackTrace ();
+        }
+        return null;
+    }
+    public Item getSalesItem(int articleNo) {
+        try {
+            ResultSet rs = statement.executeQuery ( "SELECT * FROM Item WHERE ArticleNo = " + articleNo + ";" );
+
+
+
+            while (rs.next ()) {
+                int articleNoText =  rs.getInt ( 1 ) ;
+                String platformAbbreviation = String.format ( rs.getString ( 2 ) );
+                double price = rs.getDouble (3) ;
+                int amountOfItems =  rs.getInt(4) ;
+                String title = String.format(rs.getString(5));
+                int releaseDate = rs.getInt(6) ;
+                Item item = new Item(articleNoText, platformAbbreviation, price, amountOfItems, title, releaseDate);
+
+                return item;
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println ( "error on executing the query" );
+        }
+
+        return null;
+    }
+
 
 }
 

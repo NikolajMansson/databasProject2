@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by L J on 4/21/2017.
  */
-public class SearchController implements Initializable {
+public class SearchController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -29,51 +28,82 @@ public class SearchController implements Initializable {
     @FXML
     private TextArea view;
     @FXML
-    private RadioButton rb1;
-    @FXML
-    private RadioButton rb2;
-    @FXML
-    private RadioButton rb3;
-    @FXML
-    private RadioButton rb4;
-    @FXML
-    private RadioButton rb5;
-    @FXML
-    private RadioButton rb6;
-    @FXML
     private TextField searchfield;
+    @FXML
+    private TextField indexTextField;
 
-    public void searchbyoption() {
-        // if r1 is turned on, then r2 and r3 are turned off
-        // if r2 is turned on, then r1 and r3 are turned off
-        // if r3 is turned on, then r1 and r2 are turned off
+    private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
+
+    ;
+    SearchStatus searchControll;
+    private boolean ascending = true;
+
+
+
+
+    public void addToCart() throws IOException {
+        int articleNumber = Integer.parseInt ( indexTextField.getText() );
+        DBConnection dbconnection = new DBConnection ();
+
+        SingletonCart singletonCart = new SingletonCart ();
+
+        try {
+            singletonCart.writer (articleNumber );
+
+           // singletonCart.openFileInput ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+
     }
 
-    public void sortbyoption() {
-        // if r4 is turned on, then r5 and r6 are turned off
-        // if r5 is turned on, then r4 and r6 are turned off
-        // if r6 is turned on, then r4 and r5 are turned off
+    public void setGameTitleRadioButton() {
+        this.searchControll = SearchStatus.TITLE;
     }
 
-
-    public void addToCart() {
-
+    public void setDeveloperRadioButton() {
+        this.searchControll = SearchStatus.DEVELOPER;
     }
+
+    public void setPlatformRadioButton() {
+        this.searchControll = SearchStatus.PLATFORM;
+    }
+
+    public void setAscendingOrderRadioButton() {
+        this.ascending = true;
+    }
+
+    public void setDescendingOrderRadioButton() {
+        this.ascending = false;
+    }
+
 
     public void search() {
 
         DBConnection dbConnection = new DBConnection ();
         ArrayList<SearchResultItem> searchItemList;
-        if (searchfield.getText().equals("")) {
-            searchItemList = dbConnection.getItemDefaultSearch ();
+        if (searchfield.getText ().equals ( "" )) {
+            searchItemList = dbConnection.getItemDefaultSearch ( ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
 
             // view.appendText ();
-        }
-        else{
-            searchItemList = dbConnection.getItemTextSearch (searchfield.getText ());
+        } else if (searchControll == SearchStatus.TITLE) {
+            searchItemList = dbConnection.getItemTitleSearch ( searchfield.getText (), ascending );
+            for (int i = 0; i < searchItemList.size (); i++) {
+                view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
+            }
+
+        } else if (searchControll == SearchStatus.PLATFORM) {
+            searchItemList = dbConnection.getItemPlatformSearch ( searchfield.getText (), ascending );
+            for (int i = 0; i < searchItemList.size (); i++) {
+                view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
+            }
+
+        } else if (searchControll == SearchStatus.DEVELOPER) {
+            searchItemList = dbConnection.getItemDeveloperSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
@@ -82,6 +112,7 @@ public class SearchController implements Initializable {
 
 
     }
+
 
     public void viewCart(ActionEvent ae) throws IOException {
         Node node = (Node) ae.getSource ();

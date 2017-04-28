@@ -3,10 +3,12 @@ package sample;
 import java.util.ArrayList;
 
 public class Cart {
-
     public Cart() {
     }
 
+    private ArrayList<Item> itemList;
+
+    /*
     private ArrayList<Game> itemId;
 
     private ArrayList<Game> itemAmount;
@@ -18,6 +20,7 @@ public class Cart {
     private String itemName;
 
     private String platform;
+    */
 
     public void addItemToCart(Item item, Integer amountOfItems) {
         // TODO implement here

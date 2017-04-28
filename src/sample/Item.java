@@ -1,11 +1,12 @@
 package sample;
 
 
+import java.io.Serializable;
 
 /**
  *
  */
-public class Item extends Game {
+public class Item extends Game implements Serializable  {
 
     private String gameTitle;
 
@@ -13,17 +14,24 @@ public class Item extends Game {
 
     private int articleNumber = 0;
 
+    private int amountOfItems = 0;
+
+    private int releaseDate = 0;
 
 
-    Platform platform;
 
-    public Item(String gameTitle, double price, Platform platform) {
-        super ( gameTitle);
+    String platformAbbreviation;
 
-        this.articleNumber++;
-        setGameTitle (gameTitle);
-        setPlatform(platform);
+
+    public Item(int articleNumber, String platformAbbreviation, double price, int amountOfItems, String title, int releaseDate ) {
+        super ( title);
+        setArticleNumber ( articleNumber );
+        setPlatformAbbreviation(platformAbbreviation);
         setPrice(price);
+        setAmountOfItems ( amountOfItems );
+        setGameTitle (title);
+        setRealeaseDate ( releaseDate );
+
     }
 
     @Override
@@ -36,6 +44,26 @@ public class Item extends Game {
         this.gameTitle = gameTitle;
     }
 
+    public void setAmountOfItems(int amountOfItems){
+        this.amountOfItems = amountOfItems;
+    }
+
+    public int getAmountOfItems(){
+        return amountOfItems;
+    }
+
+    public void setRealeaseDate(int releaseDate){
+        this.releaseDate = releaseDate;
+    }
+
+    public int getReleaseDate(){
+        return releaseDate;
+    }
+
+    public void setReleaseDate(int releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -44,8 +72,8 @@ public class Item extends Game {
         this.articleNumber = articleNumber;
     }
 
-    public void setPlatform(Platform platform) {
-        this.platform = platform;
+    public void setPlatformAbbreviation(String platformAbbreviation) {
+        this.platformAbbreviation = platformAbbreviation;
     }
 
     public int getArticleNumber() {
@@ -56,8 +84,8 @@ public class Item extends Game {
         return price;
     }
 
-    public Platform getPlatform(){
-        return platform;
+    public String getPlatformAbbreviation(){
+        return platformAbbreviation;
     }
 
 
