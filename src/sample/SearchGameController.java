@@ -88,8 +88,11 @@ public class SearchGameController implements Initializable {
         DBConnection connection = new DBConnection ();
         ArrayList<SearchResultItem> searchItemList = null;
 
+        view.appendText(String.format("%s %-15s %-15s %-15s %-15s %n", "Article No.     ", "Game Title", "Platform", "Developer", "Price"));
+
         if (searchfield.getText ().equals ( "" )) {
             searchItemList = connection.getItemDefaultSearch ( ascending );
+
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
