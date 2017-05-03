@@ -39,7 +39,7 @@ public class OrderEmployeeToGuestController implements Initializable {
     @FXML
     public void addOrder(ActionEvent ae) {
         DBConnection dbConnection = new DBConnection ();
-        SingletonCart sCart = new SingletonCart ();
+        CartFile sCart = new CartFile();
         byte[] bytesArray = sCart.readerArticleNoFile ();
         for (int i = 0; i < bytesArray.length; i++) {
             Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );

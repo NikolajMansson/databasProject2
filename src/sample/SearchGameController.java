@@ -45,17 +45,17 @@ public class SearchGameController implements Initializable {
     public void addToCart() throws IOException {
         int articleNumber = Integer.parseInt ( indexTextField.getText ());
         int quantity = Integer.parseInt(quantityfield.getText());
-        SingletonCart singletonCart = new SingletonCart ();
+        CartFile cartFile = new CartFile();
 
         try {
-            singletonCart.writerArticleNoFile ( articleNumber );
+            cartFile.writerArticleNoFile ( articleNumber );
 
-            // singletonCart.openFileInput ();
+            // cartFile.openFileInput ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
         try {
-        singletonCart.writerQuantityFile(quantity);
+        cartFile.writerQuantityFile(quantity);
         } catch (IOException e) {
             e.printStackTrace ();
         }

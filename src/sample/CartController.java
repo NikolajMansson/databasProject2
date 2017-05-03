@@ -7,8 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class CartController implements Initializable {
     @FXML
     private TextArea cartArea;
     @FXML
-    private TextField totalPriceTextField;
+    private Label totalPriceLabel;
     private double totalPrice = 0;
     private ArrayList<Item> itemList = new ArrayList<> ();
     private ArrayList<Integer> quantitylist = new ArrayList<>();
@@ -35,10 +36,10 @@ public class CartController implements Initializable {
 
         cartArea.appendText(String.format("%s%10s%10s%10s%10s%10s%n", "Article No." , "Game Title", "Platform", "Quantity", "Price per Item", "Price"));
 
-        SingletonCart singletonCart = new SingletonCart ();
+        CartFile cartFile = new CartFile();
         DBConnection dbConnection = new DBConnection ();
-        byte[] bytesArray = singletonCart.readerArticleNoFile ();
-        byte[] bytesArray1 = singletonCart.readerQuantityFile();
+        byte[] bytesArray = cartFile.readerArticleNoFile ();
+        byte[] bytesArray1 = cartFile.readerQuantityFile();
         ArrayList<Double> totalItemPrice = new ArrayList<>();
         for (int i = 0; i < bytesArray.length; i++) {
             Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
@@ -59,7 +60,8 @@ public class CartController implements Initializable {
             cartArea.appendText ( String.format ( "%d %-5s %d %.2f %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), quantitylist.get(i) , itemList.get ( i ).getPrice (), totalItemPrice.get(i) ) );
         }
         double theTotalPrice = calculateTotalPrice ( totalItemPrice );
-        totalPriceTextField.setText ( String.valueOf ( theTotalPrice ) );
+        totalPriceLabel.setFont(new Font("Arial Black", 33));
+        totalPriceLabel.setText ( String.format ("%.2f", theTotalPrice ) );
 
     }
 

@@ -10,13 +10,13 @@ import java.nio.file.StandardOpenOption;
 /**
  * Created by L J on 4/21/2017.
  */
-public class SingletonCart  {
+public class CartFile {
 
     //StringBuilder string = new StringBuilder ();
 
  //   ArrayList<Item> record = new ArrayList<Item> ();
 
-   // private static ArrayList<Item> datastorage;
+   // private static CartFile datastorage;
 
     //  private ArrayList<Item> itemList;
     /*
@@ -29,7 +29,7 @@ public class SingletonCart  {
     */
 
 
-     /* private SingletonCart() {
+     /* private CartFile() {
 
 
 
@@ -44,7 +44,7 @@ public class SingletonCart  {
 
     }*/
 
-    public SingletonCart() {
+    public CartFile() {
 
     }
 /*
