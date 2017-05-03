@@ -1,22 +1,23 @@
 package sample;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 
 /**
  * Created by L J on 4/21/2017.
  */
-public class SingletonCart implements Serializable {
+public class SingletonCart  {
 
     //StringBuilder string = new StringBuilder ();
 
  //   ArrayList<Item> record = new ArrayList<Item> ();
 
-    private static ArrayList<Item> datastorage;
+   // private static ArrayList<Item> datastorage;
+
     //  private ArrayList<Item> itemList;
     /*
     private ArrayList<Integer> articlenumber = null;
@@ -128,10 +129,46 @@ public class SingletonCart implements Serializable {
             e.printStackTrace ();
         }
     }
+
+    public void writerQuantityFile(int q) throws IOException {
+
+
+        try {
+            File f = new File ( "cartQuantity.bin" );
+            if (f.exists () && f.isFile ()) {
+                Path path = Paths.get ( "cartQuantity.bin" );
+                byte[] bytes = {(byte) q};
+
+                Files.write ( path, bytes, StandardOpenOption.APPEND );
+            } else {
+                Path path = Paths.get ( "cartQuantity.bin" );
+                byte[] bytes = {(byte) q};
+
+                Files.write ( path, bytes, StandardOpenOption.CREATE );
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+    }
+
 //Här hämtas filen över vilka artikelnummer som finns på föremål som ska köpas
     public byte[] readerArticleNoFile() {
         try {
             Path paths = Paths.get ( "cartArticleNo.bin" );
+            byte[] bytesRead = Files.readAllBytes ( paths );
+            return bytesRead;
+
+        } catch (IOException ex) {
+            ex.printStackTrace ();
+        }
+
+        return null;
+    }
+
+    public byte[] readerQuantityFile() {
+        try {
+            Path paths = Paths.get ( "cartQuantity.bin" );
             byte[] bytesRead = Files.readAllBytes ( paths );
             return bytesRead;
 

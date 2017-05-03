@@ -34,6 +34,8 @@ public class SearchGameController implements Initializable {
     private TextField searchfield;
     @FXML
     private TextField indexTextField;
+    @FXML
+    private TextField quantityfield;
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
@@ -41,11 +43,13 @@ public class SearchGameController implements Initializable {
     private boolean ascending = true;
 
     public void addToCart() throws IOException {
-        int articleNumber = Integer.parseInt ( indexTextField.getText () );
+        int articleNumber = Integer.parseInt ( indexTextField.getText ());
+        int quantity = Integer.parseInt(quantityfield.getText());
         SingletonCart singletonCart = new SingletonCart ();
 
         try {
             singletonCart.writerArticleNoFile ( articleNumber );
+            singletonCart.writerQuantityFile(quantity);
 
             // singletonCart.openFileInput ();
         } catch (IOException e) {

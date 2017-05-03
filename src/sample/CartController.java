@@ -27,20 +27,31 @@ public class CartController implements Initializable {
     private TextField totalPriceTextField;
     private double totalPrice = 0;
     private ArrayList<Item> itemList = new ArrayList<> ();
+    private ArrayList<Integer> quantitylist = new ArrayList<>();
+    private ArrayList<Double> totalItemPriceList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        cartArea.appendText(String.format("%s%10s%10s%10s%10s%10s%n", "Article No." , "Game Title", "Platform", "Quantity", "Price per Item", "Price"));
+
         SingletonCart singletonCart = new SingletonCart ();
         DBConnection dbConnection = new DBConnection ();
         byte[] bytesArray = singletonCart.readerArticleNoFile ();
+        byte[] bytesArray1 = singletonCart.readerQuantityFile();
         for (int i = 0; i < bytesArray.length; i++) {
             Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
             this.itemList.add ( item );
 
         }
+
+        for (int i = 0; i < bytesArray1.length; i++) {
+            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+            quantitylist.add( (int) bytesArray1[i]);
+
+        }
         for (int i = 0; i < itemList.size (); i++) {
-            cartArea.appendText ( String.format ( "%d %-5s %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), itemList.get ( i ).getPrice () ) );
+            cartArea.appendText ( String.format ( "%d %-5s %d %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), quantitylist.get(i) , itemList.get ( i ).getPrice () ) );
         }
         double theTotalPrice = calculateTotalPrice ( itemList );
         totalPriceTextField.setText ( String.valueOf ( theTotalPrice ) );
