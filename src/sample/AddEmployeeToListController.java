@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -12,7 +11,7 @@ import java.util.ResourceBundle;
 /**
  * Created by L J on 4/18/2017.
  */
-public class RegisterCustomer implements Initializable {
+public class AddEmployeeToListController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,26 +29,23 @@ public class RegisterCustomer implements Initializable {
     @FXML
     private TextField username;
     @FXML
-    private TextField registrationDate;
-
+    private TextField employementDate;
     @FXML
     private PasswordField password;
 
+
     @FXML
-    public void add(ActionEvent ae) {
+    public void add() {
         DBConnection connection = new DBConnection ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-
-
-            connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText(), email.getText (), username.getText (), password.getText () );
-
-
-
+        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employementDate.getText (),
+                email.getText (), username.getText (), password.getText () );
     }
+
     @FXML
     public void cancel() {
 

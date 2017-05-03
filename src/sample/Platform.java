@@ -5,11 +5,11 @@ package sample;
  */
 public class Platform {
 
-    private String abbreviation;
+    private String abbreviation = null;
 
-    private String fullName;
+    private String fullName = null;
 
-    private String maker;
+    private String maker = null;
 
     public Platform(String abbrivation, String fullName, String maker) {
         this.abbreviation = abbrivation;

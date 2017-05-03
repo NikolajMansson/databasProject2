@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderEmployeeToMemberController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <AnchorPane prefHeight="466.0" prefWidth="500.0">
+            <children>
+                <Button fx:id="cancelButton" layoutX="420.0" layoutY="408.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                <Button fx:id="finishSaleButton" layoutX="243.0" layoutY="408.0" mnemonicParsing="false" onAction="#addOrder" prefHeight="25.0" prefWidth="166.0" text="Go through with order" />
+                <Label layoutX="99.0" layoutY="24.0" text="Order: Employee to Member">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="dateOfOrderTextField" layoutX="198.0" layoutY="83.0" prefHeight="25.0" prefWidth="149.0" />
+                <Label layoutX="37.0" layoutY="87.0" text="Date of order:" />
+                <Label layoutX="34.0" layoutY="167.0" text="Customer username:" />
+                <Label layoutX="35.0" layoutY="126.0" text="Seller username:" />
+            <TextField fx:id="sellerTextField" layoutX="198.0" layoutY="122.0" />
+            <TextField fx:id="customerTextField" layoutX="197.0" layoutY="162.0" />
+            <TextField fx:id="bossTextField" layoutX="197.0" layoutY="202.0" />
+            <Label layoutX="37.0" layoutY="206.0" text="Boss username:" />
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>

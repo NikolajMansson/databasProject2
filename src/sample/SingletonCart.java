@@ -12,10 +12,9 @@ import java.util.ArrayList;
  */
 public class SingletonCart implements Serializable {
 
-    StringBuilder string = new StringBuilder ();
+    //StringBuilder string = new StringBuilder ();
 
-    ArrayList<Item> record = new ArrayList<Item> ();
-
+ //   ArrayList<Item> record = new ArrayList<Item> ();
 
     private static ArrayList<Item> datastorage;
     //  private ArrayList<Item> itemList;
@@ -107,19 +106,19 @@ public class SingletonCart implements Serializable {
     }
     */
 
-
-    public void writer(int articleNo) throws IOException {
+//Här sparas artikelnumret på vad som ska köpas
+    public void writerArticleNoFile(int articleNo) throws IOException {
 
 
         try {
-            File f = new File ( "cart3.bin" );
+            File f = new File ( "cartArticleNo.bin" );
             if (f.exists () && f.isFile ()) {
-                Path path = Paths.get ( "cart3.bin" );
+                Path path = Paths.get ( "cartArticleNo.bin" );
                 byte[] bytes = {(byte) articleNo};
 
                 Files.write ( path, bytes, StandardOpenOption.APPEND );
             } else {
-                Path path = Paths.get ( "cart3.bin" );
+                Path path = Paths.get ( "cartArticleNo.bin" );
                 byte[] bytes = {(byte) articleNo};
 
                 Files.write ( path, bytes, StandardOpenOption.CREATE );
@@ -129,18 +128,17 @@ public class SingletonCart implements Serializable {
             e.printStackTrace ();
         }
     }
-        public byte[] readAccountNumbers() {
-            try {
-                Path paths = Paths.get ( "cart3.bin" );
-                byte[] bytesRead = Files.readAllBytes ( paths );
-                return bytesRead;
+//Här hämtas filen över vilka artikelnummer som finns på föremål som ska köpas
+    public byte[] readerArticleNoFile() {
+        try {
+            Path paths = Paths.get ( "cartArticleNo.bin" );
+            byte[] bytesRead = Files.readAllBytes ( paths );
+            return bytesRead;
 
-            } catch (IOException ex) {
-                ex.printStackTrace ();
-            }
-
-            return null;
-
-
+        } catch (IOException ex) {
+            ex.printStackTrace ();
         }
+
+        return null;
     }
+}

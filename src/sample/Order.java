@@ -1,35 +1,58 @@
 package sample;
 
-import java.util.Date;
-
 public class Order extends Cart {
 
-    private Integer orderNumber;
+    private int orderNumber = 0;
 
-    private CustomerAccount userID;
+    private Boss bossUserName = null;
 
-    private Double totalPrice;
+    private EmployeeAccount employeeAccountUserName = null;
 
-    private Integer totalQuantityItems;
+    private BossAccount bossAccountUserName = null;
 
-    private EmployeeAccount employeeSSN;
+    private int dateOfOrder = 0;
 
-    private Date dateOfOrder;
+    private Cart cart = null;
 
-    private Cart cart;
-
-    public Order(int orderNumber, EmployeeAccount employeeSSN, Date dateOfOrder, Cart cart) {
+    public Order(int orderNumber, int dateOfOrder, Cart cart) {
         setOrderNumber ( orderNumber );
-        setEmployeeSSN ( employeeSSN );
         setDateOfOrder ( dateOfOrder );
         setCart ( cart );
     }
-    public Order(int orderNumber, CustomerAccount userID, EmployeeAccount employeeSSN, Date dateOfOrder, Cart cart) {
-        setUserID ( userID );
+
+    public Order(int orderNumber, EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, Cart cart) {
         setOrderNumber ( orderNumber );
-        setEmployeeSSN ( employeeSSN );
         setDateOfOrder ( dateOfOrder );
+        setEmployeeAccountUserName ( employeeAccountUserName );
+        setBossUserName ( bossUserName );
         setCart ( cart );
+    }
+
+    public Order(int orderNumber, BossAccount bossAccountUserName, int dateOfOrder, Cart cart) {
+        setOrderNumber ( orderNumber );
+        setDateOfOrder ( dateOfOrder );
+        setBossAccountUserName ( bossAccountUserName );
+        setCart ( cart );
+    }
+
+    public Boss getBossUserName() {
+        return bossUserName;
+    }
+
+    public void setBossUserName(Boss bossUserName) {
+        this.bossUserName = bossUserName;
+    }
+
+    public BossAccount getBossAccountUserName() {
+        return bossAccountUserName;
+    }
+
+    public void setBossAccountUserName(BossAccount bossAccountUserName) {
+        this.bossAccountUserName = bossAccountUserName;
+    }
+
+    public void setDateOfOrder(int dateOfOrder) {
+        this.dateOfOrder = dateOfOrder;
     }
 
     public Integer getOrderNumber() {
@@ -40,44 +63,16 @@ public class Order extends Cart {
         this.orderNumber = orderNumber;
     }
 
-    public CustomerAccount getUserID() {
-        return userID;
+    public EmployeeAccount getEmployeeAccountUserName() {
+        return employeeAccountUserName;
     }
 
-    public void setUserID(CustomerAccount userID) {
-        this.userID = userID;
+    public void setEmployeeAccountUserName(EmployeeAccount employeeAccountUserName) {
+        this.employeeAccountUserName = employeeAccountUserName;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Integer getTotalQuantityItems() {
-        return totalQuantityItems;
-    }
-
-    public void setTotalQuantityItems(Integer totalQuantityItems) {
-        this.totalQuantityItems = totalQuantityItems;
-    }
-
-    public EmployeeAccount getEmployeeSSN() {
-        return employeeSSN;
-    }
-
-    public void setEmployeeSSN(EmployeeAccount employeeSSN) {
-        this.employeeSSN = employeeSSN;
-    }
-
-    public Date getDateOfOrder() {
+    public int getDateOfOrder() {
         return dateOfOrder;
-    }
-
-    public void setDateOfOrder(Date dateOfOrder) {
-        this.dateOfOrder = dateOfOrder;
     }
 
     public Cart getCart() {
@@ -87,4 +82,6 @@ public class Order extends Cart {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+
+
 }

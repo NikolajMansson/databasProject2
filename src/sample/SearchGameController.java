@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -19,12 +20,14 @@ import java.util.ResourceBundle;
 /**
  * Created by L J on 4/21/2017.
  */
-public class SearchController implements Initializable{
+public class SearchGameController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
+    @FXML
+    Button removeGameButton;
     @FXML
     private TextArea view;
     @FXML
@@ -34,85 +37,83 @@ public class SearchController implements Initializable{
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
-    ;
-    SearchStatus searchControll;
+    SearchStatus searchControll = SearchStatus.TITLE;
     private boolean ascending = true;
 
-
-
-
     public void addToCart() throws IOException {
-        int articleNumber = Integer.parseInt ( indexTextField.getText() );
-        DBConnection dbconnection = new DBConnection ();
-
+        int articleNumber = Integer.parseInt ( indexTextField.getText () );
         SingletonCart singletonCart = new SingletonCart ();
 
         try {
-            singletonCart.writer (articleNumber );
+            singletonCart.writerArticleNoFile ( articleNumber );
 
-           // singletonCart.openFileInput ();
+            // singletonCart.openFileInput ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
 
+    }
+@FXML
+    public void removeGame(ActionEvent ae) {
+        DBConnection dbConnection = new DBConnection ();
+        String title = indexTextField.getText ();
+        dbConnection.removeGame ( title );
+
 
     }
-
-    public void setGameTitleRadioButton() {
+@FXML
+    public void setGameTitleRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.TITLE;
     }
-
-    public void setDeveloperRadioButton() {
+    @FXML
+    public void setDeveloperRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.DEVELOPER;
     }
-
-    public void setPlatformRadioButton() {
+    @FXML
+    public void setPlatformRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.PLATFORM;
     }
-
-    public void setAscendingOrderRadioButton() {
+    @FXML
+    public void setAscendingOrderRadioButton(ActionEvent ae) {
         this.ascending = true;
     }
-
-    public void setDescendingOrderRadioButton() {
+    @FXML
+    public void setDescendingOrderRadioButton(ActionEvent ae) {
         this.ascending = false;
     }
 
 
     public void search() {
 
-        DBConnection dbConnection = new DBConnection ();
-        ArrayList<SearchResultItem> searchItemList;
+        DBConnection connection = new DBConnection ();
+        ArrayList<SearchResultItem> searchItemList = null;
+
         if (searchfield.getText ().equals ( "" )) {
-            searchItemList = dbConnection.getItemDefaultSearch ( ascending );
+            searchItemList = connection.getItemDefaultSearch ( ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
 
             // view.appendText ();
         } else if (searchControll == SearchStatus.TITLE) {
-            searchItemList = dbConnection.getItemTitleSearch ( searchfield.getText (), ascending );
+            searchItemList = connection.getItemTitleSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
 
         } else if (searchControll == SearchStatus.PLATFORM) {
-            searchItemList = dbConnection.getItemPlatformSearch ( searchfield.getText (), ascending );
+            searchItemList = connection.getItemPlatformSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
 
         } else if (searchControll == SearchStatus.DEVELOPER) {
-            searchItemList = dbConnection.getItemDeveloperSearch ( searchfield.getText (), ascending );
+            searchItemList = connection.getItemDeveloperSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
-
         }
-
-
     }
-
 
     public void viewCart(ActionEvent ae) throws IOException {
         Node node = (Node) ae.getSource ();

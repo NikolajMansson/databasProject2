@@ -6,11 +6,11 @@ import java.io.Serializable;
 /**
  *
  */
-public class Item extends Game implements Serializable  {
+public class Item extends Game implements Serializable {
 
-    private String gameTitle;
+    private String gameTitle = null;
 
-    private double price;
+    private double price = 0;
 
     private int articleNumber = 0;
 
@@ -18,18 +18,16 @@ public class Item extends Game implements Serializable  {
 
     private int releaseDate = 0;
 
+    String platformAbbreviation = null;
 
 
-    String platformAbbreviation;
-
-
-    public Item(int articleNumber, String platformAbbreviation, double price, int amountOfItems, String title, int releaseDate ) {
-        super ( title);
+    public Item(int articleNumber, String platformAbbreviation, double price, int amountOfItems, String title, int releaseDate) {
+        super ( title );
         setArticleNumber ( articleNumber );
-        setPlatformAbbreviation(platformAbbreviation);
-        setPrice(price);
+        setPlatformAbbreviation ( platformAbbreviation );
+        setPrice ( price );
         setAmountOfItems ( amountOfItems );
-        setGameTitle (title);
+        setGameTitle ( title );
         setRealeaseDate ( releaseDate );
 
     }
@@ -44,19 +42,19 @@ public class Item extends Game implements Serializable  {
         this.gameTitle = gameTitle;
     }
 
-    public void setAmountOfItems(int amountOfItems){
+    public void setAmountOfItems(int amountOfItems) {
         this.amountOfItems = amountOfItems;
     }
 
-    public int getAmountOfItems(){
+    public int getAmountOfItems() {
         return amountOfItems;
     }
 
-    public void setRealeaseDate(int releaseDate){
+    public void setRealeaseDate(int releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public int getReleaseDate(){
+    public int getReleaseDate() {
         return releaseDate;
     }
 
@@ -84,7 +82,7 @@ public class Item extends Game implements Serializable  {
         return price;
     }
 
-    public String getPlatformAbbreviation(){
+    public String getPlatformAbbreviation() {
         return platformAbbreviation;
     }
 

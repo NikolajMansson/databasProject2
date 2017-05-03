@@ -3,27 +3,22 @@ package sample;
 /**
  * Created by Nikolaj on 2017-04-25.
  */
-public class Person {
-    private int SSN;
+public abstract class Person {
+    private int SSN = 0;
 
-    private String firstName;
+    private String firstName = null;
 
-    private String surname;
+    private String surname = null;
 
-    private Account account;
 
-    public Person(){
+    public Person() {
 
     }
-    public Person(int SSN, String firstName, String surname, Account account){
-        setSSN(SSN);
+
+    public Person(int SSN, String firstName, String surname) {
+        setSSN ( SSN );
         setFirstName ( firstName );
         setSurname ( surname );
-        setAccount(account);
-        this.SSN = SSN;
-        this.firstName = firstName;
-        this.surname = surname;
-        this.account = account;
     }
 
     public void setSSN(int SSN) {
@@ -55,11 +50,4 @@ public class Person {
         return surname;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

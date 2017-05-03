@@ -1,13 +1,11 @@
 package sample;
 
-import java.util.ArrayList;
-
 public class Cart {
     public Cart() {
     }
-
+/*
     private ArrayList<Item> itemList;
-
+*/
     /*
     private ArrayList<Game> itemId;
 
@@ -29,16 +27,18 @@ public class Cart {
     public void removeItemFromCart(Item item) {
         // TODO implement here
     }
-
+/*
     public void finishSale() {
         // TODO implement here
     }
-
+*/
+/*
     public Double calculateTotalPrice(ArrayList<Item> item) {
         // TODO implement here
         return null;
     }
-
+*/
+/*
     public double getPricePerItem() {
         // TODO implement here
         return Double.parseDouble ( null );
@@ -48,9 +48,10 @@ public class Cart {
         // TODO implement here
         return null;
     }
-
+*/
+/*
     public void sendOrderToDB(Order order) {
         //Lägg till metod i DB för att lägga in en order
     }
-
+*/
 }

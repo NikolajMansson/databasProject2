@@ -2,13 +2,16 @@ package sample;
 
 import java.io.Serializable;
 
-public abstract class Account implements Serializable  {
+public abstract class Account implements Serializable {
 
 
+    private String userName = null;
 
-    private String userName;
+    private String password = null;
 
-    private String password;
+    public Account(String userName) {
+        setUserName ( userName );
+    }
 
     public Account(String userName, String password) {
         setUserName ( userName );
@@ -16,9 +19,10 @@ public abstract class Account implements Serializable  {
     }
 
 
-    public void setUserName(String userName){
+    public void setUserName(String userName) {
         this.userName = userName;
     }
+
     public void setPassword(String password) {
 
         this.password = password;

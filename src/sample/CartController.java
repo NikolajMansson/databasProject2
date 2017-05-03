@@ -25,25 +25,25 @@ public class CartController implements Initializable {
     private TextArea cartArea;
     @FXML
     private TextField totalPriceTextField;
-private double totalPrice = 0;
-    private ArrayList<Item> itemList = new ArrayList<> (  );
+    private double totalPrice = 0;
+    private ArrayList<Item> itemList = new ArrayList<> ();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         SingletonCart singletonCart = new SingletonCart ();
         DBConnection dbConnection = new DBConnection ();
-        byte[] bytesArray = singletonCart.readAccountNumbers ( );
-        for(int i = 0; i < bytesArray.length; i++){
-            //System.out.println((int)bytesArray[i]);
-            Item item = dbConnection.getSalesItem ( (int)bytesArray[i] );
-            this.itemList.add(item);
+        byte[] bytesArray = singletonCart.readerArticleNoFile ();
+        for (int i = 0; i < bytesArray.length; i++) {
+            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+            this.itemList.add ( item );
 
         }
         for (int i = 0; i < itemList.size (); i++) {
-            cartArea.appendText ( String.format("%d %-5s %.2f%n", itemList.get(i).getArticleNumber (), itemList.get(i).getGameTitle (), itemList.get(i).getPrice ()) );
+            cartArea.appendText ( String.format ( "%d %-5s %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), itemList.get ( i ).getPrice () ) );
         }
         double theTotalPrice = calculateTotalPrice ( itemList );
-        totalPriceTextField.setText( String.valueOf ( theTotalPrice ) );
+        totalPriceTextField.setText ( String.valueOf ( theTotalPrice ) );
 
     }
 
@@ -78,18 +78,30 @@ private double totalPrice = 0;
     public void removeItem() {
 
 
+    }
+@FXML
+    public void buy(ActionEvent ae) {
+    Node node = (Node) ae.getSource ();
+    Stage stage = (Stage) node.getScene ().getWindow ();
 
+    FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderOptions.fxml" ) );
+    Parent root = null;
+    try {
+        root = loader.load ();
+    } catch (IOException e) {
+        e.printStackTrace ();
     }
 
-    public void buy() {
-
-    }
-
-    public double calculateTotalPrice(ArrayList<Item> itemList){
+    stage.setScene ( new Scene ( root ) );
 
 
-        for(int i = 0; i < itemList.size (); i++){
-            double itemPrice = itemList.get(i).getPrice ();
+}
+
+    public double calculateTotalPrice(ArrayList<Item> itemList) {
+
+
+        for (int i = 0; i < itemList.size (); i++) {
+            double itemPrice = itemList.get ( i ).getPrice ();
             this.totalPrice = totalPrice + itemPrice;
         }
         return totalPrice;

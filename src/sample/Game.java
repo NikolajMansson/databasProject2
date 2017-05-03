@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private String gameTitle;
+    private String gameTitle = null;
 
-    private String genre;
+    private String genre = null;
 
-    private String developer;
+    private String developer = null;
 
-    private String descriptionOfPlot;
+    private String descriptionOfPlot = null;
 
     private ArrayList<Platform> platformList = new ArrayList<> ();
 
 
     public Game(String gameTitle) {
-        setGameTitle (gameTitle);
+        setGameTitle ( gameTitle );
     }
 
     public void setGameTitle(String gameTitle) {

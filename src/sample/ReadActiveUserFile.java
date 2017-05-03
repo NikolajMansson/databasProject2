@@ -12,7 +12,7 @@ import java.nio.file.Paths;
  * Created by Nikolaj on 2017-02-20.
  */
 public class ReadActiveUserFile implements Serializable {
-    private static ObjectInputStream input;
+    private static ObjectInputStream input = null;
 
 
     public static void openFile() {
