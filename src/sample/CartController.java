@@ -39,9 +39,14 @@ public class CartController implements Initializable {
         DBConnection dbConnection = new DBConnection ();
         byte[] bytesArray = singletonCart.readerArticleNoFile ();
         byte[] bytesArray1 = singletonCart.readerQuantityFile();
+        ArrayList<Double> totalItemPrice = new ArrayList<>();
         for (int i = 0; i < bytesArray.length; i++) {
             Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
             this.itemList.add ( item );
+            int quantity = bytesArray1[i];
+            quantitylist.add(quantity);
+            totalItemPrice.add(item.getPrice ()*quantity);
+
 
         }
 
@@ -51,9 +56,9 @@ public class CartController implements Initializable {
 
         }
         for (int i = 0; i < itemList.size (); i++) {
-            cartArea.appendText ( String.format ( "%d %-5s %d %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), quantitylist.get(i) , itemList.get ( i ).getPrice () ) );
+            cartArea.appendText ( String.format ( "%d %-5s %d %.2f %.2f%n", itemList.get ( i ).getArticleNumber (), itemList.get ( i ).getGameTitle (), quantitylist.get(i) , itemList.get ( i ).getPrice (), totalItemPrice.get(i) ) );
         }
-        double theTotalPrice = calculateTotalPrice ( itemList );
+        double theTotalPrice = calculateTotalPrice ( totalItemPrice );
         totalPriceTextField.setText ( String.valueOf ( theTotalPrice ) );
 
     }
@@ -108,11 +113,11 @@ public class CartController implements Initializable {
 
 }
 
-    public double calculateTotalPrice(ArrayList<Item> itemList) {
+    public double calculateTotalPrice(ArrayList<Double> totalItemPriceList) {
 
 
-        for (int i = 0; i < itemList.size (); i++) {
-            double itemPrice = itemList.get ( i ).getPrice ();
+        for (int i = 0; i < totalItemPriceList.size (); i++) {
+            double itemPrice = totalItemPriceList.get ( i );
             this.totalPrice = totalPrice + itemPrice;
         }
         return totalPrice;

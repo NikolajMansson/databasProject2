@@ -49,9 +49,13 @@ public class SearchGameController implements Initializable {
 
         try {
             singletonCart.writerArticleNoFile ( articleNumber );
-            singletonCart.writerQuantityFile(quantity);
 
             // singletonCart.openFileInput ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+        try {
+        singletonCart.writerQuantityFile(quantity);
         } catch (IOException e) {
             e.printStackTrace ();
         }
