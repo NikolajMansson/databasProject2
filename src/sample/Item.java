@@ -1,12 +1,10 @@
 package sample;
 
 
-import java.io.Serializable;
-
 /**
  *
  */
-public class Item extends Game implements Serializable {
+public class Item extends Game {
 
     private String gameTitle = null;
 
@@ -18,8 +16,7 @@ public class Item extends Game implements Serializable {
 
     private int releaseDate = 0;
 
-    String platformAbbreviation = null;
-
+    private String platformAbbreviation = null;
 
     public Item(int articleNumber, String platformAbbreviation, double price, int amountOfItems, String title, int releaseDate) {
         super ( title );
@@ -85,6 +82,4 @@ public class Item extends Game implements Serializable {
     public String getPlatformAbbreviation() {
         return platformAbbreviation;
     }
-
-
 }

@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 public abstract class Account implements Serializable {
 
-
     private String userName = null;
-
     private String password = null;
 
     public Account(String userName) {
@@ -18,7 +16,6 @@ public abstract class Account implements Serializable {
         setPassword ( password );
     }
 
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -28,7 +25,6 @@ public abstract class Account implements Serializable {
         this.password = password;
     }
 
-
     public String getUserName() {
         return userName;
     }
@@ -36,5 +32,4 @@ public abstract class Account implements Serializable {
     public String getPassword() {
         return password;
     }
-
 }

@@ -20,12 +20,12 @@ import java.util.ResourceBundle;
 /**
  * Created by L J on 4/21/2017.
  */
-public class SearchGameController implements Initializable {
+public class SearchGameBossController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
+    CartFile cartFile = new CartFile ();
     @FXML
     Button removeGameButton;
     @FXML
@@ -35,68 +35,75 @@ public class SearchGameController implements Initializable {
     @FXML
     private TextField indexTextField;
     @FXML
-    private TextField quantityfield;
+    private TextField gameTitleTextField;
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
-    SearchStatus searchControll = SearchStatus.TITLE;
+    private SearchStatus searchControll = SearchStatus.TITLE;
     private boolean ascending = true;
 
-    public void addToCart() throws IOException {
-        int articleNumber = Integer.parseInt ( indexTextField.getText ());
-        int quantity = Integer.parseInt(quantityfield.getText());
-        CartFile cartFile = new CartFile();
+    @FXML
+    public void cancel(ActionEvent ae) {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
 
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        Parent root = null;
         try {
-            cartFile.writerArticleNoFile ( articleNumber );
-
-            // cartFile.openFileInput ();
+            root = loader.load ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
-        try {
-        cartFile.writerQuantityFile(quantity);
-        } catch (IOException e) {
-            e.printStackTrace ();
-        }
+
+        Scene scene = new Scene ( root );
+        stage.setScene ( scene );
+    }
+
+    public void addToCart() {
+        int articleNumber = Integer.parseInt ( indexTextField.getText () );
+
+            cartFile.writerArticleNumberFile ( articleNumber);
 
     }
-@FXML
+
+    @FXML
     public void removeGame(ActionEvent ae) {
-        DBConnection dbConnection = new DBConnection ();
-        String title = indexTextField.getText ();
+        SetGameInfoQueries dbConnection = new SetGameInfoQueries ();
+        String title = gameTitleTextField.getText ();
         dbConnection.removeGame ( title );
-
-
     }
-@FXML
+
+    @FXML
     public void setGameTitleRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.TITLE;
     }
+
     @FXML
     public void setDeveloperRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.DEVELOPER;
     }
+
     @FXML
     public void setPlatformRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.PLATFORM;
     }
+
     @FXML
     public void setAscendingOrderRadioButton(ActionEvent ae) {
         this.ascending = true;
     }
+
     @FXML
     public void setDescendingOrderRadioButton(ActionEvent ae) {
         this.ascending = false;
     }
 
-
+    @FXML
     public void search() {
-
-        DBConnection connection = new DBConnection ();
+        ItemSearchQueries connection = new ItemSearchQueries ();
         ArrayList<SearchResultItem> searchItemList = null;
 
-        view.appendText(String.format("%s %-15s %-15s %-15s %-15s %n", "Article No.     ", "Game Title", "Platform", "Developer", "Price"));
+        view.appendText ( String.format ( "%s %-15s %-15s %-15s %-15s %n", "Article No.     ", "Game Title", "Platform", "Developer", "Price" ) );
 
         if (searchfield.getText ().equals ( "" )) {
             searchItemList = connection.getItemDefaultSearch ( ascending );
@@ -105,7 +112,6 @@ public class SearchGameController implements Initializable {
                 view.appendText ( String.format ( "%d %-5s %-15s %-15s %.2f %n", searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getDeveloper (), searchItemList.get ( i ).getPrice () ) );
             }
 
-            // view.appendText ();
         } else if (searchControll == SearchStatus.TITLE) {
             searchItemList = connection.getItemTitleSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchItemList.size (); i++) {
@@ -126,16 +132,19 @@ public class SearchGameController implements Initializable {
         }
     }
 
-    public void viewCart(ActionEvent ae) throws IOException {
+    public void viewCart(ActionEvent ae){
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
         FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCart.fxml" ) );
-        Parent root = loader.load ();
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
         Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
-
-
 }

@@ -2,12 +2,18 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -41,8 +47,6 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
     }
 
     @FXML
-    private TextArea view;
-    @FXML
     private TextField searchfield;
     @FXML
     private TextField indexTextField;
@@ -55,8 +59,8 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
 
     private enum SearchStatus {BOSS, EMPLOYEE}
 
-    TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
-    SearchStatus searchStatusControll = SearchStatus.BOSS;
+    private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
+    private SearchStatus searchStatusControll = SearchStatus.BOSS;
     private boolean ascending = true;
 
     @FXML
@@ -96,52 +100,68 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
 
     @FXML
     public void search(ActionEvent ae) {
-
-        DBConnection connection = new DBConnection ();
+        SalesSearchQueries connection = new SalesSearchQueries ();
         ArrayList<Employee> searchEmployeeList = null;
         ArrayList<Boss> searchBossList = null;
 
         if (searchfield.getText ().equals ( "" )) {
             searchBossList = connection.getBossDefaultSalesSearch ( ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN)&&(searchStatusControll == SearchStatus.EMPLOYEE)) {
             searchEmployeeList = connection.getEmployeeSalesSSNSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME)&&(searchStatusControll == SearchStatus.EMPLOYEE)) {
             searchEmployeeList = connection.getEmployeeSalesUserNameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)&&(searchStatusControll == SearchStatus.EMPLOYEE)) {
             searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN) && (searchStatusControll == SearchStatus.BOSS)) {
             searchBossList = connection.getBossSalesSSNSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME) &&(searchStatusControll == SearchStatus.BOSS)) {
             searchBossList = connection.getBossSalesUserNameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)&&(searchStatusControll == SearchStatus.BOSS)) {
             searchBossList = connection.getBossSalesSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
             }
         }
+    }
+
+    @FXML
+    public void cancel(ActionEvent ae){
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
     }
 }

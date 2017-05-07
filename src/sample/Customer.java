@@ -18,12 +18,12 @@ public class Customer extends Person {
     }
 
     public Customer(int SSN, String firstName, String surName, String email, String userName) {
-        this.SSN = SSN;
-        this.firstName = firstName;
-        this.surName = surName;
-        this.email = email;
+        setSSN(SSN);
+        setFirstName(firstName);
+        setSurName(surName);
+        setEmail(email);
         CustomerAccount customerAccount = new CustomerAccount ( userName );
-        this.customerAccount = customerAccount;
+        setCustomerAccount(customerAccount);
     }
 
     @Override

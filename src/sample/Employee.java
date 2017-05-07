@@ -4,27 +4,23 @@ package sample;
  * Created by Nikolaj on 2017-04-29.
  */
 public class Employee extends Person {
-    private static int SSN = 0;
-    private String firstName = null;
-    private String surName = null;
     private int employmentDate = 0;
-    private static int gamesSold = 0;
-    private static double income = 0;
+    private int gamesSold = 0;
+    private double income = 0;
     private String email = null;
     private EmployeeAccount employeeAccount = null;
-    private Boss supervisor = null;
 
 
     public Employee() {
     }
 
-    public Employee(int SSN, String firstName, String surName, String email, String userName) {
-        this.SSN = SSN;
-        this.firstName = firstName;
-        this.surName = surName;
-        this.email = email;
+    public Employee(int SSN, String firstName, String surname, String email, String userName) {
+        setSSN(SSN);
+        setFirstName(firstName);
+        setSurname ( surname );
+        setEmail(email);
         EmployeeAccount employeeAccount = new EmployeeAccount ( userName );
-        this.employeeAccount = employeeAccount;
+        setEmployeeAccount(employeeAccount);
     }
     public Employee(String firstName, String surName, int employmentDate, int gamesSold, double income, String userName) {
         setFirstName ( firstName );
@@ -36,23 +32,7 @@ public class Employee extends Person {
         setEmployeeAccount ( employeeAccount );
     }
 
-    @Override
-    public String getFirstName() {
-        return firstName;
-    }
 
-    @Override
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
-    }
 
     public EmployeeAccount getEmployeeAccount() {
         return employeeAccount;
@@ -70,20 +50,20 @@ public class Employee extends Person {
         this.employmentDate = employmentDate;
     }
 
-    public static int getGamesSold() {
+    public int getGamesSold() {
         return gamesSold;
     }
 
-    public static void setGamesSold(int gamesSold) {
-        Employee.gamesSold = gamesSold;
+    public void setGamesSold(int gamesSold) {
+        this.gamesSold = gamesSold;
     }
 
-    public static double getIncome() {
+    public double getIncome() {
         return income;
     }
 
-    public static void setIncome(double income) {
-        Employee.income = income;
+    public void setIncome(double income) {
+        this.income = income;
     }
 
     public String getEmail() {
@@ -94,13 +74,6 @@ public class Employee extends Person {
         this.email = email;
     }
 
-    public Boss getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(Boss supervisor) {
-        this.supervisor = supervisor;
-    }
 }
 
 

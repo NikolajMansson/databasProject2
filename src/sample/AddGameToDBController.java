@@ -18,11 +18,7 @@ import java.util.ResourceBundle;
 /**
  * Created by L J on 4/18/2017.
  */
-public class AddGameToListController implements Initializable {
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+public class AddGameToDBController implements Initializable {
 
     @FXML
     private TextField gameTitle;
@@ -33,37 +29,51 @@ public class AddGameToListController implements Initializable {
     @FXML
     private TextArea description;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
+    }
     @FXML
-    public void add(ActionEvent ae) throws IOException {
-        DBConnection connection = new DBConnection ();
+    public void addGame(ActionEvent ae) {
+        SetGameInfoQueries connection = new SetGameInfoQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
+        connection.close ();
     }
 
     @FXML
-    public void addItemToListScene(ActionEvent ae) throws IOException {
+    public void addItemToListScene(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddGameToStock.fxml" ) );
-        Parent root = loader.load ();
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneAddItemToStock.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
     }
 
     @FXML
-    public void cancel(ActionEvent ae) throws IOException {
+    public void cancel(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
         FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
-        Parent root = loader.load ();
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );

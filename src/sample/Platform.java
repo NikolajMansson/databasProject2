@@ -6,14 +6,16 @@ package sample;
 public class Platform {
 
     private String abbreviation = null;
-
     private String fullName = null;
-
     private String maker = null;
 
     public Platform(String abbrivation, String fullName, String maker) {
-        this.abbreviation = abbrivation;
-        this.fullName = fullName;
+        setAbbreviation(abbrivation);
+        setFullName(fullName);
+        setMaker(maker);
+    }
+
+    public void setMaker(String maker) {
         this.maker = maker;
     }
 

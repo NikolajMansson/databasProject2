@@ -1,17 +1,24 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Created by L J on 4/18/2017.
  */
-public class AddEmployeeToListController implements Initializable {
+public class AddEmployeeToDBController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,7 +43,7 @@ public class AddEmployeeToListController implements Initializable {
 
     @FXML
     public void add() {
-        DBConnection connection = new DBConnection ();
+        EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
@@ -47,8 +54,20 @@ public class AddEmployeeToListController implements Initializable {
     }
 
     @FXML
-    public void cancel() {
+    public void cancel(ActionEvent ae) {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
 
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+        Scene scene = new Scene ( root, 500, 300 );
+        stage.setScene ( scene );
     }
 
 

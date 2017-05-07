@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddGameToListController">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddGameToDBController">
     <columnConstraints>
         <ColumnConstraints/>
     </columnConstraints>
@@ -23,7 +23,7 @@
             <children>
                 <Button fx:id="cancel" layoutX="420.0" layoutY="408.0" mnemonicParsing="false" onAction="#cancel"
                         text="Cancel"/>
-                <Button fx:id="add" layoutX="329.0" layoutY="408.0" mnemonicParsing="false" onAction="#add"
+                <Button fx:id="add" layoutX="329.0" layoutY="408.0" mnemonicParsing="false" onAction="#addGame"
                         prefHeight="25.0" prefWidth="76.0" text="Add game"/>
                 <Label layoutX="159.0" layoutY="23.0" text="Add Game to List">
                     <font>

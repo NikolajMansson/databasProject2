@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CartController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CartController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -19,9 +20,9 @@
     <children>
         <AnchorPane prefHeight="403.0" prefWidth="681.0">
             <children>
-                <Button layoutX="43.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" />
-                <Button fx:id="buyButton" layoutX="394.0" layoutY="340.0" mnemonicParsing="false" onAction="#buy" prefHeight="25.0" prefWidth="87.0" text="Buy" />
-                <Button layoutX="227.0" layoutY="340.0" mnemonicParsing="false" onAction="#removeItem" text="Remove Item" />
+                <Button layoutX="21.0" layoutY="340.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="87.0" text="Back" />
+                <Button fx:id="buyButton" layoutX="457.0" layoutY="340.0" mnemonicParsing="false" onAction="#buy" prefHeight="25.0" prefWidth="87.0" text="Buy" />
+                <Button fx:id="removeButton" layoutX="348.0" layoutY="340.0" mnemonicParsing="false" onAction="#removeItem" text="Remove Item" />
                 <Button layoutX="570.0" layoutY="340.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="87.0" text="Cancel" />
                 <TextArea fx:id="cartArea" layoutX="30.0" layoutY="107.0" prefHeight="164.0" prefWidth="635.0" />
                 <Label fx:id="totalRedLabel" layoutX="54.0" layoutY="285.0" prefHeight="50.0" prefWidth="153.0" text="TOTAL :" textFill="RED">
@@ -45,6 +46,7 @@
                     </font>
                 </Label>
             <Label fx:id="totalPriceLabel" layoutX="492.0" layoutY="302.0" />
+            <TextField fx:id="removeIndexTextLabel" layoutX="171.0" layoutY="340.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter item index to remove" />
             </children>
         </AnchorPane>
     </children>

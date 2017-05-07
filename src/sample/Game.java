@@ -3,6 +3,9 @@ package sample;
 import java.util.ArrayList;
 
 public class Game {
+    public Game(String gameTitle) {
+        setGameTitle ( gameTitle );
+    }
 
     private String gameTitle = null;
 
@@ -13,11 +16,6 @@ public class Game {
     private String descriptionOfPlot = null;
 
     private ArrayList<Platform> platformList = new ArrayList<> ();
-
-
-    public Game(String gameTitle) {
-        setGameTitle ( gameTitle );
-    }
 
     public void setGameTitle(String gameTitle) {
         this.gameTitle = gameTitle;
@@ -62,6 +60,4 @@ public class Game {
     public String getDescriptionOfPlot() {
         return descriptionOfPlot;
     }
-
-
 }

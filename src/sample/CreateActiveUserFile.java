@@ -14,12 +14,13 @@ public class CreateActiveUserFile implements Serializable {
     private static ObjectOutputStream output;
 
     public void startUpload(Account account) {
+
         openFile ();
         addRecords ( account );
         closeFile ();
     }
 
-    public static void openFile() {
+    public void openFile() {
         try {
             output = new ObjectOutputStream (
                     Files.newOutputStream ( Paths.get ( "accounts.ser" ) )
@@ -30,18 +31,17 @@ public class CreateActiveUserFile implements Serializable {
         }
     }
 
-    public static void addRecords(Account record) {
+    public void addRecords(Account account) {
         try {
-            output.writeObject ( record );
+            output.writeObject ( account );
         } catch (NoSuchElementException elementException) {
             System.err.println ( "Invalid input. Please try again" );
         } catch (IOException ioException) {
             System.err.println ( "Error writing to file. Terminating" );
-
         }
     }
 
-    public static void closeFile() {
+    public void closeFile() {
         try {
             if (output != null) {
                 output.close ();

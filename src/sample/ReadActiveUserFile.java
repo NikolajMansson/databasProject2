@@ -14,8 +14,7 @@ import java.nio.file.Paths;
 public class ReadActiveUserFile implements Serializable {
     private static ObjectInputStream input = null;
 
-
-    public static void openFile() {
+    public void openFile() {
         try {
             input = new ObjectInputStream ( Files.newInputStream ( Paths.get ( "accounts.ser" ) ) );
         } catch (IOException ioException) {
@@ -25,7 +24,7 @@ public class ReadActiveUserFile implements Serializable {
         }
     }
 
-    public static Account readRecords() {
+    public Account readRecords() {
 
         try {
             while (true) {
@@ -43,7 +42,7 @@ public class ReadActiveUserFile implements Serializable {
         return null;
     }
 
-    public static void closeFile() {
+    public void closeFile() {
         try {
             if (input != null) {
                 input.close ();

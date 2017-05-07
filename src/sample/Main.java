@@ -6,15 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
-    public static CreateActiveUserFile createActiveUserFile = new CreateActiveUserFile ();
+    private CreateActiveUserFile createActiveUserFile = new CreateActiveUserFile ();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load ( getClass ().getResource ( "sceneSearchFromGameLibrary.fxml" ) );
+        Parent root = FXMLLoader.load ( getClass ().getResource ( "sceneLogin.fxml" ) );
         primaryStage.setTitle ( "Game Store Shopping" );
         primaryStage.setScene ( new Scene ( root, 500, 300 ) );
         primaryStage.show ();
@@ -25,7 +23,7 @@ public class Main extends Application {
         launch ( args );
     }
 
-    public static void setMyUser(Account account) throws IOException {
+    public void setMyUser(Account account){
 
         createActiveUserFile.startUpload ( account );
 

@@ -16,5 +16,4 @@ public class BossAccount extends EmployeeAccount implements Serializable {
         setPassword ( password );
     }
 
-
 }

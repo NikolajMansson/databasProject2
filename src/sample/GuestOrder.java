@@ -1,23 +1,24 @@
 package sample;
 
+import java.util.ArrayList;
+
 /**
  * Created by Nikolaj on 2017-04-29.
  */
 public class GuestOrder extends Order {
 
-    public GuestOrder(int orderNumber, int dateOfOrder, Cart cart) {
-        super ( orderNumber, dateOfOrder, cart );
+    public GuestOrder(int dateOfOrder, ArrayList<Item> itemList) {
+        super ( dateOfOrder, itemList );
     }
 
-    public GuestOrder(int orderNumber, EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, Cart cart) {
-        super ( orderNumber, dateOfOrder, cart );
-        setEmployeeAccountUserName ( employeeAccountUserName );
-        setBossUserName ( bossUserName );
+    public GuestOrder(EmployeeAccount employeeUserName, int dateOfOrder, BossAccount bossUserName, ArrayList<Item> itemList) {
+        super ( dateOfOrder, itemList);
+        setEmployeeAccountUserName ( employeeUserName );
+        setBossAccountUserName ( bossUserName );
     }
 
-    public GuestOrder(int orderNumber, BossAccount bossAccountUserName, int dateOfOrder, Cart cart) {
-        super ( orderNumber, dateOfOrder, cart );
+    public GuestOrder(BossAccount bossAccountUserName, int dateOfOrder, ArrayList<Item> itemList) {
+        super ( dateOfOrder, itemList);
         setBossAccountUserName ( bossAccountUserName );
     }
-
 }

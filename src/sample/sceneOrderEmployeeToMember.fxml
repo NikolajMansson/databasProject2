@@ -29,8 +29,6 @@
                 <TextField fx:id="dateOfOrderTextField" layoutX="198.0" layoutY="83.0" prefHeight="25.0" prefWidth="149.0" />
                 <Label layoutX="37.0" layoutY="87.0" text="Date of order:" />
                 <Label layoutX="34.0" layoutY="167.0" text="Customer username:" />
-                <Label layoutX="35.0" layoutY="126.0" text="Seller username:" />
-            <TextField fx:id="sellerTextField" layoutX="198.0" layoutY="122.0" />
             <TextField fx:id="customerTextField" layoutX="197.0" layoutY="162.0" />
             <TextField fx:id="bossTextField" layoutX="197.0" layoutY="202.0" />
             <Label layoutX="37.0" layoutY="206.0" text="Boss username:" />

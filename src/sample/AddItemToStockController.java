@@ -15,28 +15,27 @@ import java.io.IOException;
 /**
  * Created by Nikolaj on 2017-04-19.
  */
-public class AddItemToListController {
+public class AddItemToStockController {
     @FXML
-    Button cancel;
+    public Button cancel;
     @FXML
-    Button addItemButton;
+    public Button addItemButton;
     @FXML
-    TextField gameTitle;
+    private TextField gameTitle;
     @FXML
-    TextField fullNameOfPlatform;
+    private TextField fullNameOfPlatform;
     @FXML
-    TextField priceTextField;
+    private TextField priceTextField;
     @FXML
-    TextField abbreviationTextField;
+    private TextField abbreviationTextField;
     @FXML
-    TextField makerOfPlatform;
+    private TextField makerOfPlatform;
     @FXML
-    TextField amountOfItemsTextField;
-
+    private TextField amountOfItemsTextField;
 
     @FXML
     public void add(ActionEvent ae) {
-        DBConnection connection = new DBConnection ();
+        SetGameInfoQueries connection = new SetGameInfoQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
@@ -44,15 +43,21 @@ public class AddItemToListController {
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addPlatformToList ( abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText () );
         connection.addItemToList ( abbreviationTextField.getText (), priceTextField.getText (), amountOfItemsTextField.getText (), gameTitle.getText () );
+        connection.close ();
     }
 
     @FXML
-    public void cancel(ActionEvent ae) throws IOException {
+    public void cancel(ActionEvent ae){
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
         FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
-        Parent root = loader.load ();
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );

@@ -5,11 +5,8 @@ package sample;
  */
 public abstract class Person {
     private int SSN = 0;
-
     private String firstName = null;
-
     private String surname = null;
-
 
     public Person() {
 
@@ -22,17 +19,14 @@ public abstract class Person {
     }
 
     public void setSSN(int SSN) {
-
         this.SSN = SSN;
     }
 
     public void setFirstName(String firstName) {
-
         this.firstName = firstName;
     }
 
     public void setSurname(String surName) {
-
         this.surname = surName;
     }
 
@@ -41,13 +35,10 @@ public abstract class Person {
     }
 
     public String getFirstName() {
-
         return firstName;
     }
 
     public String getSurname() {
-
         return surname;
     }
-
 }

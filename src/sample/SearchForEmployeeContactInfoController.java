@@ -2,12 +2,18 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,48 +23,42 @@ import java.util.ResourceBundle;
  */
 public class SearchForEmployeeContactInfoController implements Initializable {
     @FXML
-    Button search;
+    public Button search;
     @FXML
-    Button cancelButton;
+    public Button cancelButton;
     @FXML
-    Button logOutButton;
+    public RadioButton ssnRadioButton;
     @FXML
-    RadioButton ssnRadioButton;
+    public RadioButton surnameRadioButton;
     @FXML
-    RadioButton surnameRadioButton;
+    public RadioButton usernameRadioButton;
     @FXML
-    RadioButton usernameRadioButton;
+    public RadioButton ascendingOrderRadioButton;
     @FXML
-    RadioButton ascendingOrderRadioButton;
+    public RadioButton descendingOrderRadioButton;
     @FXML
-    RadioButton descendingOrderRadioButton;
+    public TextArea viewTextArea;
     @FXML
-    TextArea viewTextArea;
+    public Button removeEmployeeButton;
     @FXML
-    TextField removeEmployeeTextField;
+    private TextField searchfield;
     @FXML
-    Button removeEmployeeButton;
+    public TextField removeEmployeeTextField;
+    @FXML
+    public RadioButton bossRadioButton;
+    @FXML
+    public RadioButton regularEmployeeRadioButton;
 
+    private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
+    private enum SearchStatus {BOSS, EMPLOYEE}
+    private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
+    private SearchStatus searchStatusControll = SearchStatus.BOSS;
+    private boolean ascending = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
-    @FXML
-    private TextArea view;
-    @FXML
-    private TextField searchfield;
-    @FXML
-    private TextField indexTextField;
-
-    private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
-
-    private enum SearchStatus {BOSS, EMPLOYEE}
-
-    TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
-    SearchStatus searchStatusControll = SearchStatus.BOSS;
-    private boolean ascending = true;
 
     @FXML
     public void setSSNRadioButton(ActionEvent ae) {
@@ -97,73 +97,73 @@ public class SearchForEmployeeContactInfoController implements Initializable {
 
     @FXML
     public void removeEmployee(ActionEvent ae) {
-        DBConnection connection = new DBConnection ();
-        String userName = indexTextField.getText ();
+        EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
+        String userName = removeEmployeeTextField.getText ();
         connection.removeEmployee ( userName );
-
     }
-
-    @FXML
-    public void removeBoss(ActionEvent ae) {
-        DBConnection connection = new DBConnection ();
-        String userName = indexTextField.getText ();
-        connection.removeBoss ( userName );
-
-    }
-
-    @FXML
-    private RadioButton bossRadioButton;
-    @FXML
-    private RadioButton regularEmployeeRadioButton;
 
     @FXML
     public void search() {
-
-        DBConnection connection = new DBConnection ();
+        ContactSearchQueries connection = new ContactSearchQueries ();
         ArrayList<Employee> searchEmployeeList = null;
         ArrayList<Boss> searchBossList = null;
 
         if (searchfield.getText ().equals ( "" )) {
             searchBossList = connection.getBossDefaultContactSearch ( ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN  && searchStatusControll == SearchStatus.EMPLOYEE) {
             searchEmployeeList = connection.getEmployeeContactSSNSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME && searchStatusControll == SearchStatus.EMPLOYEE) {
             searchEmployeeList = connection.getEmployeeContactUserNameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME && searchStatusControll == SearchStatus.EMPLOYEE) {
             searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurName (), searchEmployeeList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN && searchStatusControll == SearchStatus.BOSS) {
             searchBossList = connection.getBossContactSSNSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME && searchStatusControll == SearchStatus.BOSS) {
             searchBossList = connection.getBossContactUserNameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME && searchStatusControll == SearchStatus.BOSS) {
             searchBossList = connection.getBossContactSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchBossList.size (); i++) {
-                view.appendText ( String.format ( "%d %-5s %-15s %-15s %n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
             }
         }
+    }
+    public void cancel(ActionEvent ae) {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+        Scene scene = new Scene ( root );
+        stage.setScene ( scene );
     }
 }

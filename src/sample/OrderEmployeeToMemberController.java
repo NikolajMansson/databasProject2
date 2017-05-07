@@ -21,19 +21,20 @@ import java.util.ResourceBundle;
  */
 public class OrderEmployeeToMemberController implements Initializable {
     @FXML
-    Button cancelButton;
+    public Button cancelButton;
     @FXML
-    Button finishSaleButton;
+    public Button finishSaleButton;
     @FXML
-    TextField dateOfOrderTextField;
+    private TextField dateOfOrderTextField;
     @FXML
-    TextField sellerTextField;
+    private TextField sellerTextField;
     @FXML
-    TextField bossTextField;
+    private TextField bossTextField;
     @FXML
-    TextField customerTextField;
-    ArrayList<Item> itemList = new ArrayList<> ();
+    private TextField customerTextField;
 
+    private ArrayList<Item> itemList = new ArrayList<> ();
+    int quantity = 0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -41,27 +42,46 @@ public class OrderEmployeeToMemberController implements Initializable {
 
     @FXML
     public void addOrder(ActionEvent ae) {
-        DBConnection dbConnection = new DBConnection ();
+        PerformOrderQueries connection1 = new PerformOrderQueries ();
+        SetGameInfoQueries connection2 = new SetGameInfoQueries ();
         CartFile sCart = new CartFile();
-        byte[] bytesArray = sCart.readerArticleNoFile ();
-        for (int i = 0; i < bytesArray.length; i++) {
-            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+
+        byte[] bytesArray1 = sCart.readerArticleNumberFile ();
+        for (int i = 0; i < bytesArray1.length; i++) {
+            Item item = connection1.getSalesItem ( (int) bytesArray1[i] );
             this.itemList.add ( item );
         }
 
-        //Som funktionaliteten ser ut just nu kan man endast handla ett item i taget
-        for (int i = 0; i < itemList.size (); i++) {
-            dbConnection.addRegularOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), customerTextField.getText (), sellerTextField.getText (),
-            itemList.get(i).getArticleNumber (), bossTextField.getText (), 1, itemList.get(i).getPrice ());
-            dbConnection.increaseEmployeeIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
-            dbConnection.increaseGameSoldEmployee(1, sellerTextField.getText());
-            dbConnection.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
+        byte[] bytesArray2 = sCart.readerQuantityFile ();
+        for(int i = 0; i < bytesArray2.length; i++){
+            this.quantity = quantity + (int) bytesArray2[i];
         }
+
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = (EmployeeAccount) readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        int date = Integer.parseInt ( dateOfOrderTextField.getText() );
+        BossAccount boss = new BossAccount ( bossTextField.getText () );
+        CustomerAccount customer = new CustomerAccount ( customerTextField.getText() );
+
+        RegularCustomerOrder order = new RegularCustomerOrder ( account, date, boss, itemList, customer, quantity );
+        //I nedan text ska objektet läggas in istället för enskilda variabler
+        for (int i = 0; i < itemList.size (); i++) {
+            connection1.addRegularOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), customerTextField.getText (), sellerTextField.getText (),
+            itemList.get(i).getArticleNumber (), bossTextField.getText (), 1, itemList.get(i).getPrice ());
+            connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
+            connection1.increaseGameSoldEmployee(1, sellerTextField.getText());
+            connection2.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
+        }
+
+        sCart.cleanQuantity ();
+        sCart.cleanArticleNo ();
 
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployee.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -85,9 +105,7 @@ public class OrderEmployeeToMemberController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace ();
         }
-
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
     }
-
 }

@@ -4,12 +4,12 @@ package sample;
  * Created by Nikolaj on 2017-04-27.
  */
 public class SearchResultItem {
-    int articleNo = 0;
-    String title = null;
-    String abbreviation = null;
-    String developer = null;
-    String descriptionOfPlot = null;
-    double price = 0;
+    private int articleNo = 0;
+    private String title = null;
+    private String abbreviation = null;
+    private String developer = null;
+    private String descriptionOfPlot = null;
+    private double price = 0;
 
     public SearchResultItem(int articleNo, String title, String abbreviation, String developer, String descriptionOfPlot, double price) {
         setArticleNo ( articleNo );

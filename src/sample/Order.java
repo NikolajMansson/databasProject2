@@ -1,8 +1,8 @@
 package sample;
 
-public class Order extends Cart {
+import java.util.ArrayList;
 
-    private int orderNumber = 0;
+public abstract class Order  {
 
     private Boss bossUserName = null;
 
@@ -12,27 +12,24 @@ public class Order extends Cart {
 
     private int dateOfOrder = 0;
 
-    private Cart cart = null;
+    ArrayList<Item> itemList = new ArrayList<> (  );
 
-    public Order(int orderNumber, int dateOfOrder, Cart cart) {
-        setOrderNumber ( orderNumber );
+    public Order(int dateOfOrder, ArrayList<Item> itemList) {
         setDateOfOrder ( dateOfOrder );
-        setCart ( cart );
+        setItemList ( itemList );
     }
 
-    public Order(int orderNumber, EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, Cart cart) {
-        setOrderNumber ( orderNumber );
+    public Order(EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, ArrayList<Item> itemList) {
         setDateOfOrder ( dateOfOrder );
         setEmployeeAccountUserName ( employeeAccountUserName );
         setBossUserName ( bossUserName );
-        setCart ( cart );
+        setItemList ( itemList );
     }
 
-    public Order(int orderNumber, BossAccount bossAccountUserName, int dateOfOrder, Cart cart) {
-        setOrderNumber ( orderNumber );
+    public Order(BossAccount bossAccountUserName, int dateOfOrder, ArrayList<Item> itemList) {
         setDateOfOrder ( dateOfOrder );
         setBossAccountUserName ( bossAccountUserName );
-        setCart ( cart );
+        setItemList ( itemList );
     }
 
     public Boss getBossUserName() {
@@ -55,14 +52,6 @@ public class Order extends Cart {
         this.dateOfOrder = dateOfOrder;
     }
 
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
-    }
-
     public EmployeeAccount getEmployeeAccountUserName() {
         return employeeAccountUserName;
     }
@@ -75,13 +64,12 @@ public class Order extends Cart {
         return dateOfOrder;
     }
 
-    public Cart getCart() {
-        return cart;
+    public ArrayList<Item> getItemList() {
+        return itemList;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setItemList(ArrayList<Item> itemList) {
+        this.itemList = itemList;
     }
-
 
 }

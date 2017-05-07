@@ -20,21 +20,21 @@ import java.util.ResourceBundle;
  */
 public class OrderOptionsController implements Initializable {
     @FXML
-    Button okButton;
+    public Button okButton;
     @FXML
-    Button cancelButton;
+    public Button cancelButton;
     @FXML
-    RadioButton memberRadioButton;
+    public RadioButton memberRadioButton;
     @FXML
-    RadioButton guestRadioButton;
+    public RadioButton guestRadioButton;
     @FXML
-    RadioButton bossRadioButton;
+    public RadioButton bossRadioButton;
     @FXML
-    RadioButton regularEmployeeRadioButton;
+    public RadioButton regularEmployeeRadioButton;
     private enum EmployeeStatus {BOSS, EMPLOYEE}
     private enum CustomerStatus {MEMBER, GUEST}
-    EmployeeStatus employeeStatusControll = EmployeeStatus.BOSS;
-    CustomerStatus customerStatusControll = CustomerStatus.MEMBER;
+    private EmployeeStatus employeeStatusControll = EmployeeStatus.BOSS;
+    private CustomerStatus customerStatusControll = CustomerStatus.MEMBER;
 
     @FXML
     public void setMemberRadioButton(ActionEvent ae){
@@ -58,13 +58,18 @@ public class OrderOptionsController implements Initializable {
 
     }
     @FXML
-    public void changeScene(ActionEvent ae) throws IOException {
+    public void changeScene(ActionEvent ae) {
         if((employeeStatusControll==EmployeeStatus.BOSS)&&(customerStatusControll==CustomerStatus.GUEST)) {
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 
             FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderBossToGuest.fxml" ) );
-            Parent root = loader.load ();
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
 
             Scene scene = new Scene ( root, 500, 300 );
             stage.setScene ( scene );
@@ -74,7 +79,12 @@ public class OrderOptionsController implements Initializable {
             Stage stage = (Stage) node.getScene ().getWindow ();
 
             FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderEmployeeToGuest.fxml" ) );
-            Parent root = loader.load ();
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
 
             Scene scene = new Scene ( root, 500, 300 );
             stage.setScene ( scene );
@@ -84,7 +94,12 @@ public class OrderOptionsController implements Initializable {
             Stage stage = (Stage) node.getScene ().getWindow ();
 
             FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderBossToMember.fxml" ) );
-            Parent root = loader.load ();
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
 
             Scene scene = new Scene ( root, 500, 300 );
             stage.setScene ( scene );
@@ -94,7 +109,12 @@ public class OrderOptionsController implements Initializable {
             Stage stage = (Stage) node.getScene ().getWindow ();
 
             FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderEmployeeToMember.fxml" ) );
-            Parent root = loader.load ();
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
 
             Scene scene = new Scene ( root, 500, 300 );
             stage.setScene ( scene );

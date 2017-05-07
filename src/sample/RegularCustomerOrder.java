@@ -1,32 +1,34 @@
 package sample;
 
+import java.util.ArrayList;
+
 /**
  * Created by Nikolaj on 2017-04-29.
  */
 public class RegularCustomerOrder extends Order {
-    private Customer customerUserName = null;
+    private CustomerAccount customerUserName = null;
     private int quantity = 0;
 
-    public RegularCustomerOrder(int orderNumber, EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, Cart cart, Customer customerUserName, int quantity) {
-        super ( orderNumber, dateOfOrder, cart );
-        setEmployeeAccountUserName ( employeeAccountUserName );
-        setBossUserName ( bossUserName );
+    public RegularCustomerOrder(Account employeeAccountUserName, int dateOfOrder, BossAccount bossUserName, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+        super ( dateOfOrder, itemList );
+        setEmployeeAccountUserName ( (EmployeeAccount) employeeAccountUserName );
+        setBossAccountUserName ( bossUserName );
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
     }
 
-    public RegularCustomerOrder(int orderNumber, BossAccount bossAccountUserName, int dateOfOrder, Cart cart, Customer customerUserName, int quantity) {
-        super ( orderNumber, dateOfOrder, cart );
+    public RegularCustomerOrder(BossAccount bossAccountUserName, int dateOfOrder, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+        super (dateOfOrder, itemList);
         setBossAccountUserName ( bossAccountUserName );
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
     }
 
-    public Customer getCustomerUserName() {
+    public CustomerAccount getCustomerUserName() {
         return customerUserName;
     }
 
-    public void setCustomerUserName(Customer userName) {
+    public void setCustomerUserName(CustomerAccount userName) {
         this.customerUserName = userName;
     }
 

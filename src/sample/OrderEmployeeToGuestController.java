@@ -21,16 +21,16 @@ import java.util.ResourceBundle;
  */
 public class OrderEmployeeToGuestController implements Initializable {
     @FXML
-    Button cancelButton;
+    public Button cancelButton;
     @FXML
-    Button finishSaleButton;
+    public Button finishSaleButton;
     @FXML
-    TextField dateOfOrderTextField;
+    private TextField dateOfOrderTextField;
+
     @FXML
-    TextField sellerTextField;
-    @FXML
-    TextField bossTextField;
-    ArrayList<Item> itemList = new ArrayList<> ();
+    private TextField bossTextField;
+    private ArrayList<Item> itemList = new ArrayList<> ();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,27 +38,38 @@ public class OrderEmployeeToGuestController implements Initializable {
     }
     @FXML
     public void addOrder(ActionEvent ae) {
-        DBConnection dbConnection = new DBConnection ();
+        PerformOrderQueries connection1 = new PerformOrderQueries ();
+        SetGameInfoQueries connection2 = new SetGameInfoQueries ();
         CartFile sCart = new CartFile();
-        byte[] bytesArray = sCart.readerArticleNoFile ();
+        byte[] bytesArray = sCart.readerArticleNumberFile ();
         for (int i = 0; i < bytesArray.length; i++) {
-            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+            Item item = connection1.getSalesItem ( (int) bytesArray[i] );
             this.itemList.add ( item );
         }
 
-        //Som funktionaliteten ser ut just nu kan man endast handla ett item i taget
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        EmployeeAccount account= (EmployeeAccount) readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        BossAccount boss = new BossAccount ( bossTextField.getText () );
+
+        GuestOrder guestOrder = new GuestOrder (account, Integer.parseInt(dateOfOrderTextField.getText ()) , boss, itemList);
+
+        //I nedan text ska objektet läggas in istället för enskilda variabler
         for (int i = 0; i < itemList.size (); i++) {
-            dbConnection.addGuestOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), sellerTextField.getText (),
+            connection1.addGuestOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), account.getUserName (),
                     itemList.get(i).getArticleNumber (), bossTextField.getText (), itemList.get(i).getPrice ());
-            dbConnection.increaseEmployeeIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
-            dbConnection.increaseGameSoldEmployee (1, sellerTextField.getText());
-            dbConnection.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
+            connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), account.getUserName () );
+            connection1.increaseGameSoldEmployee (1, account.getUserName ());
+            connection2.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
         }
+        sCart.cleanArticleNo ();
+        sCart.cleanQuantity ();
 
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployee.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -86,5 +97,4 @@ public class OrderEmployeeToGuestController implements Initializable {
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
     }
-
 }

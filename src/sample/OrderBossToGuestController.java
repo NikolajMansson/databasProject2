@@ -21,47 +21,56 @@ import java.util.ResourceBundle;
  */
 public class OrderBossToGuestController implements Initializable {
     @FXML
-    Button cancelButton;
+    public Button cancelButton;
     @FXML
-    Button finishSaleButton;
+    public Button finishSaleButton;
     @FXML
-    TextField dateOfOrderTextField;
+    private TextField dateOfOrderTextField;
     @FXML
-    TextField sellerTextField;
-    ArrayList<Item> itemList = new ArrayList<> ();
+    private TextField sellerTextField;
+    private ArrayList<Item> itemList = new ArrayList<> ();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
     @FXML
     public void addOrder(ActionEvent ae) {
-        DBConnection dbConnection = new DBConnection ();
-        CartFile sCart = new CartFile();
-        byte[] bytesArray = sCart.readerArticleNoFile ();
+
+        PerformOrderQueries connection1 = new PerformOrderQueries ();
+        SetGameInfoQueries connection2 = new SetGameInfoQueries ();
+        CartFile sCart = null;
+
+            sCart = new CartFile ();
+
+        byte[] bytesArray = sCart.readerArticleNumberFile ();
         for (int i = 0; i < bytesArray.length; i++) {
-            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+            Item item = connection1.getSalesItem ( (int) bytesArray[i] );
             this.itemList.add ( item );
         }
 
         //Som funktionaliteten ser ut just nu kan man endast handla ett item i taget
         for (int i = 0; i < itemList.size (); i++) {
-            dbConnection.addGuestOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), sellerTextField.getText (),
+            connection1.addGuestOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), sellerTextField.getText (),
                     itemList.get(i).getArticleNumber (), sellerTextField.getText (), itemList.get(i).getPrice ());
-            dbConnection.increaseBossIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
-            dbConnection.increaseGameSoldBoss(1, sellerTextField.getText());
-            dbConnection.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
+            connection1.increaseBossIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
+            connection1.increaseGameSoldBoss(1, sellerTextField.getText());
+            connection2.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
         }
 
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBoss.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
         } catch (IOException e) {
             e.printStackTrace ();
         }
+
+        sCart.cleanArticleNo ();
+        sCart.cleanQuantity ();
 
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
@@ -78,7 +87,6 @@ public class OrderBossToGuestController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace ();
         }
-
         Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
     }
