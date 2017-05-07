@@ -1,99 +1,16 @@
-CREATE USER 'bossStore'@'localhost';
-
-SET PASSWORD FOR 'bossStore'@'localhost' = PASSWORD('123');
-
-
-INSERT INTO Boss(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword) 
-
-VALUES (790312, 'Elin', 'Kristiansson', 20160502, 0,0, 'elin.kristiansson@gmail.com', 'bossStore', '123');
-GRANT ALL PRIVILEGES ON * TO 'bossStore'@'localhost' WITH GRANT OPTION; 
-
-
-CREATE USER 'employee1Store'@'localhost';
-
-SET PASSWORD FOR 'employee1Store'@'localhost' = PASSWORD('123');
-INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, Boss_UserName) 
-
-VALUES (860502, 'Nicklas', 'Karlsson', 20170605, 0, 0, 'nicklas.karlsson@gmail.com', 'employee1Store', '123', (SELECT UserName FROM Boss WHERE UserName = 'bossStore'));
-
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee1Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee1Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost'; 
-
-
-
-CREATE USER 'employee2Store'@'localhost';
-
-SET PASSWORD FOR 'employee2Store'@'localhost' = PASSWORD('123');
-INSERT INTO Employees(SSN, FirstName, Surname, EmploymentDate, GamesSold, Income, Email, UserName, UserPassword, Boss_UserName) 
-
-VALUES (820412, 'Jan', 'Josefsson', 20170305, 0, 0, 'jonas.josefsson@gmail.com', 'employee3Store', '123', (SELECT UserName FROM Boss WHERE UserName = 'bossStore'));
-GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee2Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee2Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee2Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee2Store'@'localhost'; 
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee2Store'@'localhost'; 
-
-
-
-
-CREATE USER 'customer1Store'@'localhost';
-
-SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123');
-
-GRANT SELECT ON Game TO 'customer1Store'@'localhost';
-
-
-INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) 
-
-VALUES (890423, 'Sara', 'Hansson', 20170105, 'customer1Store', '123', 'sara.hansson@gmail.com');
-
-
-
-CREATE USER 'customer2Store'@'localhost';
-
-SET PASSWORD FOR 'customer2Store'@'localhost' = PASSWORD('123');
-
-GRANT SELECT ON Game TO 'customer2Store'@'localhost';
-
-INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) 
-
-VALUES (850321, 'Kristina', 'Henriksen', 20170529, 'customer2Store', '123', 'kristina.henriksen@gmail.com');
-
-
-
- 
-INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot) 
-
-VALUES ('The Wolf', 'RPG', 'Ubisoft', 'Vargjakt i Norrland');
-
-INSERT INTO Game(Title, Genre, Developer, DescriptionOfPlot) 
-
-VALUES ('NHL2016', 'Sportspel', 'EA Sports', 'Hockeyspel');
-
-INSERT INTO Platform(Abbreviation, Fullname, Developer) 
-
-VALUES ('XBOX1', 'Xbox One', 'Microsoft');
-
- UPDATE Item SET price=299.00 WHERE Game_Title='NHL2016' AND Platform_Abbreviation='XBOX1';
- UPDATE Item SET price=99.00 WHERE Game_Title='The Wolf' AND Platform_Abbreviation='XBOX1';
- 
- 
- INSERT INTO Item(Game_Title, Platform_Abbreviation, price, amountOfItems) VALUES ((SELECT Title FROM Game WHERE Title = 'NHL2016'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 219.00, 3);
-
-
-INSERT INTO Item(Game_Title, Platform_Abbreviation, price, amountOfItems) VALUES ((SELECT Title FROM Game WHERE Title = 'The Wolf'), (SELECT Abbreviation FROM Platform WHERE Abbreviation = 'XBOX1'), 219.00, 3);
-
-INSERT INTO Platform(Abbreviation, Fullname, Developer) VALUES ('PS4', 'PlayStation 4', 'Sony');
-update item set amountOfItems=2 WHERE Game_Title= 'The Wolf' and Platform_Abbreviation='XBOX1';
+insert into Boss values(840502, 'Elin', 'Karlsson', 20150102, 0, 0, 'charlie.karlsson@gmail.com', 'bossStore', '123');
+insert into Employee values(860502, 'Nikolaj', 'Mansson', 20160402, 0, 0, 'nikolaj.mansson@gmail.com', 'employee1Store', '123', 'bossStore');
+insert into Customer values(860502, 'Robert', 'Hansson', 20170203, 'customer1Store', '123', 'robert.hansson@gmail.com');
+insert into Game(Title, Genre, Developer, DescriptionOfPlot) values('Lord of the Rings', 'RPG', 'UbiSoft', 'Game about a hero');
+insert into Game(Title, Genre, Developer, DescriptionOfPlot) values('Lord of the Hero', 'RPG', 'UbiSoft', 'Game about a another hero');
+insert into Platform(Abbreviation, FullName, Developer) values ('PS2', 'PlayStation2', 'Sony');
+insert into Item(ArticleNo, Platform_Abbreviation, Price, AmountOfItems, Game_Title, ReleaseDate) values (null, (SELECT Abbreviation FROM Platform WHERE Abbreviation='PS2'), 190.00, 15, (SELECT Title FROM Game WHERE Title='Lord of the Hero'), null);
+insert into Item(ArticleNo, Platform_Abbreviation, Price, AmountOfItems, Game_Title, ReleaseDate) values (null, (SELECT Abbreviation FROM Platform WHERE Abbreviation='PS2'), 290.00, 62, (SELECT Title FROM Game WHERE Title='Lord of the Rings'), null);
+insert into guestorder(OrderNumber, DateOfOrder, Employees_UserName, Item_ArticleNo, Boss_UserName, TotalPricePerItem) values(null, 20160502, (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=6),(SELECT UserName from boss WHERE UserName='bossStore'), 200);
+insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employees_UserName, Item_ArticleNo, Boss_UserName, Quantity, TotalPricePerItem) values(null, 20160501, (SELECT UserName FROM Customer WHERE UserName='customer1Store'), (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=10),(SELECT UserName from boss WHERE UserName='bossStore'), 1, 200);
+SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE 'Ubi%' ORDER BY ArticleNo;
+SELECT * FROM Boss;
+UPDATE Boss SET Income=Income + 2.00 WHERE UserName = 'bossStore';
+UPDATE Boss SET GamesSold=GamesSold + 1 WHERE UserName = 'bossStore';
+UPDATE Employee SET Income=3.00 WHERE UserName = 'employee1Store';
+SELECT ArticleNo FROM Item;
