@@ -49,7 +49,7 @@ public class SearchGameEmployeeController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();

@@ -53,7 +53,6 @@
                 <Label layoutX="77.0" layoutY="217.0" text="Type  of employee:" />
             <TextField fx:id="removeEmployeeTextField" layoutX="22.0" layoutY="422.0" prefHeight="25.0" prefWidth="208.0" promptText="Enter username of person to remove" />
             <Button fx:id="removeEmployeeButton" layoutX="238.0" layoutY="422.0" mnemonicParsing="false" onAction="#removeEmployee" text="Remove employee" />
-            <Button fx:id="removeBossButton" layoutX="364.0" layoutY="422.0" mnemonicParsing="false" onAction="#removeBoss" text="Remove boss" />
             </children>
         </AnchorPane>
     </children>
