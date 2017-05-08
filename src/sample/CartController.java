@@ -15,8 +15,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by L J on 4/18/2017.
@@ -35,9 +39,37 @@ public class CartController implements Initializable {
     private ArrayList<Double> totalItemPriceList = new ArrayList<> ();
 
 
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    LocalDateTime date;
+
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+
+                date = LocalDateTime.now();
+
+
+                System.out.println(date.format(dtf));
+
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Timer timer = new Timer(true);
+        timer.scheduleAtFixedRate(tt,0,1000);
+
 
         cartArea.appendText ( String.format ( "%s%10s%10s%10s%10s%10s%n", "Article No.", "Game Title", "Platform", "Quantity", "Price per Item", "Price" ) );
 
