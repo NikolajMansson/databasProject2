@@ -93,7 +93,6 @@ public class EmployeeSetAccountQueries extends DBConnection{
     public void removeEmployee(String userName) {
         try {
             eraseEmployeeRegularOrder.setString ( 1, userName );
-            eraseEmployeeRegularOrder.setString ( 1, userName );
             eraseEmployeeRegularOrder.executeUpdate ();
 
             eraseEmployeeGuestOrder.setString ( 1, userName );
