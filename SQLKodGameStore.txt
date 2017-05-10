@@ -1,7 +1,5 @@
-
-insert into Boss values(840502, 'Elin', 'Karlsson', 20150102, 0, 0, 'charlie.karlsson@gmail.com', 'bossStore', '123', 1);
-
-insert into Employee values(860502, 'Nikolaj', 'Mansson', 20160402, 0, 0, 'nikolaj.mansson@gmail.com', 'employee1Store', '123', 'bossStore', 1);
+insert into Store values(null, 'Game Store Kristianstad');
+insert into Employee values(860502, 'Nikolaj', 'Mansson', 20160402, 0, 0, 'nikolaj.mansson@gmail.com', 'employee1Store', '123',  1, 1);
 
 insert into Customer values(860502, 'Robert', 'Hansson', 20170203, 'customer1Store', '123', 'robert.hansson@gmail.com');
 
@@ -11,21 +9,17 @@ insert into Game(Title, Genre, Developer, DescriptionOfPlot) values('Lord of the
 
 insert into Platform(Abbreviation, FullName, Developer) values ('PS2', 'PlayStation2', 'Sony');
 
-insert into Item(Price, AmountOfItems, ReleaseDate, Game_GameId) values (190.00, 15, null, 1);
+insert into Item(Price, ReleaseDate, Game_GameId, Store_Store_id) values (190.00, null, 1, 1);
 
-insert into Item(Price, AmountOfItems, ReleaseDate, Game_GameId) values (290.00, 62, null, 1);
+insert into Item(Price, ReleaseDate, Game_GameId, Store_Store_id) values (290.00, null, 1, 1);
 
-insert into guestorder(OrderNumber, DateOfOrder, Employees_UserName, Item_ArticleNo, Boss_UserName, TotalPricePerItem) values(null, 20160502, (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=2),(SELECT UserName from boss WHERE UserName='bossStore'), 200);
+insert into guestorder(OrderNumber, DateOfOrder, Employee_UserName, Item_ArticleNo, TotalPricePerItem) values(null, 20160502, (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=2), 200);
 
-insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employees_UserName, Item_ArticleNo, Boss_UserName, Quantity, TotalPricePerItem) values(null, 20160501, (SELECT UserName FROM Customer WHERE UserName='customer1Store'), (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=1),(SELECT UserName from boss WHERE UserName='bossStore'), 1, 200);
+insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employee_UserName, Item_ArticleNo, Quantity, TotalPricePerItem) values(null, 20160501, (SELECT UserName FROM Customer WHERE UserName='customer1Store'), (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=1), 1, 200);
 
 SELECT ArticleNo, Title, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Game_GameId=GameId AND Developer LIKE 'Ubi%' ORDER BY ArticleNo;
 
-SELECT * FROM Boss;
-
-UPDATE Boss SET Income=Income + 2.00 WHERE UserName = 'bossStore';
-
-UPDATE Boss SET GamesSold=GamesSold + 1 WHERE UserName = 'bossStore';
+UPDATE Employee SET GamesSold=GamesSold + 1 WHERE UserName = 'bossStore';
 
 UPDATE Employee SET Income=3.00 WHERE UserName = 'employee1Store';
 
