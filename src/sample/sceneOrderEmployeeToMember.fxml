@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderEmployeeToMemberController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderEmployeeToMemberController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -26,12 +26,11 @@
                         <Font size="24.0" />
                     </font>
                 </Label>
-                <TextField fx:id="dateOfOrderTextField" layoutX="198.0" layoutY="83.0" prefHeight="25.0" prefWidth="149.0" />
+                
                 <Label layoutX="37.0" layoutY="87.0" text="Date of order:" />
                 <Label layoutX="34.0" layoutY="167.0" text="Customer username:" />
             <TextField fx:id="customerTextField" layoutX="197.0" layoutY="162.0" />
-            <TextField fx:id="bossTextField" layoutX="197.0" layoutY="202.0" />
-            <Label layoutX="37.0" layoutY="206.0" text="Boss username:" />
+            <Label fx:id="dateOfOrderLabel" layoutX="197.0" layoutY="87.0" />
             </children>
         </AnchorPane>
     </children>

@@ -8,11 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -25,16 +28,19 @@ public class OrderEmployeeToGuestController implements Initializable {
     @FXML
     public Button finishSaleButton;
     @FXML
-    private TextField dateOfOrderTextField;
+    private Label dateOfOrderLabel;
 
     @FXML
     private TextField bossTextField;
     private ArrayList<Item> itemList = new ArrayList<> ();
 
+    LocalDateTime date = LocalDateTime.now();
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        dateOfOrderLabel.setText(date.format(dtf));
     }
     @FXML
     public void addOrder(ActionEvent ae) {
@@ -53,11 +59,11 @@ public class OrderEmployeeToGuestController implements Initializable {
         readActiveUserFile.closeFile ();
         BossAccount boss = new BossAccount ( bossTextField.getText () );
 
-        GuestOrder guestOrder = new GuestOrder (account, Integer.parseInt(dateOfOrderTextField.getText ()) , boss, itemList);
+        GuestOrder guestOrder = new GuestOrder (account , boss, itemList);
 
         //I nedan text ska objektet läggas in istället för enskilda variabler
         for (int i = 0; i < itemList.size (); i++) {
-            connection1.addGuestOrderToList ( Integer.parseInt ( dateOfOrderTextField.getText ()), account.getUserName (),
+            connection1.addGuestOrderToList ( Integer.parseInt ( dateOfOrderLabel.getText ()), account.getUserName (),
                     itemList.get(i).getArticleNumber (), bossTextField.getText (), itemList.get(i).getPrice ());
             connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), account.getUserName () );
             connection1.increaseGameSoldEmployee (1, account.getUserName ());

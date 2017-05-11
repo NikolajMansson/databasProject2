@@ -1,5 +1,6 @@
 package sample;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class Order  {
@@ -10,24 +11,25 @@ public abstract class Order  {
 
     private BossAccount bossAccountUserName = null;
 
-    private int dateOfOrder = 0;
+    private LocalDateTime dateOfOrder = null;
 
     ArrayList<Item> itemList = new ArrayList<> (  );
 
-    public Order(int dateOfOrder, ArrayList<Item> itemList) {
-        setDateOfOrder ( dateOfOrder );
+    public Order(ArrayList<Item> itemList) {
+        dateOfOrder = LocalDateTime.now();
         setItemList ( itemList );
     }
 
-    public Order(EmployeeAccount employeeAccountUserName, int dateOfOrder, Boss bossUserName, ArrayList<Item> itemList) {
-        setDateOfOrder ( dateOfOrder );
+    public Order(EmployeeAccount employeeAccountUserName,LocalDateTime date, Boss bossUserName, ArrayList<Item> itemList) {
+
+        setDateOfOrder(date);
         setEmployeeAccountUserName ( employeeAccountUserName );
         setBossUserName ( bossUserName );
         setItemList ( itemList );
     }
 
-    public Order(BossAccount bossAccountUserName, int dateOfOrder, ArrayList<Item> itemList) {
-        setDateOfOrder ( dateOfOrder );
+    public Order(BossAccount bossAccountUserName,  ArrayList<Item> itemList) {
+        dateOfOrder = LocalDateTime.now();
         setBossAccountUserName ( bossAccountUserName );
         setItemList ( itemList );
     }
@@ -48,7 +50,7 @@ public abstract class Order  {
         this.bossAccountUserName = bossAccountUserName;
     }
 
-    public void setDateOfOrder(int dateOfOrder) {
+    public void setDateOfOrder(LocalDateTime dateOfOrder) {
         this.dateOfOrder = dateOfOrder;
     }
 
@@ -60,7 +62,7 @@ public abstract class Order  {
         this.employeeAccountUserName = employeeAccountUserName;
     }
 
-    public int getDateOfOrder() {
+    public LocalDateTime getDateOfOrder() {
         return dateOfOrder;
     }
 

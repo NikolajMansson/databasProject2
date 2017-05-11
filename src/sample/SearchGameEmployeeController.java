@@ -25,7 +25,7 @@ public class SearchGameEmployeeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
+    CartFile cartFile = new CartFile ();
     @FXML
     Button removeGameButton;
     @FXML
@@ -35,9 +35,9 @@ public class SearchGameEmployeeController implements Initializable {
     @FXML
     private TextField indexTextField;
     @FXML
-    private TextField quantityfield;
-    @FXML
     private TextField gameTitleTextField;
+    @FXML
+    private TextField quantityTextField;
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
@@ -49,7 +49,7 @@ public class SearchGameEmployeeController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -61,13 +61,12 @@ public class SearchGameEmployeeController implements Initializable {
         stage.setScene ( scene );
     }
 
-    @FXML
     public void addToCart() {
         int articleNumber = Integer.parseInt ( indexTextField.getText () );
-        int quantity = Integer.parseInt ( quantityfield.getText () );
-        CartFile cartFile = new CartFile ();
-        cartFile.writerArticleNumberFile ( articleNumber );
-       cartFile.writerQuantityFile ( quantity );
+        int quantity = Integer.parseInt(quantityTextField.getText ());
+
+            cartFile.writerArticleNumberFile ( articleNumber);
+            cartFile.writerQuantityFile(quantity);
 
     }
 

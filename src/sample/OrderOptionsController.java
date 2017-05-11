@@ -44,14 +44,7 @@ public class OrderOptionsController implements Initializable {
     public void setGuestRadioButton(ActionEvent ae){
         this.customerStatusControll=CustomerStatus.GUEST;
     };
-    @FXML
-    public void setBossRadioButton(ActionEvent ae){
-        this.employeeStatusControll=EmployeeStatus.BOSS;
-    };
-    @FXML
-    public void setEmployeeRadioButton(ActionEvent ae){
-        this.employeeStatusControll=EmployeeStatus.EMPLOYEE;
-    };
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,22 +52,9 @@ public class OrderOptionsController implements Initializable {
     }
     @FXML
     public void changeScene(ActionEvent ae) {
-        if((employeeStatusControll==EmployeeStatus.BOSS)&&(customerStatusControll==CustomerStatus.GUEST)) {
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderBossToGuest.fxml" ) );
-            Parent root = null;
-            try {
-                root = loader.load ();
-            } catch (IOException e) {
-                e.printStackTrace ();
-            }
 
-            Scene scene = new Scene ( root, 500, 300 );
-            stage.setScene ( scene );
-        }
-        else if((employeeStatusControll==EmployeeStatus.EMPLOYEE)&&(customerStatusControll==CustomerStatus.GUEST)) {
+        if(customerStatusControll==CustomerStatus.GUEST) {
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -89,22 +69,8 @@ public class OrderOptionsController implements Initializable {
             Scene scene = new Scene ( root, 500, 300 );
             stage.setScene ( scene );
         }
-        else if((employeeStatusControll==EmployeeStatus.BOSS)&&(customerStatusControll==CustomerStatus.MEMBER)) {
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneOrderBossToMember.fxml" ) );
-            Parent root = null;
-            try {
-                root = loader.load ();
-            } catch (IOException e) {
-                e.printStackTrace ();
-            }
-
-            Scene scene = new Scene ( root, 500, 300 );
-            stage.setScene ( scene );
-        }
-        else if((employeeStatusControll==EmployeeStatus.EMPLOYEE)&&(customerStatusControll==CustomerStatus.MEMBER)){
+        else if(customerStatusControll==CustomerStatus.MEMBER){
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 

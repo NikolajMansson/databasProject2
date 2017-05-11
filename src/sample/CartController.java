@@ -42,6 +42,7 @@ public class CartController implements Initializable {
 
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd ");
+
     //HH:mm:ss
     LocalDateTime date;
 
@@ -59,9 +60,10 @@ public class CartController implements Initializable {
 
                 date = LocalDateTime.now();
 
-                System.out.println(date.format(dtf));
+                //System.out.println(date.format(dtf));
 
                 datetime.setText(String.valueOf(date.format(dtf)));
+
 
 
 

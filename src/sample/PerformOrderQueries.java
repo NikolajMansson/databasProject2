@@ -31,8 +31,6 @@ public class PerformOrderQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            increaseMoneyBoss = c.prepareStatement ( "UPDATE Boss SET Income=Income + ? WHERE UserName = ?" );
-            increaseItemsSoldBoss = c.prepareStatement ( "UPDATE Boss SET GamesSold=GamesSold + ? WHERE UserName = ?;" );
             increaseMoneyEmployee = c.prepareStatement ( "UPDATE Employee SET Income=Income + ? WHERE UserName = ?;" );
             increaseItemsSoldEmployee = c.prepareStatement ( "UPDATE Employee SET GamesSold=GamesSold + ? WHERE UserName = ?;" );
             saleToMember = c.prepareStatement ( "insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employees_UserName, Item_ArticleNo, Boss_UserName, Quantity, TotalPricePerItem) values(null, ?, (SELECT UserName FROM Customer WHERE UserName=?), (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?),(SELECT UserName from boss WHERE UserName=?), ?, ?)" );
@@ -53,27 +51,7 @@ public class PerformOrderQueries extends DBConnection{
         }
     }
 
-    public void increaseBossIncome(double price, String userName) {
-        try {
-            increaseMoneyBoss.setDouble ( 1, price );
-            increaseMoneyBoss.setString ( 2, userName );
-            increaseMoneyBoss.executeUpdate ();
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
 
-    }
-
-    public void increaseGameSoldBoss(int gamesSold, String userName) {
-        try {
-            increaseItemsSoldBoss.setInt ( 1, gamesSold );
-            increaseItemsSoldBoss.setString ( 2, userName );
-            increaseItemsSoldBoss.executeUpdate ();
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
-
-    }
 
 
     public void increaseEmployeeIncome(double price, String userName) {

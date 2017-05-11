@@ -1,5 +1,6 @@
 package sample;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -9,16 +10,16 @@ public class RegularCustomerOrder extends Order {
     private CustomerAccount customerUserName = null;
     private int quantity = 0;
 
-    public RegularCustomerOrder(Account employeeAccountUserName, int dateOfOrder, BossAccount bossUserName, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
-        super ( dateOfOrder, itemList );
+    public RegularCustomerOrder(Account employeeAccountUserName, BossAccount bossUserName, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+        super (itemList );
         setEmployeeAccountUserName ( (EmployeeAccount) employeeAccountUserName );
         setBossAccountUserName ( bossUserName );
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
     }
 
-    public RegularCustomerOrder(BossAccount bossAccountUserName, int dateOfOrder, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
-        super (dateOfOrder, itemList);
+    public RegularCustomerOrder(BossAccount bossAccountUserName, LocalDateTime dateOfOrder, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+        super ( itemList);
         setBossAccountUserName ( bossAccountUserName );
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
