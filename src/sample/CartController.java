@@ -28,6 +28,8 @@ import java.util.TimerTask;
 public class CartController implements Initializable {
 
     @FXML
+    private Label datetime;
+    @FXML
     private TextArea cartArea;
     @FXML
     private Label totalPriceLabel;
@@ -56,7 +58,8 @@ public class CartController implements Initializable {
                 date = LocalDateTime.now();
 
 
-                System.out.println(date.format(dtf));
+                datetime.setText(String.valueOf(date.format(dtf)));
+
 
 
                 try {
@@ -116,6 +119,10 @@ public class CartController implements Initializable {
 
     @FXML
     public void cancel(ActionEvent ae) {
+
+
+
+
 
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();

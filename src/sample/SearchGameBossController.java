@@ -61,8 +61,10 @@ public class SearchGameBossController implements Initializable {
 
     public void addToCart() {
         int articleNumber = Integer.parseInt ( indexTextField.getText () );
+        int quantity = Integer.parseInt()
 
             cartFile.writerArticleNumberFile ( articleNumber);
+            cartFile.writerQuantityFile();
 
     }
 

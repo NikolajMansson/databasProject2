@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CartController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CartController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -35,7 +35,7 @@
                         <Font name="Arial Black" size="33.0" />
                     </font>
                 </Label>
-                <Label layoutX="225.0" layoutY="29.0" prefHeight="36.0" prefWidth="212.0" text="My Cart">
+                <Label layoutX="307.0" layoutY="29.0" prefHeight="36.0" prefWidth="96.0" text="My Cart">
                     <font>
                         <Font size="25.0" />
                     </font>
@@ -45,8 +45,9 @@
                         <Font name="Arial Black" size="33.0" />
                     </font>
                 </Label>
-            <Label fx:id="totalPriceLabel" layoutX="492.0" layoutY="302.0" />
+
             <TextField fx:id="removeIndexTextLabel" layoutX="171.0" layoutY="340.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter item index to remove" />
+            <Label fx:id="datetime" layoutX="521.0" layoutY="39.0" prefHeight="17.0" prefWidth="37.0" text="Label" />
             </children>
         </AnchorPane>
     </children>
