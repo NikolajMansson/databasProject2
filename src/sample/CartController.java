@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +15,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by L J on 4/18/2017.
@@ -41,10 +43,7 @@ public class CartController implements Initializable {
     private ArrayList<Double> totalItemPriceList = new ArrayList<> ();
 
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd ");
 
-    //HH:mm:ss
-    LocalDateTime date;
 
 
 
@@ -53,26 +52,19 @@ public class CartController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        TimerTask tt = new TimerTask() {
-            @Override
-            public void run() {
+        Timeline tl = new Timeline(
+                new KeyFrame(Duration.seconds(0),
+                        actionEvent -> {
+                            Calendar time = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                            datetime.setText(sdf.format(time.getTime()));
+                        }
+                        ),
+                new KeyFrame(Duration.seconds(1))
+        );
 
-
-                date = LocalDateTime.now();
-
-                //System.out.println(date.format(dtf));
-
-                datetime.setText(String.valueOf(date.format(dtf)));
-
-
-
-
-
-            }
-        };
-
-        Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(tt,0,1000);
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.play();
 
 
         cartArea.appendText ( String.format ( "%s%10s%10s%10s%10s%10s%n", "Article No.", "Game Title", "Platform", "Quantity", "Price per Item", "Price" ) );
