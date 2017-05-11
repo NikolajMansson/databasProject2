@@ -36,6 +36,8 @@ public class SearchGameBossController implements Initializable {
     private TextField indexTextField;
     @FXML
     private TextField gameTitleTextField;
+    @FXML
+    private TextField quantityTextField;
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
@@ -61,10 +63,10 @@ public class SearchGameBossController implements Initializable {
 
     public void addToCart() {
         int articleNumber = Integer.parseInt ( indexTextField.getText () );
-        int quantity = Integer.parseInt()
+        int quantity = Integer.parseInt(quantityTextField.getText ());
 
             cartFile.writerArticleNumberFile ( articleNumber);
-            cartFile.writerQuantityFile();
+            cartFile.writerQuantityFile(quantity);
 
     }
 

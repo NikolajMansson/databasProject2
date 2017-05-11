@@ -49,7 +49,7 @@
                 <TextArea fx:id="view" layoutX="31.0" layoutY="247.0" prefHeight="145.0" prefWidth="561.0" />
                 <TextField fx:id="indexTextField" layoutX="154.0" layoutY="411.0" prefHeight="25.0" prefWidth="126.0" promptText="Index of item for saleIndex of item for sale" />
             <Button fx:id="removeGameButton" layoutX="312.0" layoutY="458.0" mnemonicParsing="false" onAction="#removeGame" text="Remove game" />
-            <TextField fx:id="quantityfield" layoutX="312.0" layoutY="411.0" prefHeight="25.0" prefWidth="92.0" promptText="Enter quantity" />
+            <TextField fx:id="quantityTextField" layoutX="312.0" layoutY="411.0" prefHeight="25.0" prefWidth="92.0" promptText="Enter quantity" />
             <Button fx:id="cancelButton" layoutX="511.0" layoutY="461.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             <TextField fx:id="gameTitleTextField" layoutX="133.0" layoutY="458.0" prefHeight="25.0" prefWidth="149.0" promptText="Title of game to remove" />
 
