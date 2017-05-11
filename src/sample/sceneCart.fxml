@@ -47,7 +47,7 @@
                 </Label>
 
             <TextField fx:id="removeIndexTextLabel" layoutX="171.0" layoutY="340.0" prefHeight="25.0" prefWidth="160.0" promptText="Enter item index to remove" />
-            <Label fx:id="datetime" layoutX="521.0" layoutY="39.0" prefHeight="17.0" prefWidth="37.0" text="Label" />
+            <Label fx:id="datetime" layoutX="473.0" layoutY="39.0" prefHeight="17.0" prefWidth="181.0" />
             </children>
         </AnchorPane>
     </children>

@@ -41,7 +41,8 @@ public class CartController implements Initializable {
     private ArrayList<Double> totalItemPriceList = new ArrayList<> ();
 
 
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd ");
+    //HH:mm:ss
     LocalDateTime date;
 
 
@@ -55,18 +56,16 @@ public class CartController implements Initializable {
             @Override
             public void run() {
 
+
                 date = LocalDateTime.now();
 
+                System.out.println(date.format(dtf));
 
                 datetime.setText(String.valueOf(date.format(dtf)));
 
 
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
             }
         };
 
