@@ -127,7 +127,7 @@ public class LoginController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -143,7 +143,8 @@ public class LoginController implements Initializable {
         // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
         helpAlert.setContentText("If you are a customer, use the guest button." + System.getProperty("line.separator")
         + "If you have a membership, enter your username and password, then use the customer button." + System.getProperty("line.separator")
-        + "If you are an employee/boss, enter your username and password, then use the employee button.");
+        + "If you are an employee/boss, enter your username and password, then use the employee button." + System.getProperty("line.separator")
+        + "Press OK to close this window.");
         helpAlert.showAndWait();
     }
 }
