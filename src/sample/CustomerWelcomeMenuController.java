@@ -41,7 +41,7 @@ public class CustomerWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
 
     }
@@ -59,7 +59,7 @@ public class CustomerWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root, 500, 300 );
         stage.setScene ( scene );
     }
 }

@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -41,7 +42,7 @@ public class EmployeeWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -58,7 +59,7 @@ public class EmployeeWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
 
     }
@@ -76,7 +77,7 @@ public class EmployeeWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -93,7 +94,24 @@ public class EmployeeWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
+    }
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(400);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employee Welcome Menu");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Use the 'Register game to Catalog' button to add a new game." + System.getProperty("line.separator")
+                + "Use the 'Register game to Stock' to add a new copy to the store." + System.getProperty("line.separator")
+                + "Use the 'Game Search' to search for games." + System.getProperty("line.separator")
+                + "Use the 'Customer Search' to search for members." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

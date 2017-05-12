@@ -48,6 +48,12 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
 
     @FXML
     private TextField searchfield;
+    @FXML
+    private TextField indexTextField;
+    @FXML
+    private RadioButton bossRadioButton;
+    @FXML
+    private RadioButton regularEmployeeRadioButton;
 
     private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
 
@@ -96,12 +102,12 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
     public void search(ActionEvent ae) {
         SalesSearchQueries connection = new SalesSearchQueries ();
         ArrayList<Employee> searchEmployeeList = null;
-
+        ArrayList<Boss> searchBossList = null;
 
         if (searchfield.getText ().equals ( "" )) {
-            searchEmployeeList = connection.getEmployeeDefaultSalesSearch ( ascending );
-            for (int i = 0; i < searchEmployeeList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
+            searchBossList = connection.getBossDefaultSalesSearch ( ascending );
+            for (int i = 0; i < searchBossList.size (); i++) {
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
             }
 
         } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN)&&(searchStatusControll == SearchStatus.EMPLOYEE)) {
@@ -121,6 +127,24 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
             for (int i = 0; i < searchEmployeeList.size (); i++) {
                 viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
             }
+
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN) && (searchStatusControll == SearchStatus.BOSS)) {
+            searchBossList = connection.getBossSalesSSNSearch ( searchfield.getText (), ascending );
+            for (int i = 0; i < searchBossList.size (); i++) {
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+            }
+
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME) &&(searchStatusControll == SearchStatus.BOSS)) {
+            searchBossList = connection.getBossSalesUserNameSearch ( searchfield.getText (), ascending );
+            for (int i = 0; i < searchBossList.size (); i++) {
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+            }
+
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)&&(searchStatusControll == SearchStatus.BOSS)) {
+            searchBossList = connection.getBossSalesSurnameSearch ( searchfield.getText (), ascending );
+            for (int i = 0; i < searchBossList.size (); i++) {
+                viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmploymentDate (), searchBossList.get ( i ).getGamesSold (), searchBossList.get ( i ).getIncome () ) );
+            }
         }
     }
 
@@ -139,5 +163,23 @@ public class SearchForEmployeeSalesStatisticsController implements Initializable
 
         Scene scene = new Scene ( root);
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(450);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employee Search Engine");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
+                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
+                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
+                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

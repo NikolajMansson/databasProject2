@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -49,7 +50,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root);
+            Scene scene = new Scene (root);
             stage.setScene ( scene );
         }
     }
@@ -77,7 +78,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root);
+            Scene scene = new Scene ( root );
             stage.setScene ( scene );
         }
 
@@ -128,5 +129,22 @@ public class LoginController implements Initializable {
 
         Scene scene = new Scene ( root);
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(600);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the login screen");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("If you are a customer, use the guest button." + System.getProperty("line.separator")
+        + "If you have a membership, enter your username and password, then use the customer button." + System.getProperty("line.separator")
+        + "If you are an employee/boss, enter your username and password, then use the employee button." + System.getProperty("line.separator")
+        + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

@@ -44,8 +44,16 @@
                 <RadioButton fx:id="descendingOrderRadioButton" layoutX="224.0" layoutY="188.0" mnemonicParsing="false" onAction="#setDescendingOrderRadioButton" text="Descending Order" toggleGroup="$sortByAscDesc" />
                 <TextArea fx:id="viewTextArea" layoutX="70.0" layoutY="269.0" prefHeight="145.0" prefWidth="523.0" />
                 <RadioButton fx:id="usernameRadioButton" layoutX="153.0" layoutY="129.0" mnemonicParsing="false" onAction="#setUsernameRadioButton" text="Username" toggleGroup="$searchIdentification" />
-            <TextField fx:id="removeEmployeeTextField" layoutX="70.0" layoutY="422.0" prefHeight="25.0" prefWidth="208.0" promptText="Enter username of person to remove" />
-            <Button fx:id="removeEmployeeButton" layoutX="322.0" layoutY="422.0" mnemonicParsing="false" onAction="#removeEmployee" text="Remove employee" />
+                <RadioButton fx:id="bossRadioButton" layoutX="76.0" layoutY="244.0" mnemonicParsing="false" onAction="#setBossRadioButton" selected="true" text="Boss">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="typeOfEmployee" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="regularEmployeeRadioButton" layoutX="142.0" layoutY="245.0" mnemonicParsing="false" onAction="#setEmployeeRadioButton" text="Regular Employee" toggleGroup="$typeOfEmployee" />
+                <Label layoutX="77.0" layoutY="217.0" text="Type  of employee:" />
+            <TextField fx:id="removeEmployeeTextField" layoutX="22.0" layoutY="422.0" prefHeight="25.0" prefWidth="208.0" promptText="Enter username of person to remove" />
+            <Button fx:id="removeEmployeeButton" layoutX="238.0" layoutY="422.0" mnemonicParsing="false" onAction="#removeEmployee" text="Remove employee" />
+            <Button layoutX="552.0" layoutY="67.0" mnemonicParsing="false" onAction="#help" text="Help" />
             </children>
         </AnchorPane>
     </children>
