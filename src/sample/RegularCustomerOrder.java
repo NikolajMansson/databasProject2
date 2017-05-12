@@ -10,17 +10,16 @@ public class RegularCustomerOrder extends Order {
     private CustomerAccount customerUserName = null;
     private int quantity = 0;
 
-    public RegularCustomerOrder(Account employeeAccountUserName, BossAccount bossUserName, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+    public RegularCustomerOrder(Account employeeAccountUserName, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
         super (itemList );
         setEmployeeAccountUserName ( (EmployeeAccount) employeeAccountUserName );
-        setBossAccountUserName ( bossUserName );
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
     }
 
-    public RegularCustomerOrder(BossAccount bossAccountUserName, LocalDateTime dateOfOrder, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
+    public RegularCustomerOrder(LocalDateTime dateOfOrder, ArrayList<Item> itemList, CustomerAccount customerUserName, int quantity) {
         super ( itemList);
-        setBossAccountUserName ( bossAccountUserName );
+
         setCustomerUserName ( customerUserName );
         setQuantity ( quantity );
     }

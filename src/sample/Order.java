@@ -5,11 +5,10 @@ import java.util.ArrayList;
 
 public abstract class Order  {
 
-    private Boss bossUserName = null;
+    private Employee bossUserName = null;
 
     private EmployeeAccount employeeAccountUserName = null;
 
-    private BossAccount bossAccountUserName = null;
 
     private LocalDateTime dateOfOrder = null;
 
@@ -20,35 +19,22 @@ public abstract class Order  {
         setItemList ( itemList );
     }
 
-    public Order(EmployeeAccount employeeAccountUserName,LocalDateTime date, Boss bossUserName, ArrayList<Item> itemList) {
+    public Order(EmployeeAccount employeeAccountUserName,LocalDateTime date,  ArrayList<Item> itemList) {
 
         setDateOfOrder(date);
         setEmployeeAccountUserName ( employeeAccountUserName );
-        setBossUserName ( bossUserName );
+
         setItemList ( itemList );
     }
 
-    public Order(BossAccount bossAccountUserName,  ArrayList<Item> itemList) {
-        dateOfOrder = LocalDateTime.now();
-        setBossAccountUserName ( bossAccountUserName );
-        setItemList ( itemList );
-    }
-
-    public Boss getBossUserName() {
+    public Employee getBossUserName() {
         return bossUserName;
     }
 
-    public void setBossUserName(Boss bossUserName) {
+    public void setEmployeeUserName(Employee bossUserName) {
         this.bossUserName = bossUserName;
     }
 
-    public BossAccount getBossAccountUserName() {
-        return bossAccountUserName;
-    }
-
-    public void setBossAccountUserName(BossAccount bossAccountUserName) {
-        this.bossAccountUserName = bossAccountUserName;
-    }
 
     public void setDateOfOrder(LocalDateTime dateOfOrder) {
         this.dateOfOrder = dateOfOrder;

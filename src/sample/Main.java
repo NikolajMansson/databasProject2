@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load ( getClass ().getResource ("sceneSearchFromGameLibraryEmployee.fxml") );
+        Parent root = FXMLLoader.load ( getClass ().getResource ("sceneSearchForEmployeeContactInfo.fxml") );
         primaryStage.setTitle ( "Game Store Shopping" );
         primaryStage.setScene ( new Scene ( root ));
         primaryStage.show ();

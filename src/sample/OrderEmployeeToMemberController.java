@@ -55,14 +55,12 @@ public class OrderEmployeeToMemberController implements Initializable {
         CartFile sCart = new CartFile();
 
         byte[] bytesArray1 = sCart.readerArticleNumberFile ();
+        byte[] bytesArray2 = sCart.readerArticleNumberFile ();
         for (int i = 0; i < bytesArray1.length; i++) {
-            Item item = connection1.getSalesItem ( (int) bytesArray1[i] );
-            this.itemList.add ( item );
-        }
 
-        byte[] bytesArray2 = sCart.readerQuantityFile ();
-        for(int i = 0; i < bytesArray2.length; i++){
-            this.quantity = quantity + (int) bytesArray2[i];
+            Item item = connection1.getSalesItem ( (int) bytesArray1[i] );
+            item.setAmountOfItems ( (int)bytesArray2[i] );
+            this.itemList.add ( item);
         }
 
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
@@ -70,16 +68,17 @@ public class OrderEmployeeToMemberController implements Initializable {
         Account account = (EmployeeAccount) readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
 
-        BossAccount boss = new BossAccount ( bossTextField.getText () );
+
         CustomerAccount customer = new CustomerAccount ( customerTextField.getText() );
 
-        RegularCustomerOrder order = new RegularCustomerOrder ( account, boss, itemList, customer, quantity );
+        RegularCustomerOrder order = new RegularCustomerOrder ( account, itemList, customer, quantity );
         //I nedan text ska objektet läggas in istället för enskilda variabler
+
         for (int i = 0; i < itemList.size (); i++) {
-            connection1.addRegularOrderToList ( Integer.parseInt ( dateOfOrderLabel.getText ()), customerTextField.getText (), sellerTextField.getText (),
-            itemList.get(i).getArticleNumber (), bossTextField.getText (), 1, itemList.get(i).getPrice ());
-            connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), sellerTextField.getText () );
-            connection1.increaseGameSoldEmployee(1, sellerTextField.getText());
+            connection1.addRegularOrderToList ( customerTextField.getText (), account.getUserName (),
+            itemList.get(i).getArticleNumber (), itemList.get(i).getAmountOfItems (  ), itemList.get(i).getPrice ());
+            connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), account.getUserName () );
+            connection1.increaseGameSoldEmployee (1, account.getUserName ());
             connection2.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
         }
 
@@ -97,7 +96,7 @@ public class OrderEmployeeToMemberController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -113,7 +112,7 @@ public class OrderEmployeeToMemberController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace ();
         }
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 }

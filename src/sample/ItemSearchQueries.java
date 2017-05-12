@@ -30,21 +30,21 @@ public class ItemSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            defaultItemAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItems > 0 ORDER BY ArticleNo" );
+            defaultItemAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            defaultItemDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItems > 0 ORDER BY ArticleNo DESC" );
+            defaultItemDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
 
-            itemTitleAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo" );
+            itemTitleAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            itemTitleDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo DESC" );
+            itemTitleDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
 
-            itemPlatformAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo" );
+            itemPlatformAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            itemPlatformDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo DESC" );
+            itemPlatformDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
 
-            itemDeveloperAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo" );
+            itemDeveloperAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            itemDeveloperDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItems > 0 ORDER BY ArticleNo DESC" );
+            itemDeveloperDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
 
 
         } catch (SQLException ex) {

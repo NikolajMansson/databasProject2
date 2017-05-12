@@ -7,18 +7,14 @@ import java.util.ArrayList;
  */
 public class GuestOrder extends Order {
 
-    public GuestOrder( ArrayList<Item> itemList) {
+    public GuestOrder(EmployeeAccount account, ArrayList<Item> itemList) {
         super (  itemList );
     }
 
-    public GuestOrder(EmployeeAccount employeeUserName, BossAccount bossUserName, ArrayList<Item> itemList) {
-        super (  itemList);
-        setEmployeeAccountUserName ( employeeUserName );
-        setBossAccountUserName ( bossUserName );
-    }
 
-    public GuestOrder(BossAccount bossAccountUserName, ArrayList<Item> itemList) {
+
+    public GuestOrder(ArrayList<Item> itemList) {
         super ( itemList);
-        setBossAccountUserName ( bossAccountUserName );
+
     }
 }

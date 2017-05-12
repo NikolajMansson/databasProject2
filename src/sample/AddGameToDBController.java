@@ -58,7 +58,7 @@ public class AddGameToDBController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -75,7 +75,7 @@ public class AddGameToDBController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 }

@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root, 500, 300 );
+            Scene scene = new Scene ( root);
             stage.setScene ( scene );
         }
     }
@@ -77,7 +77,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root, 500, 300 );
+            Scene scene = new Scene ( root);
             stage.setScene ( scene );
         }
 
@@ -87,11 +87,11 @@ public class LoginController implements Initializable {
     public void loginAsBoss(ActionEvent ae) {
         Main main = new Main ();
 
-        BossSetAccountQueries bossSetAccountQueries = new BossSetAccountQueries ();
-        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordBoss ( loginUsername.getText (), loginPassword.getText () );
+        EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
+        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
         if (testUserIdPassword == true) {
 
-            BossAccount bossAccount = new BossAccount ( loginUsername.getText (), loginPassword.getText () );
+            EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText () );
 
             main.setMyUser ( bossAccount );
 
@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root, 500, 300 );
+            Scene scene = new Scene ( root);
             stage.setScene ( scene );
         }
 
@@ -126,7 +126,7 @@ public class LoginController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 }

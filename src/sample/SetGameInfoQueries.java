@@ -25,7 +25,7 @@ public class SetGameInfoQueries extends DBConnection{
             insertNewItem = c.prepareStatement ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, price, amountOfItems) VALUES ((SELECT Title FROM Game WHERE Title = ?), (SELECT Abbreviation FROM Platform WHERE Abbreviation = ?), ?, ?);" );
             insertNewGame = c.prepareStatement ( "INSERT INTO Game (Title, Genre, Developer, DescriptionOfPlot) VALUES (?, ?, ?, ?);" );
             insertNewPlatform = c.prepareStatement ( "INSERT INTO Platform VALUES (?, ?, ?);" );
-            decreaseItemAmount = c.prepareStatement ( "UPDATE Item SET amountOfItems=? WHERE ArticleNo = ?;" );
+            decreaseItemAmount = c.prepareStatement ( "UPDATE Item SET AmountOfItemsInStock=AmountOfItemsInStock-? WHERE ArticleNo = ?;" );
             removeGame = c.prepareStatement ( "UPDATE Item SET AmountOfItems = 0 WHERE (Game_Title = ?); " );
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );

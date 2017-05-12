@@ -3,10 +3,7 @@ package sample;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Nikolaj on 2017-05-05.
@@ -33,8 +30,8 @@ public class PerformOrderQueries extends DBConnection{
 
             increaseMoneyEmployee = c.prepareStatement ( "UPDATE Employee SET Income=Income + ? WHERE UserName = ?;" );
             increaseItemsSoldEmployee = c.prepareStatement ( "UPDATE Employee SET GamesSold=GamesSold + ? WHERE UserName = ?;" );
-            saleToMember = c.prepareStatement ( "insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employees_UserName, Item_ArticleNo, Boss_UserName, Quantity, TotalPricePerItem) values(null, ?, (SELECT UserName FROM Customer WHERE UserName=?), (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?),(SELECT UserName from boss WHERE UserName=?), ?, ?)" );
-            saleToGuest = c.prepareStatement ( "insert into guestorder(OrderNumber, DateOfOrder, Employees_UserName, Item_ArticleNo, Boss_UserName, TotalPricePerItem) VALUES(null, ?, (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?),(SELECT UserName from boss WHERE UserName=?), ?)" );
+            saleToMember = c.prepareStatement ( "insert into regularCustomerOrder(Customer_UserName, Employees_UserName, Item_ArticleNo, Quantity, TotalPricePerItem) values((SELECT UserName FROM Customer WHERE UserName=?), (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?), ?, ?);" );
+            saleToGuest = c.prepareStatement ( "insert into guestorder(Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values( (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?), ?, ?);");
             getItemBeingSold = c.prepareStatement ( "SELECT * FROM Item WHERE ArticleNo = ?;" );
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
@@ -59,7 +56,7 @@ BigDecimal value = BigDecimal.valueOf ( price );
         BigDecimal rounded = value.round(new MathContext ( 2, RoundingMode.CEILING ));
 
         try {
-            increaseMoneyEmployee.setString ( 1, String.valueOf(rounded));
+            increaseMoneyEmployee.setDouble ( 1, price);
             increaseMoneyEmployee.setString ( 2, userName );
             increaseMoneyEmployee.executeUpdate ();
         } catch (SQLException e) {
@@ -79,15 +76,13 @@ BigDecimal value = BigDecimal.valueOf ( price );
         }
     }
 
-    public void addRegularOrderToList(int dateOfOrder, String customerUserName, String employeeUserName, int itemArticleNo, String bossUserName, int quantity, double totalPricePerItem) {
+    public void addRegularOrderToList(String customerUserName, String employeeUserName, int itemArticleNo, int quantity, double totalPricePerItem) {
         try {
-            saleToMember.setInt ( 1, dateOfOrder );
-            saleToMember.setString ( 2, customerUserName );
-            saleToMember.setString ( 3, employeeUserName );
-            saleToMember.setInt ( 4, itemArticleNo );
-            saleToMember.setString ( 5, bossUserName );
-            saleToMember.setInt ( 6, quantity );
-            saleToMember.setDouble ( 7, totalPricePerItem );
+            saleToMember.setString ( 1, customerUserName );
+            saleToMember.setString ( 2, employeeUserName );
+            saleToMember.setInt ( 3, itemArticleNo );
+            saleToMember.setInt ( 4, quantity );
+            saleToMember.setDouble ( 5, totalPricePerItem );
             saleToMember.executeUpdate ();
 
         } catch (SQLException sqlException) {
@@ -96,14 +91,16 @@ BigDecimal value = BigDecimal.valueOf ( price );
 
     }
 
-    public void addGuestOrderToList(int dateOfOrder, String employeeUserName, int itemArticleNo, String bossUserName, double totalPricePerItem) {
+    public void addGuestOrderToList(String employeeUserName, int itemArticleNo, int quantity, double totalPricePerItem) {
 
         try {
-            saleToGuest.setInt ( 1, dateOfOrder );
-            saleToGuest.setString ( 2, employeeUserName );
-            saleToGuest.setInt ( 3, itemArticleNo );
-            saleToGuest.setString ( 4, bossUserName );
-            saleToGuest.setDouble ( 5, totalPricePerItem );
+
+
+            saleToGuest.setString ( 1, employeeUserName );
+            saleToGuest.setInt ( 2, itemArticleNo );
+            saleToGuest.setInt ( 3, quantity );
+            saleToGuest.setDouble ( 4, totalPricePerItem );
+            saleToGuest.executeUpdate ();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace ();

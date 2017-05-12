@@ -22,12 +22,12 @@ public class BossWelcomeMenuController implements Initializable {
     public Button employeeSearchButton;
 
     private ReadActiveUserFile readUser = new ReadActiveUserFile ();
-    private BossAccount account = new BossAccount ( "", "" );
+    private EmployeeAccount account = new EmployeeAccount ( "", "" );
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         readUser.openFile ();
-        this.account = (BossAccount) readUser.readRecords ();
+        this.account = (EmployeeAccount) readUser.readRecords ();
         readUser.closeFile ();
         welcomeLabel.setText ( "Welcome " +  account.getUserName ()  + "!" );
     }
@@ -45,7 +45,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -62,7 +62,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -79,7 +79,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -96,7 +96,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -113,7 +113,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -130,7 +130,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -147,7 +147,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -164,7 +164,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
@@ -181,7 +181,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 }

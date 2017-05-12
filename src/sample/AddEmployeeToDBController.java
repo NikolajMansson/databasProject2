@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -39,6 +40,26 @@ public class AddEmployeeToDBController implements Initializable {
     private TextField employementDate;
     @FXML
     private PasswordField password;
+    @FXML
+    public RadioButton regularEmployeeRadioButton;
+    @FXML
+    public RadioButton bossRadioButton;
+
+
+    private enum UserStatus {BOSS, REGULAREMPLOYEE}
+
+    private UserStatus userControll = UserStatus.BOSS;
+
+    @FXML
+    public void setUserControllBoss(ActionEvent ae){
+        this.userControll =  userControll.BOSS;
+
+    }
+    @FXML
+    public void setUserControllRegularEmployee(ActionEvent ae){
+        this.userControll =  userControll.REGULAREMPLOYEE;
+
+    }
 
 
     @FXML
@@ -66,7 +87,7 @@ public class AddEmployeeToDBController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
 
