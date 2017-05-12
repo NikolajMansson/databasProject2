@@ -51,6 +51,7 @@
                 </RadioButton>
                 <RadioButton fx:id="regularEmployeeRadioButton" layoutX="142.0" layoutY="245.0" mnemonicParsing="false" onAction="#setEmployeeRadioButton" text="Regular Employee" toggleGroup="$typeOfEmployee" />
                 <Label layoutX="77.0" layoutY="217.0" text="Type  of employee:" />
+            <Button layoutX="546.0" layoutY="67.0" mnemonicParsing="false" onAction="#help" text="Help" />
             </children>
         </AnchorPane>
     </children>

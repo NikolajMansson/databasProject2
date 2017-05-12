@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class SalesSearchQueries extends DBConnection{
 
-    private PreparedStatement everBossAsc;
-    private PreparedStatement everyBossDesc;
+    private PreparedStatement everyEmployeeAsc;
+    private PreparedStatement everyEmployeeDesc;
     private PreparedStatement bossUsernameAsc;
     private PreparedStatement bossUsernameDesc;
     private PreparedStatement employeeUsernameAsc;
@@ -35,9 +35,9 @@ public class SalesSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            everBossAsc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss"  );
+            everyEmployeeAsc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee"  );
 
-            everyBossDesc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss DESC" );
+            everyEmployeeDesc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee DESC" );
 
             employeeUsernameAsc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE UserName = ?");
 
@@ -68,25 +68,25 @@ public class SalesSearchQueries extends DBConnection{
 
     }
 
-    public ArrayList<Boss> getBossDefaultSalesSearch(boolean ascending) {
+    public ArrayList<Employee> getEmployeeDefaultSalesSearch(boolean ascending) {
 
-        ArrayList<Boss> results = null;
+        ArrayList<Employee> results = null;
         ResultSet resultSet = null;
 
             try {
                 if (ascending == true) {
 
-                    resultSet = everBossAsc.executeQuery ();
+                    resultSet = everyEmployeeAsc.executeQuery ();
                 } else {
 
-                    resultSet = everyBossDesc.executeQuery ();
+                    resultSet = everyEmployeeDesc.executeQuery ();
                 }
 
                 results = new ArrayList<> ();
 
                 while (resultSet.next ()) {
 
-                    results.add ( new Boss (
+                    results.add ( new Employee (
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
                             resultSet.getInt ( "EmploymentDate" ),
@@ -144,43 +144,7 @@ public class SalesSearchQueries extends DBConnection{
 
         return null;
     }
-    public ArrayList<Boss> getBossSalesUserNameSearch(String userName, boolean ascending) {
 
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
-        try {
-                if (ascending == true) {
-                    bossUsernameAsc.setString ( 1, userName );
-
-                    resultSet = bossUsernameAsc.executeQuery ();
-                } else {
-                    bossUsernameDesc.setString ( 1, userName );
-
-                    resultSet = bossUsernameDesc.executeQuery ();
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getInt ( "EmploymentDate" ),
-                            resultSet.getInt ( "GamesSold" ),
-                            resultSet.getDouble ( "Income" ),
-                            resultSet.getString ( "UserName" ) ) );
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            }finally {
-            close ();
-        }
-
-        return null;
-    }
 
     public ArrayList<Employee> getEmployeeSalesSSNSearch(String SSN, boolean ascending) {
 
@@ -221,47 +185,6 @@ public class SalesSearchQueries extends DBConnection{
         return null;
     }
 
-    public ArrayList<Boss> getBossSalesSSNSearch(String SSN, boolean ascending) {
-
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
-            try {
-                if (ascending == true) {
-
-                    bossSSNAsc.setString ( 1, SSN );
-
-                    resultSet = bossSSNAsc.executeQuery ();
-                } else {
-
-                    bossSSNDesc.setString ( 1, SSN );
-
-                    resultSet = bossSSNDesc.executeQuery ();
-
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getInt ( "EmploymentDate" ),
-                            resultSet.getInt ( "GamesSold" ),
-                            resultSet.getDouble ( "Income" ),
-                            resultSet.getString ( "UserName" ) ) );
-                }
-                return results;
-
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
-            }
-
-        return null;
-    }
     public ArrayList<Employee> getEmployeeSalesSurnameSearch(String surname, boolean ascending) {
 
         ArrayList<Employee> results = null;
@@ -300,45 +223,6 @@ public class SalesSearchQueries extends DBConnection{
         return null;
     }
 
-
-    public ArrayList<Boss> getBossSalesSurnameSearch(String surname, boolean ascending) {
-
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
-
-            try {
-                if (ascending == true) {
-
-                    bossSurnameAsc.setString ( 1, surname );
-
-                    resultSet = bossSurnameAsc.executeQuery ();
-                } else {
-                    bossSurnameDesc.setString ( 1, surname );
-
-                    resultSet = bossSurnameDesc.executeQuery ();
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getInt ( "EmploymentDate" ),
-                            resultSet.getInt ( "GamesSold" ),
-                            resultSet.getDouble ( "Income" ),
-                            resultSet.getString ( "UserName" ) ) );
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
-            }
-        return null;
-    }
 
     public void close() {
         try {

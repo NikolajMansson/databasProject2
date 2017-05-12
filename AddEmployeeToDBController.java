@@ -39,7 +39,26 @@ public class AddEmployeeToDBController implements Initializable {
     private TextField employementDate;
     @FXML
     private PasswordField password;
+    @FXML
+    public RadioButton regularEmployeeRadioButton;
+    @FXML
+    public RadioButton bossRadioButton;
 
+
+    private enum UserStatus {BOSS, REGULAREMPLOYEE}
+
+    private UserStatus userControll = UserStatus.BOSS;
+
+    @FXML
+    public void setUserControllBoss(ActionEvent ae){
+        this.userControll =  userControll.BOSS;
+
+    }
+    @FXML
+    public void setUserControllRegularEmployee(ActionEvent ae){
+        this.userControll =  userControll.REGULAREMPLOYEE;
+
+    }
 
     @FXML
     public void add() {
@@ -66,9 +85,24 @@ public class AddEmployeeToDBController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
-
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(400);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employment Menu");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Fill in all the fields with appropriate information." + System.getProperty("line.separator")
+                + "Then press the 'add' button to add the new employee to the server." + System.getProperty("line.separator")
+                + "Press the 'Cancel' button to go back." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
+    }
 
 }

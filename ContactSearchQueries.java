@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class ContactSearchQueries extends DBConnection{
 
-    private PreparedStatement everyBossAsc;
-    private PreparedStatement everyBossDesc;
+    private PreparedStatement everyEmployeeAsc;
+    private PreparedStatement everyEmployeeDesc;
     private PreparedStatement employeeUserNameAsc;
     private PreparedStatement employeeUserNameDesc;
     private PreparedStatement bossUserNameAsc;
@@ -36,9 +36,9 @@ public class ContactSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            everyBossAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Boss ORDER BY UserName " );
+            everyEmployeeAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee ORDER BY UserName " );
 
-            everyBossDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Boss ORDER BY UserName DESC" );
+            everyEmployeeDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee ORDER BY UserName DESC" );
 
             employeeUserNameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE UserName = ? ORDER BY UserName ");
 
@@ -70,22 +70,22 @@ public class ContactSearchQueries extends DBConnection{
 
     }
 
-    public ArrayList<Boss> getBossDefaultContactSearch(boolean ascending) {
+    public ArrayList<Employee> getBossDefaultContactSearch(boolean ascending) {
 
-        ArrayList<Boss> results = null;
+        ArrayList<Employee> results = null;
         ResultSet resultSet = null;
 
             try {
                 if (ascending == true) {
-                   resultSet = everyBossAsc.executeQuery ();
+                   resultSet = everyEmployeeAsc.executeQuery ();
                 } else {
-                    resultSet = everyBossDesc.executeQuery ();
+                    resultSet = everyEmployeeDesc.executeQuery ();
                 }
 
                 results = new ArrayList<> ();
 
                 while (resultSet.next ()) {
-                    results.add ( new Boss (
+                    results.add ( new Employee (
                             resultSet.getInt ( "SSN" ),
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
@@ -142,43 +142,7 @@ public class ContactSearchQueries extends DBConnection{
         return null;
     }
 
-    public ArrayList<Boss> getBossContactUserNameSearch(String userName, boolean ascending) {
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
 
-            try {
-                if (ascending == true) {
-                    bossUserNameAsc.setString ( 1, userName );
-
-                    resultSet = bossUserNameAsc.executeQuery ();
-                } else {
-                  bossUserNameDesc.setString ( 1, userName );
-
-                    resultSet = bossUserNameDesc.executeQuery ();
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getInt ( "SSN" ),
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
-                    );
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
-            }
-
-        return null;
-    }
 
     public ArrayList<Employee> getEmployeeContactSSNSearch(String SSN, boolean ascending) {
 
@@ -217,44 +181,6 @@ public class ContactSearchQueries extends DBConnection{
             }
         return null;
     }
-    public ArrayList<Boss> getBossContactSSNSearch(String SSN, boolean ascending) {
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
-            try {
-                if (ascending == true) {
-                    bossSSNAsc.setString ( 1, SSN );
-
-                    resultSet = bossSSNAsc.executeQuery ();
-                } else {
-                   bossSSNDesc.setString ( 1, SSN );
-
-                    resultSet = bossSSNDesc.executeQuery ();
-
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getInt ( "SSN" ),
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
-                    );
-
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
-            }
-
-        return null;
-    }
 
 
     public ArrayList<Employee> getEmployeeContactSurnameSearch(String surname, boolean ascending) {
@@ -291,45 +217,6 @@ public class ContactSearchQueries extends DBConnection{
             } finally {
             close ();
         }
-
-        return null;
-    }
-
-    public ArrayList<Boss> getBossContactSurnameSearch(String surname, boolean ascending) {
-        ArrayList<Boss> results = null;
-        ResultSet resultSet = null;
-            try {
-                if (ascending == true) {
-
-                    bossSurnameAsc.setString ( 1, surname );
-
-                    resultSet = bossSurnameAsc.executeQuery ();
-                } else {
-                   bossSurnameDesc.setString ( 1, surname );
-
-                    resultSet = bossSurnameDesc.executeQuery ();
-
-                }
-
-                results = new ArrayList<> ();
-
-                while (resultSet.next ()) {
-
-                    results.add ( new Boss (
-                            resultSet.getInt ( "SSN" ),
-                            resultSet.getString ( "FirstName" ),
-                            resultSet.getString ( "Surname" ),
-                            resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
-                    );
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
-            }
 
         return null;
     }

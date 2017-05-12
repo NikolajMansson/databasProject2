@@ -27,13 +27,9 @@ public class OrderOptionsController implements Initializable {
     public RadioButton memberRadioButton;
     @FXML
     public RadioButton guestRadioButton;
-    @FXML
-    public RadioButton bossRadioButton;
-    @FXML
-    public RadioButton regularEmployeeRadioButton;
-    private enum EmployeeStatus {BOSS, EMPLOYEE}
+
     private enum CustomerStatus {MEMBER, GUEST}
-    private EmployeeStatus employeeStatusControll = EmployeeStatus.BOSS;
+
     private CustomerStatus customerStatusControll = CustomerStatus.MEMBER;
 
     @FXML
@@ -66,7 +62,7 @@ public class OrderOptionsController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root, 500, 300 );
+            Scene scene = new Scene ( root);
             stage.setScene ( scene );
         }
 
@@ -82,7 +78,7 @@ public class OrderOptionsController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root, 500, 300 );
+            Scene scene = new Scene ( root);
             stage.setScene ( scene );
         }
     }

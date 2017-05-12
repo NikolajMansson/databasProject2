@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -106,12 +103,12 @@ public class SearchForEmployeeContactInfoController implements Initializable {
     public void search() {
         ContactSearchQueries connection = new ContactSearchQueries ();
         ArrayList<Employee> searchEmployeeList = null;
-        ArrayList<Boss> searchBossList = null;
+
 
         if (searchfield.getText ().equals ( "" )) {
-            searchBossList = connection.getBossDefaultContactSearch ( ascending );
-            for (int i = 0; i < searchBossList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
+            searchEmployeeList = connection.getBossDefaultContactSearch ( ascending );
+            for (int i = 0; i < searchEmployeeList.size (); i++) {
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
         } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN  && searchStatusControll == SearchStatus.EMPLOYEE) {
@@ -129,25 +126,7 @@ public class SearchForEmployeeContactInfoController implements Initializable {
         } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME && searchStatusControll == SearchStatus.EMPLOYEE) {
             searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
-            }
-
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN && searchStatusControll == SearchStatus.BOSS) {
-            searchBossList = connection.getBossContactSSNSearch ( searchfield.getText (), ascending );
-            for (int i = 0; i < searchBossList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
-            }
-
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME && searchStatusControll == SearchStatus.BOSS) {
-            searchBossList = connection.getBossContactUserNameSearch ( searchfield.getText (), ascending );
-            for (int i = 0; i < searchBossList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
-            }
-
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME && searchStatusControll == SearchStatus.BOSS) {
-            searchBossList = connection.getBossContactSurnameSearch ( searchfield.getText (), ascending );
-            for (int i = 0; i < searchBossList.size (); i++) {
-                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchBossList.get ( i ).getSSN (), searchBossList.get ( i ).getFirstName (), searchBossList.get ( i ).getSurName (), searchBossList.get ( i ).getEmail (), searchBossList.get(i).getBossAccount ().getUserName () ) );
+                viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get ( i ).getEmployeeAccount ().getUserName () ) );
             }
         }
     }
@@ -165,5 +144,23 @@ public class SearchForEmployeeContactInfoController implements Initializable {
 
         Scene scene = new Scene ( root );
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(450);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employee Search Engine");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
+                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
+                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
+                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }
