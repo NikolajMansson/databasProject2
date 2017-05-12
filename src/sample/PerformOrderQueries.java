@@ -30,7 +30,7 @@ public class PerformOrderQueries extends DBConnection{
 
             increaseMoneyEmployee = c.prepareStatement ( "UPDATE Employee SET Income=Income + ? WHERE UserName = ?;" );
             increaseItemsSoldEmployee = c.prepareStatement ( "UPDATE Employee SET GamesSold=GamesSold + ? WHERE UserName = ?;" );
-            saleToMember = c.prepareStatement ( "insert into regularCustomerOrder(Customer_UserName, Employees_UserName, Item_ArticleNo, Quantity, TotalPricePerItem) values((SELECT UserName FROM Customer WHERE UserName=?), (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?),(SELECT UserName from boss WHERE UserName=?), ?, ?)" );
+            saleToMember = c.prepareStatement ( "insert into regularCustomerOrder(Customer_UserName, Employees_UserName, Item_ArticleNo, Quantity, TotalPricePerItem) values((SELECT UserName FROM Customer WHERE UserName=?), (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?), ?, ?);" );
             saleToGuest = c.prepareStatement ( "insert into guestorder(Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values( (SELECT UserName FROM Employee WHERE UserName=?), (SELECT ArticleNo from Item where ArticleNo=?), ?, ?);");
             getItemBeingSold = c.prepareStatement ( "SELECT * FROM Item WHERE ArticleNo = ?;" );
         } catch (SQLException ex) {
@@ -76,15 +76,13 @@ BigDecimal value = BigDecimal.valueOf ( price );
         }
     }
 
-    public void addRegularOrderToList(int dateOfOrder, String customerUserName, String employeeUserName, int itemArticleNo, String bossUserName, int quantity, double totalPricePerItem) {
+    public void addRegularOrderToList(String customerUserName, String employeeUserName, int itemArticleNo, int quantity, double totalPricePerItem) {
         try {
-            saleToMember.setInt ( 1, dateOfOrder );
-            saleToMember.setString ( 2, customerUserName );
-            saleToMember.setString ( 3, employeeUserName );
-            saleToMember.setInt ( 4, itemArticleNo );
-            saleToMember.setString ( 5, bossUserName );
-            saleToMember.setInt ( 6, quantity );
-            saleToMember.setDouble ( 7, totalPricePerItem );
+            saleToMember.setString ( 1, customerUserName );
+            saleToMember.setString ( 2, employeeUserName );
+            saleToMember.setInt ( 3, itemArticleNo );
+            saleToMember.setInt ( 4, quantity );
+            saleToMember.setDouble ( 5, totalPricePerItem );
             saleToMember.executeUpdate ();
 
         } catch (SQLException sqlException) {
