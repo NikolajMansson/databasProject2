@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SearchForEmployeeSalesStatisticsController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SearchForEmployeeSalesStatisticsController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -51,6 +51,7 @@
                 </RadioButton>
                 <RadioButton fx:id="regularEmployeeRadioButton" layoutX="142.0" layoutY="245.0" mnemonicParsing="false" onAction="#setEmployeeRadioButton" text="Regular Employee" toggleGroup="$typeOfEmployee" />
                 <Label layoutX="77.0" layoutY="217.0" text="Type  of employee:" />
+            <Button layoutX="546.0" layoutY="67.0" mnemonicParsing="false" onAction="#help" text="Help" />
             </children>
         </AnchorPane>
     </children>

@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -150,5 +151,22 @@ public class SearchGameEmployeeController implements Initializable {
 
         Scene scene = new Scene ( root );
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(420);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Game Search Engine");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Select which category you want to use (Game Title, Developer, Platform)." + System.getProperty("line.separator")
+                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
+                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

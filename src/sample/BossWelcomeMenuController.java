@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -62,7 +63,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -79,7 +80,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -96,7 +97,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -113,7 +114,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -130,7 +131,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -147,7 +148,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -164,7 +165,7 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
@@ -181,7 +182,29 @@ public class BossWelcomeMenuController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(420);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Boss Welcome Menu");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Use the 'Hire Employee' button to add a new employee." + System.getProperty("line.separator")
+                + "Use the 'Register Customer' button to add a new membership." + System.getProperty("line.separator")
+                + "Use the 'Register game to Catalog' button to add a new game." + System.getProperty("line.separator")
+                + "Use the 'Register game to Stock' to add a new copy to the store." + System.getProperty("line.separator")
+                + "Use the 'Customer Search' to search for members." + System.getProperty("line.separator")
+                + "Use the 'Game Search' to search for games." + System.getProperty("line.separator")
+                + "Use the 'Search for Employee Contact Info' to look up employees." + System.getProperty("line.separator")
+                + "Use the 'Search for Employee Sales Statictics' to see how sales are going." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

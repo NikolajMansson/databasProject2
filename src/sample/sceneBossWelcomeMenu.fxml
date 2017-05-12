@@ -8,12 +8,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BossWelcomeMenuController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BossWelcomeMenuController">
     <children>
         <AnchorPane prefHeight="300.0" prefWidth="500.0">
             <children>
                 <Button layoutX="429.0" layoutY="261.0" mnemonicParsing="false" onAction="#returnToLogin" text="Log out" />
-                <Label fx:id="welcomeLabel" layoutX="170.0" layoutY="14.0" text="Welcome Boss!">
+                <Label fx:id="welcomeLabel" layoutX="167.0" layoutY="14.0" text="Welcome Boss!">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -26,6 +26,7 @@
                 <Button fx:id="employeeSearchButton" layoutX="45.0" layoutY="209.0" mnemonicParsing="false" onAction="#searchEmployeeContactInfo" text="Search for Employee Contact Info" />
                 <Button fx:id="gameSearchButton" layoutX="337.0" layoutY="175.0" mnemonicParsing="false" onAction="#searchGames" text="Game Search" />
             <Button fx:id="salesStatisticsButton" layoutX="42.0" layoutY="249.0" mnemonicParsing="false" onAction="#viewSalesStatistics" text="Search for Employee Sales Statistics" />
+            <Button layoutX="435.0" layoutY="19.0" mnemonicParsing="false" onAction="#help" text="Help" />
             </children>
         </AnchorPane>
     </children>

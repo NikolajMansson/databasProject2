@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -165,5 +162,23 @@ public class SearchForEmployeeContactInfoController implements Initializable {
 
         Scene scene = new Scene ( root );
         stage.setScene ( scene );
+    }
+
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(450);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employee Search Engine");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
+                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
+                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
+                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

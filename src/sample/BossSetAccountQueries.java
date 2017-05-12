@@ -24,7 +24,7 @@ public class BossSetAccountQueries extends DBConnection {
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            searchForPasswordBoss = c.prepareStatement ( "SELECT UserPassword FROM Boss WHERE UserName = ?" );
+            searchForPasswordBoss = c.prepareStatement ( "SELECT UserPassword FROM Employee WHERE UserName = ?" );
 
 
         } catch (SQLException ex) {

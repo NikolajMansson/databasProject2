@@ -46,7 +46,7 @@
                 <RadioButton fx:id="descendingOrderRadioButton" layoutX="224.0" layoutY="188.0" mnemonicParsing="false" onAction="#setDescendingOrderRadioButton" text="Descending Order" toggleGroup="$ascendingOrDescendingGroup" />
                 <TextArea fx:id="view" layoutX="31.0" layoutY="247.0" prefHeight="145.0" prefWidth="561.0" />
                 <Button fx:id="cancelButton" layoutX="511.0" layoutY="461.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-            <Button layoutX="418.0" layoutY="461.0" mnemonicParsing="false" onAction="#help" text="Help" />
+            <Button layoutX="551.0" layoutY="67.0" mnemonicParsing="false" onAction="#help" text="Help" />
             </children>
         </AnchorPane>
     </children>

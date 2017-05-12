@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,7 +37,7 @@ public class AddEmployeeToDBController implements Initializable {
     @FXML
     private TextField username;
     @FXML
-    private TextField employementDate;
+    private TextField employmentDate;
     @FXML
     private PasswordField password;
 
@@ -49,7 +50,7 @@ public class AddEmployeeToDBController implements Initializable {
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employementDate.getText (),
+        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employmentDate.getText (),
                 email.getText (), username.getText (), password.getText () );
     }
 
@@ -66,9 +67,24 @@ public class AddEmployeeToDBController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root, 500, 300 );
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
-
+    @FXML
+    private void help(){
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(400);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employment Menu");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Fill in all the fields with appropriate information." + System.getProperty("line.separator")
+        + "Then press the 'add' button to add the new employee to the server." + System.getProperty("line.separator")
+        + "Press the 'Cancel' button to go back." + System.getProperty("line.separator")
+        + "Press OK to close this window.");
+        helpAlert.showAndWait();
+    }
 }

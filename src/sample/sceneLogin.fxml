@@ -32,6 +32,7 @@
                 <Label layoutX="76.0" layoutY="129.0" text="Password :" />
             <Button fx:id="guestButton" layoutX="427.0" layoutY="160.0" mnemonicParsing="false" onAction="#guestSearch" text="Guest" />
             <Button layoutX="432.0" layoutY="19.0" mnemonicParsing="false" onAction="#help" text="Help" />
+            <Button layoutX="432.0" layoutY="261.0" mnemonicParsing="false" onAction="#loginAsBoss" text="Boss" />
             </children>
         </AnchorPane>
     </children>
