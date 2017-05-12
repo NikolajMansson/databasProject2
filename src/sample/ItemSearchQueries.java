@@ -21,9 +21,9 @@ public class ItemSearchQueries extends DBConnection{
     private PreparedStatement itemDeveloperDesc;
 
 
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+    public String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
 
-    private com.mysql.jdbc.Connection c = null;
+    public com.mysql.jdbc.Connection c = null;
 
     public ItemSearchQueries() {
 
