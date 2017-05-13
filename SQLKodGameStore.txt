@@ -12,13 +12,15 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON * TO 'bossStore'@'localhost' WITH GRANT 
 CREATE USER 'employee1Store'@'localhost'; 
 SET PASSWORD FOR 'employee1Store'@'localhost' = PASSWORD('123'); 
 GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee1Store'@'localhost';  
-GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost';  
+GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost'; 
+GRANT SELECT, INSERT, UPDATE, DELETE ON Item TO 'employee1Store'@'localhost';  
 GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee1Store'@'localhost';  
 GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'@'localhost';  
 GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost';  
 CREATE USER 'customer1Store'@'localhost'; 
 SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123'); 
 GRANT SELECT ON Game TO 'customer1Store'@'localhost';  
+GRANT SELECT ON Item TO 'customer1Store'@'localhost'; 
 
 
 
@@ -56,3 +58,4 @@ UPDATE Employee SET GamesSold=GamesSold + 1 WHERE UserName = 'bossStore';
 
 UPDATE Employee SET Income=3.00 WHERE UserName = 'employee1Store';
 insert into guestorder(Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values( (SELECT UserName FROM Employee WHERE UserName='bossStore'), (SELECT ArticleNo from Item where ArticleNo=1), 9, 200);
+
