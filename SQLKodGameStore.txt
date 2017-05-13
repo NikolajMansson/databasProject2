@@ -1,23 +1,58 @@
 insert into Employee values(860502, 'Nikolaj', 'Mansson', 20160402, 0, 0, 'nikolaj.mansson@gmail.com', 'employee1Store', '123',  1, 1);
 
+insert into Employee values(850301, 'Elin', 'Larsson', 20160402, 0, 0, 'elin.larsson@gmail.com', 'bossStore', '123',  0, 1);
+
+
+
 insert into Customer values(860502, 'Robert', 'Hansson', 20170203, 'customer1Store', '123', 'robert.hansson@gmail.com');
+
+CREATE USER 'bossStore'@'localhost'; 
+SET PASSWORD FOR 'bossStore'@'localhost' = PASSWORD('123'); 
+GRANT SELECT, INSERT, UPDATE, DELETE ON * TO 'bossStore'@'localhost' WITH GRANT OPTION;  
+CREATE USER 'employee1Store'@'localhost'; 
+SET PASSWORD FOR 'employee1Store'@'localhost' = PASSWORD('123'); 
+GRANT SELECT, INSERT, UPDATE, DELETE ON Customer TO 'employee1Store'@'localhost';  
+GRANT SELECT, INSERT, UPDATE, DELETE ON Game TO 'employee1Store'@'localhost';  
+GRANT SELECT, INSERT, UPDATE, DELETE ON Platform TO 'employee1Store'@'localhost';  
+GRANT SELECT, INSERT, UPDATE, DELETE ON RegularCustomerOrder TO 'employee1Store'@'localhost';  
+GRANT SELECT, INSERT, UPDATE, DELETE ON GuestOrder TO 'employee1Store'@'localhost';  
+CREATE USER 'customer1Store'@'localhost'; 
+SET PASSWORD FOR 'customer1Store'@'localhost' = PASSWORD('123'); 
+GRANT SELECT ON Game TO 'customer1Store'@'localhost';  
+
+
 
 insert into Game(Title, Genre, Developer, DescriptionOfPlot) values('Lord of the Rings', 'RPG', 'UbiSoft', 'Game about a hero');
 
+
+
 insert into Game(Title, Genre, Developer, DescriptionOfPlot) values('Lord of the Hero', 'RPG', 'UbiSoft', 'Game about a another hero');
+
+
 
 insert into Platform(Abbreviation, FullName, Developer) values ('PS2', 'PlayStation2', 'Sony');
 
+
+
 insert into Item(Platform_Abbreviation, Price, AmountOfItemsInStock, Game_Title, ReleaseDate) values ((SELECT Abbreviation FROM Platform WHERE Abbreviation='PS2'), 190.00, 3, (SELECT Title FROM Game WHERE Title='Lord of the Rings'), 20160502);
 
-insert into guestorder(OrderNumber, DateOfOrder, Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values(null, 20160502, (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=2), 3, 200);
+
+
+insert into guestorder(Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values((SELECT UserName FROM Employee WHERE UserName='bossStore'), (SELECT ArticleNo from Item where ArticleNo=2), 3, 200);
+
+
 
 insert into regularCustomerOrder(OrderNumber, DateOfOrder, Customer_UserName, Employees_UserName, Item_ArticleNo, Quantity, TotalPricePerItem) values(null, 20160501, (SELECT UserName FROM Customer WHERE UserName='customer1Store'), (SELECT UserName FROM Employee WHERE UserName='employee1Store'), (SELECT ArticleNo from Item where ArticleNo=1), 1, 200);
 
+
+
 SELECT ArticleNo, Title, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Game_Title=Title AND Developer LIKE 'Ubi%' ORDER BY ArticleNo;
+
+
 
 UPDATE Employee SET GamesSold=GamesSold + 1 WHERE UserName = 'bossStore';
 
-UPDATE Employee SET Income=3.00 WHERE UserName = 'employee1Store';
 
-SELECT ArticleNo FROM Item;
+
+UPDATE Employee SET Income=3.00 WHERE UserName = 'employee1Store';
+insert into guestorder(Employees_UserName, Item_ArticleNo, quantity, TotalPricePerItem) values( (SELECT UserName FROM Employee WHERE UserName='bossStore'), (SELECT ArticleNo from Item where ArticleNo=1), 9, 200);
