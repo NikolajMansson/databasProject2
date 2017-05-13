@@ -18,23 +18,27 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SearchSaleStatsController implements Initializable {
+public class ContactEmployeeController implements Initializable {
 
     @FXML
-    TableView<TableEmployeeStatsSearch> tableID;
+    TableView<TableContactEmployeeSearch> tableID;
 
     @FXML
     TableColumn<TableGameSearch, String> iFirstName;
     @FXML
     TableColumn<TableGameSearch, String> iSurname;
     @FXML
-    TableColumn<TableGameSearch, Integer> iDate;
+    TableColumn<TableGameSearch, String> iEmail;
     @FXML
-    TableColumn<TableGameSearch, Integer> iGamesSold;
+    TableColumn<TableGameSearch, Integer> iSSN;
     @FXML
-    TableColumn<TableGameSearch, Double> iIncome;
+    TableColumn<TableGameSearch, Double> iUsername;
+    @FXML
+    TableColumn<TableGameSearch, String> iIsEmployed;
 
-    private ArrayList<TableEmployeeStatsSearch> data = new ArrayList<> ();
+
+
+    private ArrayList<TableContactEmployeeSearch> data = new ArrayList<> ();
     ArrayList<Employee> searchEmployeeList = null;
     @FXML
     Button search;
@@ -50,6 +54,10 @@ public class SearchSaleStatsController implements Initializable {
     RadioButton ascendingOrderRadioButton;
     @FXML
     RadioButton descendingOrderRadioButton;
+    @FXML
+    TextField removeEmployeeTextField;
+    @FXML
+    Button removeEmployeeButton;
 
 
 
@@ -100,53 +108,54 @@ public class SearchSaleStatsController implements Initializable {
 
     @FXML
     public void search(ActionEvent ae) {
-        SalesSearchQueries connection = new SalesSearchQueries ();
+        ContactSearchQueries connection = new ContactSearchQueries ();
 
 
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchEmployeeList = connection.getEmployeeDefaultSalesSearch ( ascending );
+            this.searchEmployeeList = connection.getEmployeeDefaultContactSearch ( ascending );
 
 
-        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN)) {
-            this.searchEmployeeList = connection.getEmployeeSalesSSNSearch ( searchfield.getText (), ascending );
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
+            this.searchEmployeeList = connection.getEmployeeContactSSNSearch ( searchfield.getText (), ascending );
 
 
-        } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME)) {
-            this.searchEmployeeList = connection.getEmployeeSalesUserNameSearch ( searchfield.getText (), ascending );
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
+            this.searchEmployeeList = connection.getEmployeeContactUserNameSearch ( searchfield.getText (), ascending );
 
 
-        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)) {
-            this.searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText (), ascending );
-
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
+            this.searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText (), ascending );
 
         }
-
         else{
             return;
         }
         for (int i = 0; i < searchEmployeeList.size (); i++) {
-            TableEmployeeStatsSearch table = new TableEmployeeStatsSearch ( searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get(i).getIncome () );
+            TableContactEmployeeSearch table = new TableContactEmployeeSearch ( searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName (), searchEmployeeList.get(i).getIsEmployed () );
             data.add ( table );
         }
 
-        ObservableList<TableEmployeeStatsSearch> data2 = FXCollections.observableArrayList ( data );
+        ObservableList<TableContactEmployeeSearch> data2 = FXCollections.observableArrayList ( data );
         tableID.setItems ( data2 );
 
-
+        iSSN.setCellValueFactory ( new PropertyValueFactory<> ( "searchSSN" ) );
         iFirstName.setCellValueFactory ( new PropertyValueFactory<> ( "searchFirstName" ) );
         iSurname.setCellValueFactory ( new PropertyValueFactory<> ( "searchSurname" ) );
-        iDate.setCellValueFactory ( new PropertyValueFactory<> ( "searchDate" ) );
-        iGamesSold.setCellValueFactory ( new PropertyValueFactory<> ( "searchGamesSold" ) );
-        iIncome.setCellValueFactory ( new PropertyValueFactory<> ( "searchIncome" ) );
+        iEmail.setCellValueFactory ( new PropertyValueFactory<> ( "searchEmail" ) );
+        iUsername.setCellValueFactory ( new PropertyValueFactory<> ( "searchUsername" ) );
+        iIsEmployed.setCellValueFactory ( new PropertyValueFactory<> ( "searchEmployed" ) );
+
+
+
+
     }
 
-    @FXML
     public void cancel(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -157,17 +166,18 @@ public class SearchSaleStatsController implements Initializable {
         Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
-
+    @FXML
+    public void removeEmployee(ActionEvent ae) {
+        EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
+        String userName = removeEmployeeTextField.getText ();
+        connection.removeEmployee ( userName );
+    }
     @FXML
     private void help(){
-        Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
-        // Ställer in övre texten
+        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         helpAlert.setTitle("Help Menu");
-        // Ställer in bredden
         helpAlert.getDialogPane().setPrefWidth(450);
-        // Ställer in mitten texten
         helpAlert.setHeaderText("This is the Employee Search Engine");
-        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
         helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
                 + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
                 + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")

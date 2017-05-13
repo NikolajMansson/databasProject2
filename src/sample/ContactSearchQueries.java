@@ -29,21 +29,21 @@ public class ContactSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            everyEmployeeAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee ORDER BY UserName " );
+            everyEmployeeAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee ORDER BY UserName " );
 
-            everyEmployeeDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee ORDER BY UserName DESC" );
+            everyEmployeeDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee ORDER BY UserName DESC" );
 
-            employeeUserNameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE UserName = ? ORDER BY UserName ");
+            employeeUserNameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE UserName = ? ORDER BY UserName ");
 
-            employeeUserNameDesc = c.prepareStatement( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE UserName = ? ORDER BY UserName DESC" );
+            employeeUserNameDesc = c.prepareStatement( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE UserName = ? ORDER BY UserName DESC" );
 
-            employeeSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE SSN = ? ORDER BY SSN ");
+            employeeSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE SSN = ? ORDER BY SSN ");
 
-            employeeSSNDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE SSN = ? ORDER BY SSN DESC");
+            employeeSSNDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE SSN = ? ORDER BY SSN DESC");
 
-            employeeSurnameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE Surname = ? ORDER BY Surname ");
+            employeeSurnameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE Surname = ? ORDER BY Surname ");
 
-            employeeSurnameDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE Surname = ? ORDER BY Surname DESC");
+            employeeSurnameDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName,isEmployed FROM Employee WHERE Surname = ? ORDER BY Surname DESC");
 
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
@@ -51,7 +51,7 @@ public class ContactSearchQueries extends DBConnection{
 
     }
 
-    public ArrayList<Employee> getBossDefaultContactSearch(boolean ascending) {
+    public ArrayList<Employee> getEmployeeDefaultContactSearch(boolean ascending) {
 
         ArrayList<Employee> results = null;
         ResultSet resultSet = null;
@@ -71,7 +71,8 @@ public class ContactSearchQueries extends DBConnection{
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
                             resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
+                            resultSet.getString ( "UserName" ),
+                            resultSet.getInt("isEmployed"))
                     );
                 }
                 return results;
@@ -109,7 +110,8 @@ public class ContactSearchQueries extends DBConnection{
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
                             resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
+                            resultSet.getString ( "UserName" ),
+                            resultSet.getInt("isEmployed"))
                     );
                 }
                 return results;
@@ -150,7 +152,8 @@ public class ContactSearchQueries extends DBConnection{
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
                             resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
+                            resultSet.getString ( "UserName" ) ,
+                            resultSet.getInt("isEmployed"))
                     );
                 }
                 return results;
@@ -188,7 +191,8 @@ public class ContactSearchQueries extends DBConnection{
                             resultSet.getString ( "FirstName" ),
                             resultSet.getString ( "Surname" ),
                             resultSet.getString ( "Email" ),
-                            resultSet.getString ( "UserName" ) )
+                            resultSet.getString ( "UserName" ) ,
+                            resultSet.getInt("isEmployed"))
                     );
                 }
                 return results;

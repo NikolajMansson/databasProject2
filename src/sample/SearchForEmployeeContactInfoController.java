@@ -96,7 +96,7 @@ public class SearchForEmployeeContactInfoController implements Initializable {
 
 
         if (searchfield.getText ().equals ( "" )) {
-            searchEmployeeList = connection.getBossDefaultContactSearch ( ascending );
+            searchEmployeeList = connection.getEmployeeDefaultContactSearch ( ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
                 viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }

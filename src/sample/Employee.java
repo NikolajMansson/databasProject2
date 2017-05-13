@@ -9,18 +9,20 @@ public class Employee extends Person {
     private double income = 0;
     private String email = null;
     private EmployeeAccount employeeAccount = null;
+    private int isEmployed = 0;
 
 
     public Employee() {
     }
 
-    public Employee(int SSN, String firstName, String surname, String email, String userName) {
+    public Employee(int SSN, String firstName, String surname, String email, String userName, int isEmployed) {
         setSSN(SSN);
         setFirstName(firstName);
         setSurname ( surname );
         setEmail(email);
         EmployeeAccount employeeAccount = new EmployeeAccount ( userName );
         setEmployeeAccount(employeeAccount);
+        setIsEmployed ( isEmployed );
     }
     public Employee(String firstName, String surName, int employmentDate, int gamesSold, double income, String userName) {
         setFirstName ( firstName );
@@ -30,9 +32,16 @@ public class Employee extends Person {
         setIncome ( income );
         EmployeeAccount employeeAccount = new EmployeeAccount ( userName );
         setEmployeeAccount ( employeeAccount );
+
     }
 
+    public int getIsEmployed() {
+        return isEmployed;
+    }
 
+    public void setIsEmployed(int isEmployed) {
+        this.isEmployed = isEmployed;
+    }
 
     public EmployeeAccount getEmployeeAccount() {
         return employeeAccount;
