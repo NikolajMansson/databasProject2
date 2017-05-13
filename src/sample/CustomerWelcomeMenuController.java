@@ -33,7 +33,7 @@ public class CustomerWelcomeMenuController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameLibraryCustomer.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameCustomer.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();

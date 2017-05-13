@@ -13,18 +13,15 @@ public class SalesSearchQueries extends DBConnection{
 
     private PreparedStatement everyEmployeeAsc;
     private PreparedStatement everyEmployeeDesc;
-    private PreparedStatement bossUsernameAsc;
-    private PreparedStatement bossUsernameDesc;
+
     private PreparedStatement employeeUsernameAsc;
     private PreparedStatement employeeUsernameDesc;
     private PreparedStatement employeeSSNAsc;
     private PreparedStatement employeeSSNDesc;
-    private PreparedStatement bossSSNAsc;
-    private PreparedStatement bossSSNDesc;
+
     private PreparedStatement employeeSurnameAsc;
     private PreparedStatement employeeSurnameDesc;
-    private PreparedStatement bossSurnameAsc;
-    private PreparedStatement bossSurnameDesc;
+
 
     private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
 
@@ -35,33 +32,22 @@ public class SalesSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            everyEmployeeAsc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee"  );
+            everyEmployeeAsc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee ORDER BY Surname"  );
 
-            everyEmployeeDesc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee DESC" );
+            everyEmployeeDesc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee ORDER BY Surname DESC" );
 
-            employeeUsernameAsc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE UserName = ?");
+            employeeUsernameAsc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE UserName = ? ORDER BY UserName");
 
-            employeeUsernameDesc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE UserName = ? DESC");
+            employeeUsernameDesc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE UserName = ? ORDER BY UserName DESC");
 
-            bossUsernameAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE UserName = ?");
+            employeeSSNAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE SSN = ? ORDER BY SSN");
 
-            bossUsernameDesc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE UserName = ? DESC");
+            employeeSSNDesc = c.prepareStatement( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE SSN = ? ORDER BY SSN DESC" );
 
-            employeeSSNAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE SSN = ?");
+            employeeSurnameAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE Surname = ? ORDER BY Surname");
 
-            employeeSSNDesc = c.prepareStatement( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE SSN = ? DESC" );
+            employeeSurnameDesc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE Surname = ? ORDER BY Surname DESC" );
 
-            bossSSNAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE SSN = ?");
-
-            bossSSNDesc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE SSN = ? DESC");
-
-            employeeSurnameAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE Surname = ?");
-
-            employeeSurnameDesc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE Surname = ? DESC" );
-
-            bossSurnameAsc = c.prepareStatement ( "SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE Surname = ?" );
-
-            bossSurnameDesc = c.prepareStatement ("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Boss WHERE Surname = ? DESC");
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
         }
@@ -197,7 +183,7 @@ public class SalesSearchQueries extends DBConnection{
                     resultSet = employeeSurnameAsc.executeQuery ();
                 } else {
 
-                    employeeUsernameDesc.setString ( 1, surname );
+                    employeeSurnameDesc.setString ( 1, surname );
 
                     resultSet = employeeSurnameDesc.executeQuery ();
                 }

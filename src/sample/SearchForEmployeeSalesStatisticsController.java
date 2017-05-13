@@ -45,8 +45,16 @@ import java.util.ResourceBundle;
         @FXML
         private TextField searchfield;
 
+    public RadioButton getDescendingOrderRadioButton() {
+        return descendingOrderRadioButton;
+    }
 
-        private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
+
+    public void setDescendingOrderRadioButton(ActionEvent actionEvent) {
+        this.ascending = false;
+    }
+
+    private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
 
 
         private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
@@ -75,10 +83,6 @@ import java.util.ResourceBundle;
             this.ascending = true;
         }
 
-        @FXML
-        public void setDescendingOrderRadioButton(ActionEvent ae) {
-            this.ascending = false;
-        }
 
         @FXML
         public void search(ActionEvent ae) {
@@ -108,6 +112,7 @@ import java.util.ResourceBundle;
                 searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText (), ascending );
                 for (int i = 0; i < searchEmployeeList.size (); i++) {
                     viewTextArea.appendText ( String.format ( "%-5s %-15s %d %d %.2f %n", searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get ( i ).getIncome () ) );
+
                 }
 
             }
@@ -118,7 +123,7 @@ import java.util.ResourceBundle;
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "../../../../Documents/databasProject2/src/sample/sceneBossWelcomeMenu.fxml" ) );
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
             Parent root = null;
             try {
                 root = loader.load ();

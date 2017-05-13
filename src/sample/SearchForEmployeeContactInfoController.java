@@ -47,9 +47,8 @@ public class SearchForEmployeeContactInfoController implements Initializable {
     public RadioButton regularEmployeeRadioButton;
 
     private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
-    private enum SearchStatus {BOSS, EMPLOYEE}
+
     private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
-    private SearchStatus searchStatusControll = SearchStatus.BOSS;
     private boolean ascending = true;
 
     @Override
@@ -72,15 +71,6 @@ public class SearchForEmployeeContactInfoController implements Initializable {
         this.typeOfIntrestControll = typeOfIntrestControll.USERNAME;
     }
 
-    @FXML
-    public void setBossRadioButton(ActionEvent ae) {
-        this.searchStatusControll = searchStatusControll.BOSS;
-    }
-
-    @FXML
-    public void setEmployeeRadioButton(ActionEvent ae) {
-        this.searchStatusControll = searchStatusControll.EMPLOYEE;
-    }
 
     @FXML
     public void setAscendingOrderRadioButton(ActionEvent ae) {
@@ -111,19 +101,19 @@ public class SearchForEmployeeContactInfoController implements Initializable {
                 viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN  && searchStatusControll == SearchStatus.EMPLOYEE) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
             searchEmployeeList = connection.getEmployeeContactSSNSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
                 viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME && searchStatusControll == SearchStatus.EMPLOYEE) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
             searchEmployeeList = connection.getEmployeeContactUserNameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
                 viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName () ) );
             }
 
-        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME && searchStatusControll == SearchStatus.EMPLOYEE) {
+        } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
             searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText (), ascending );
             for (int i = 0; i < searchEmployeeList.size (); i++) {
                 viewTextArea.appendText ( String.format ( "%d %-5s %-15s %-15s %s%n", searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get ( i ).getEmployeeAccount ().getUserName () ) );

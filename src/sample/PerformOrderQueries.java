@@ -10,8 +10,6 @@ import java.sql.*;
  */
 public class PerformOrderQueries extends DBConnection{
 
-    private PreparedStatement increaseMoneyBoss;
-    private PreparedStatement increaseItemsSoldBoss;
     private PreparedStatement increaseMoneyEmployee;
     private PreparedStatement increaseItemsSoldEmployee;
     private PreparedStatement saleToMember;
@@ -128,7 +126,7 @@ BigDecimal value = BigDecimal.valueOf ( price );
 
         } catch (SQLException ex) {
             ex.printStackTrace ();
-            //System.err.println ( "error on executing the query" );
+
         }
 
         return null;

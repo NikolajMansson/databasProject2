@@ -35,7 +35,7 @@ public class LoginController implements Initializable {
         boolean testUserIdPassword = employeeSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
         if (testUserIdPassword == true) {
 
-            EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText () );
+            EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 1 );
 
             main.setMyUser ( account );
 
@@ -89,10 +89,10 @@ public class LoginController implements Initializable {
         Main main = new Main ();
 
         EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
-        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
+        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordBoss ( loginUsername.getText (), loginPassword.getText () );
         if (testUserIdPassword == true) {
 
-            EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText () );
+            EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 0 );
 
             main.setMyUser ( bossAccount );
 
@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameLibraryCustomer.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameCustomer.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();

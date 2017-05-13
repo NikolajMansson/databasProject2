@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -78,4 +79,29 @@ public class AddGameToDBController implements Initializable {
         Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
-}
+
+
+        @FXML
+
+        private void help() {
+
+            Alert helpAlert = new Alert ( Alert.AlertType.INFORMATION, "" );
+
+            helpAlert.setTitle ( "Help Menu" );
+
+            helpAlert.getDialogPane ().setPrefWidth ( 400 );
+
+            helpAlert.setHeaderText ( "This is the New Game Menu" );
+
+            helpAlert.setContentText ( "Fill in all the fields with appropriate information." + System.getProperty ( "line.separator" )
+
+                    + "Then press the 'add games' button to add the new game to the server." + System.getProperty ( "line.separator" )
+
+                    + "Press the 'Cancel' button to go back." + System.getProperty ( "line.separator" )
+
+                    + "Press OK to close this window." );
+
+            helpAlert.showAndWait ();
+        }
+    }
+

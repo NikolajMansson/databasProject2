@@ -7,7 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -36,27 +38,23 @@ public class AddEmployeeToDBController implements Initializable {
     @FXML
     private TextField username;
     @FXML
-    private TextField employementDate;
-    @FXML
     private PasswordField password;
     @FXML
     public RadioButton regularEmployeeRadioButton;
     @FXML
     public RadioButton bossRadioButton;
 
+    int employeeStatus = 0;
 
-    private enum UserStatus {BOSS, REGULAREMPLOYEE}
-
-    private UserStatus userControll = UserStatus.BOSS;
 
     @FXML
     public void setUserControllBoss(ActionEvent ae){
-        this.userControll =  userControll.BOSS;
+        this.employeeStatus =  0;
 
     }
     @FXML
     public void setUserControllRegularEmployee(ActionEvent ae){
-        this.userControll =  userControll.REGULAREMPLOYEE;
+        this.employeeStatus =  1;
 
     }
 
@@ -68,8 +66,9 @@ public class AddEmployeeToDBController implements Initializable {
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (), employementDate.getText (),
-                email.getText (), username.getText (), password.getText () );
+        connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (),
+                email.getText (), username.getText (), password.getText (), employeeStatus  );
+        connection.logNewEmployee ( account.getUserName (), username.getText ());
     }
 
     @FXML

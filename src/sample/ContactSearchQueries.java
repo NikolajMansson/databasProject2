@@ -15,17 +15,10 @@ public class ContactSearchQueries extends DBConnection{
     private PreparedStatement everyEmployeeDesc;
     private PreparedStatement employeeUserNameAsc;
     private PreparedStatement employeeUserNameDesc;
-    private PreparedStatement bossUserNameAsc;
-    private PreparedStatement bossUserNameDesc;
     private PreparedStatement employeeSSNAsc;
     private PreparedStatement employeeSSNDesc;
-    private PreparedStatement bossSSNAsc;
-    private PreparedStatement bossSSNDesc;
     private PreparedStatement employeeSurnameAsc;
     private PreparedStatement employeeSurnameDesc;
-    private PreparedStatement bossSurnameAsc;
-    private PreparedStatement bossSurnameDesc;
-
 
     private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
 
@@ -44,25 +37,13 @@ public class ContactSearchQueries extends DBConnection{
 
             employeeUserNameDesc = c.prepareStatement( "SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE UserName = ? ORDER BY UserName DESC" );
 
-            bossUserNameAsc = c.prepareStatement( "SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE UserName = ? ORDER BY UserName " );
-
-            bossUserNameDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE UserName = ? ORDER BY UserName DESC" );
-
             employeeSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE SSN = ? ORDER BY SSN ");
 
             employeeSSNDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE SSN = ? ORDER BY SSN DESC");
 
-            bossSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE SSN = ? ORDER BY SSN ");
-
-            bossSSNDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE SSN = ? ORDER BY SSN DESC");
-
             employeeSurnameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE Surname = ? ORDER BY Surname ");
 
             employeeSurnameDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Employee WHERE Surname = ? ORDER BY Surname DESC");
-
-            bossSurnameAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE Surname = ? ORDER BY Surname"  );
-
-            bossSurnameDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName FROM Boss WHERE Surname = ? ORDER BY Surname DESC");
 
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
