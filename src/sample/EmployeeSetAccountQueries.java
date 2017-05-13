@@ -79,6 +79,8 @@ public class EmployeeSetAccountQueries extends DBConnection{
 
             if (correctPassword.equals ( password )) {
                 return true;
+            } else if (!correctPassword.equals( password )){
+                return false;
             }
 
         } catch (SQLException ex) {
