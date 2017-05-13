@@ -23,12 +23,12 @@ public class BossWelcomeMenuController implements Initializable {
     public Button employeeSearchButton;
 
     private ReadActiveUserFile readUser = new ReadActiveUserFile ();
-    private EmployeeAccount account = new EmployeeAccount ( "", "" );
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         readUser.openFile ();
-        this.account = (EmployeeAccount) readUser.readRecords ();
+        Account account = (EmployeeAccount) readUser.readRecords ();
         readUser.closeFile ();
         welcomeLabel.setText ( "Welcome " +  account.getUserName ()  + "!" );
     }
@@ -157,7 +157,7 @@ public class BossWelcomeMenuController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchForEmployeeSalesStatistics.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSaleStats.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();

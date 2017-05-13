@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -24,28 +21,78 @@ import java.util.ResourceBundle;
 public class SearchSaleStatsController implements Initializable {
 
     @FXML
-    TableView<TableGameSearch> tableID;
+    TableView<TableEmployeeStatsSearch> tableID;
+
     @FXML
-    TableColumn<TableGameSearch, Integer> iID;
+    TableColumn<TableGameSearch, String> iFirstName;
     @FXML
-    TableColumn<TableGameSearch, String> iName;
+    TableColumn<TableGameSearch, String> iSurname;
     @FXML
     TableColumn<TableGameSearch, String> iDate;
     @FXML
-    TableColumn<TableGameSearch, Double> iPrice;
-
+    TableColumn<TableGameSearch, String> iGamesSold;
     @FXML
-    private TextField searchfield;
+    TableColumn<TableGameSearch, Double> iIncome;
+
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
     private SearchStatus searchControll = SearchStatus.TITLE;
-    ArrayList<SearchResultItem> searchItemList = null;
+
 
 
     ItemSearchQueries connection = new ItemSearchQueries ();
+    private ArrayList<TableEmployeeStatsSearch> data = new ArrayList<> ();
+    ArrayList<Employee> searchEmployeeList = null;
+    @FXML
+    Button search;
+    @FXML
+    Button cancelButton;
+    @FXML
+    RadioButton ssnRadioButton;
+    @FXML
+    RadioButton surnameRadioButton;
+    @FXML
+    RadioButton usernameRadioButton;
+    @FXML
+    RadioButton ascendingOrderRadioButton;
+    @FXML
+    RadioButton descendingOrderRadioButton;
+
+
+
+    @FXML
+    private TextField searchfield;
+
+
+
+    public void setDescendingOrderRadioButton(ActionEvent actionEvent) {
+        this.ascending = false;
+    }
+
+    private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
+
+
+    private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
+
     private boolean ascending = true;
-    private ArrayList<TableGameSearch> data = new ArrayList<> ();
+
+    @FXML
+    public void setSSNRadioButton(ActionEvent ae) {
+        this.typeOfIntrestControll = typeOfIntrestControll.SSN;
+    }
+
+    @FXML
+    public void setSurnameRadioButton(ActionEvent ae) {
+        this.typeOfIntrestControll = typeOfIntrestControll.SURNAME;
+    }
+
+    @FXML
+    public void setUsernameRadioButton(ActionEvent ae) {
+        this.typeOfIntrestControll = typeOfIntrestControll.USERNAME;
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,62 +101,52 @@ public class SearchSaleStatsController implements Initializable {
 
 
     @FXML
-    public void setGameTitleRadioButton(ActionEvent ae) {
-        this.searchControll = SearchStatus.TITLE;
-    }
-
-    @FXML
-    public void setDeveloperRadioButton(ActionEvent ae) {
-        this.searchControll = SearchStatus.DEVELOPER;
-    }
-
-    @FXML
-    public void setPlatformRadioButton(ActionEvent ae) {
-        this.searchControll = SearchStatus.PLATFORM;
-    }
-
-    @FXML
     public void setAscendingOrderRadioButton(ActionEvent ae) {
         this.ascending = true;
     }
 
-    @FXML
-    public void setDescendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = false;
-    }
 
     @FXML
     public void search(ActionEvent ae) {
-        ItemSearchQueries connection = new ItemSearchQueries ();
+        SalesSearchQueries connection = new SalesSearchQueries ();
+
+
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchItemList = connection.getItemDefaultSearch ( ascending );
+            this.searchEmployeeList = connection.getEmployeeDefaultSalesSearch ( ascending );
 
-        } else if (searchControll == SearchStatus.TITLE) {
-            this.searchItemList = connection.getItemTitleSearch ( searchfield.getText (), ascending );
 
-        } else if (searchControll == SearchStatus.PLATFORM) {
-            this.searchItemList = connection.getItemPlatformSearch ( searchfield.getText (), ascending );
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN)) {
+            this.searchEmployeeList = connection.getEmployeeSalesSSNSearch ( searchfield.getText (), ascending );
 
-        } else if (searchControll == SearchStatus.DEVELOPER) {
-            this.searchItemList = connection.getItemDeveloperSearch ( searchfield.getText (), ascending );
+
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME)) {
+            this.searchEmployeeList = connection.getEmployeeSalesUserNameSearch ( searchfield.getText (), ascending );
+
+
+        } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)) {
+            this.searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText (), ascending );
+
 
         }
+
         else{
             return;
         }
-        for (int i = 0; i < searchItemList.size (); i++) {
-            TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice () );
+        for (int i = 0; i < searchEmployeeList.size (); i++) {
+            TableEmployeeStatsSearch table = new TableEmployeeStatsSearch ( searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get(i).getIncome () );
             data.add ( table );
         }
 
-        ObservableList<TableGameSearch> data2 = FXCollections.observableArrayList ( data );
+        ObservableList<TableEmployeeStatsSearch> data2 = FXCollections.observableArrayList ( data );
         tableID.setItems ( data2 );
 
-        iID.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Integer> ( "searchAID" ) );
-        iName.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchTitle" ) );
-        iDate.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchAbbreviation" ) );
-        iPrice.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Double> ( "searchPrice" ) );
+
+        iFirstName.setCellValueFactory ( new PropertyValueFactory<> ( "searchFirstName" ) );
+        iSurname.setCellValueFactory ( new PropertyValueFactory<> ( "searchSurname" ) );
+        iDate.setCellValueFactory ( new PropertyValueFactory<> ( "searchDate" ) );
+        iGamesSold.setCellValueFactory ( new PropertyValueFactory<> ( "searchGamesSold" ) );
+        iIncome.setCellValueFactory ( new PropertyValueFactory<> ( "searchIncome" ) );
     }
 
     @FXML
@@ -130,15 +167,20 @@ public class SearchSaleStatsController implements Initializable {
     }
 
     @FXML
-    public void help() {
-        Alert helpAlert = new Alert ( Alert.AlertType.INFORMATION, "" );
-        helpAlert.setTitle ( "Help Menu" );
-        helpAlert.getDialogPane ().setPrefWidth ( 420 );
-        helpAlert.setHeaderText ( "This is the Game Search Engine" );
-        helpAlert.setContentText ( "Select which category you want to use (Game Title, Developer, Platform)." + System.getProperty ( "line.separator" )
-                + "Select which order you want (Ascending/Descending)." + System.getProperty ( "line.separator" )
-                + "Type your keywords in the field, then press the Search button." + System.getProperty ( "line.separator" )
-                + "Press OK to close this window." );
-        helpAlert.showAndWait ();
+    private void help(){
+        Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
+        // Ställer in övre texten
+        helpAlert.setTitle("Help Menu");
+        // Ställer in bredden
+        helpAlert.getDialogPane().setPrefWidth(450);
+        // Ställer in mitten texten
+        helpAlert.setHeaderText("This is the Employee Search Engine");
+        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
+        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
+                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
+                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
+                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
+                + "Press OK to close this window.");
+        helpAlert.showAndWait();
     }
 }

@@ -17,10 +17,11 @@
                <children>
                   <TableView fx:id="tableID" layoutX="221.0" layoutY="107.0" prefHeight="408.0" prefWidth="798.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="iID" prefWidth="75.0" text="Article ID" />
-                      <TableColumn fx:id="iName" prefWidth="400.0" text="Title" />
-                        <TableColumn fx:id="iDate" prefWidth="75.0" text="Abbreviation" />
-                        <TableColumn fx:id="iPrice" prefWidth="75.0" text="Price" />
+                      <TableColumn fx:id="iFirstName" prefWidth="75.0" text="First Name" />
+                      <TableColumn fx:id="iSurname" prefWidth="400.0" text="Surname" />
+                        <TableColumn fx:id="iDate" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="iGamesSold" prefWidth="75.0" text="Games sold" />
+                        <TableColumn fx:id="iIncome" prefWidth="75.0" text="Income" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

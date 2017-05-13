@@ -32,35 +32,26 @@ public class LoginController implements Initializable {
         Main main = new Main ();
 
         EmployeeSetAccountQueries employeeSetAccountQueries = new EmployeeSetAccountQueries ();
-        try {
-            boolean testUserIdPassword = employeeSetAccountQueries.searchForPasswordEmployee(loginUsername.getText(), loginPassword.getText());
-            if (testUserIdPassword == true) {
+        boolean testUserIdPassword = employeeSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
+        if (testUserIdPassword == true) {
 
-                EmployeeAccount account = new EmployeeAccount(loginUsername.getText(), loginPassword.getText());
+            EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 1 );
 
-                main.setMyUser(account);
+            main.setMyUser ( account );
 
-                Node node = (Node) ae.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneEmployeeWelcomeMenu.fxml"));
-                Parent root = null;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-            } else if (testUserIdPassword == false){
-                Alert validAlert = new Alert(Alert.AlertType.ERROR, "Enter a valid username and password");
-                validAlert.showAndWait();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
             }
 
-        } catch (NullPointerException n){
-            Alert nullAlert = new Alert(Alert.AlertType.ERROR, "Enter a username and password");
-            nullAlert.showAndWait();
+            Scene scene = new Scene (root);
+            stage.setScene ( scene );
         }
     }
 
@@ -69,35 +60,28 @@ public class LoginController implements Initializable {
         Main main = new Main ();
 
         CustomerSetAccountQueries customerSetAccountQueries = new CustomerSetAccountQueries ();
-        try {
-            boolean testUserIdPassword = customerSetAccountQueries.searchForPasswordCustomer(loginUsername.getText(), loginPassword.getText());
-            if (testUserIdPassword == true) {
+        boolean testUserIdPassword = customerSetAccountQueries.searchForPasswordCustomer ( loginUsername.getText (), loginPassword.getText () );
+        if (testUserIdPassword == true) {
 
-                CustomerAccount account = new CustomerAccount(loginUsername.getText(), loginPassword.getText());
+            CustomerAccount account = new CustomerAccount ( loginUsername.getText (), loginPassword.getText () );
 
-                main.setMyUser(account);
+            main.setMyUser ( account );
 
-                Node node = (Node) ae.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneCustomerWelcomeMenu.fxml"));
-                Parent root = null;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-            } else if (testUserIdPassword == false){
-                Alert validAlert = new Alert(Alert.AlertType.ERROR, "Enter a valid username and password");
-                validAlert.showAndWait();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCustomerWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
             }
-        } catch (NullPointerException n){
-            Alert nullAlert = new Alert(Alert.AlertType.ERROR, "Enter a username and password");
-            nullAlert.showAndWait();
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
         }
+
     }
 
     @FXML
@@ -105,36 +89,29 @@ public class LoginController implements Initializable {
         Main main = new Main ();
 
         EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
-        try {
-            boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordEmployee(loginUsername.getText(), loginPassword.getText());
-            if (testUserIdPassword == true) {
+        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordBoss ( loginUsername.getText (), loginPassword.getText () );
+        if (testUserIdPassword == true) {
 
-                EmployeeAccount bossAccount = new EmployeeAccount(loginUsername.getText(), loginPassword.getText());
+            EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 0 );
 
-                main.setMyUser(bossAccount);
+            main.setMyUser ( bossAccount );
 
 
-                Node node = (Node) ae.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("sceneBossWelcomeMenu.fxml"));
-                Parent root = null;
-                try {
-                    root = loader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-            } else if (testUserIdPassword == false) {
-                Alert validAlert = new Alert(Alert.AlertType.ERROR, "Enter a valid username and password");
-                validAlert.showAndWait();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
             }
-        } catch (NullPointerException n){
-            Alert nullAlert = new Alert(Alert.AlertType.ERROR, "Enter a username and password");
-            nullAlert.showAndWait();
+
+            Scene scene = new Scene ( root);
+            stage.setScene ( scene );
         }
+
     }
 
     @FXML
@@ -142,7 +119,7 @@ public class LoginController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameLibraryCustomer.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameCustomer.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
