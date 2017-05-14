@@ -98,7 +98,7 @@ public class EmployeeWelcomeMenuController implements Initializable {
         stage.setScene ( scene );
     }
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         // Ställer in övre texten
         helpAlert.setTitle("Help Menu");

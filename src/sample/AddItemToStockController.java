@@ -35,7 +35,7 @@ public class AddItemToStockController {
     private TextField amountOfItemsTextField;
 
     @FXML
-    public void add(ActionEvent ae) {
+    private void add(ActionEvent ae) {
         SetGameInfoQueries connection = new SetGameInfoQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
@@ -65,7 +65,7 @@ public class AddItemToStockController {
     }
 
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         // Ställer in övre texten
         helpAlert.setTitle("Help Menu");

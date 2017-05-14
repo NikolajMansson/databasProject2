@@ -48,22 +48,23 @@ public class AddEmployeeToDBController implements Initializable {
 
 
     @FXML
-    public void setUserControllBoss(ActionEvent ae){
+    private void setUserControllBoss(ActionEvent ae){
         this.employeeStatus =  0;
 
     }
     @FXML
-    public void setUserControllRegularEmployee(ActionEvent ae){
+    private void setUserControllRegularEmployee(ActionEvent ae){
         this.employeeStatus =  1;
 
     }
 
     @FXML
-    public void add() {
+    private void add() {
         EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (),
@@ -88,7 +89,7 @@ public class AddEmployeeToDBController implements Initializable {
         stage.setScene ( scene );
     }
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         // Ställer in övre texten
         helpAlert.setTitle("Help Menu");

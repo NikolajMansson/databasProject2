@@ -40,14 +40,6 @@ public class CartController implements Initializable {
     private double totalPrice = 0;
     private ArrayList<Item> itemList = new ArrayList<> ();
     private ArrayList<Integer> quantitylist = new ArrayList<> ();
-    private ArrayList<Double> totalItemPriceList = new ArrayList<> ();
-
-
-
-
-
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +62,14 @@ public class CartController implements Initializable {
         cartArea.appendText ( String.format ( "%s%10s%10s%10s%10s%10s%n", "Article No.", "Game Title", "Platform", "Quantity", "Price per Item", "Price" ) );
 
         CartFile cartFile = new CartFile ();
+
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+
         PerformOrderQueries dbConnection = new PerformOrderQueries ();
+        dbConnection.setDBURL ( account.getUserName (), account.getPassword ());
         byte[] bytesArray = cartFile.readerArticleNumberFile ();
         byte[] bytesArray1 = cartFile.readerQuantityFile ();
         ArrayList<Double> totalItemPrice = new ArrayList<> ();
@@ -94,7 +93,7 @@ public class CartController implements Initializable {
 
 
     @FXML
-    public void back(ActionEvent ae) {
+    private void back(ActionEvent ae) {
 
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
@@ -113,10 +112,6 @@ public class CartController implements Initializable {
     @FXML
     public void cancel(ActionEvent ae) {
 
-
-
-
-
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -132,7 +127,7 @@ public class CartController implements Initializable {
     }
 
     @FXML
-    public void removeItem(ActionEvent ae) {
+    private void removeItem(ActionEvent ae) {
         int index = Integer.parseInt ( removeIndexTextLabel.getText () );
 
         for(int i = 0; i < itemList.size (); i++){
@@ -157,7 +152,7 @@ public class CartController implements Initializable {
 
 
     @FXML
-    public void buy(ActionEvent ae) {
+    private void buy(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -172,7 +167,7 @@ public class CartController implements Initializable {
         stage.setScene ( new Scene ( root ) );
     }
 
-    public double calculateTotalPrice(ArrayList<Double> totalItemPriceList) {
+    private double calculateTotalPrice(ArrayList<Double> totalItemPriceList) {
         for (int i = 0; i < totalItemPriceList.size (); i++) {
             double itemPrice = totalItemPriceList.get ( i );
             this.totalPrice = totalPrice + itemPrice;

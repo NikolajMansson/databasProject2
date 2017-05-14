@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,18 +29,12 @@ public class OrderEmployeeToGuestController implements Initializable {
     @FXML
     private Label dateOfOrderLabel;
 
-    @FXML
-    private TextField bossTextField;
     private ArrayList<Item> itemList = new ArrayList<> ();
 
     LocalDate date = LocalDate.now();
    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-
-
-
-
-
+    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,11 +43,16 @@ public class OrderEmployeeToGuestController implements Initializable {
 
     }
     @FXML
-    public void addOrder(ActionEvent ae) {
+    private void addOrder(ActionEvent ae) {
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
         PerformOrderQueries connection1 = new PerformOrderQueries ();
+        connection1.setDBURL ( account.getUserName (), account.getPassword () );
         SetGameInfoQueries connection2 = new SetGameInfoQueries ();
+        connection2.setDBURL ( account.getUserName (), account.getPassword () );
         CartFile sCart = new CartFile();
-        System.out.println(String.format( String.valueOf ( dtf ) ));
+
         byte[] bytesArray2 = sCart.readerArticleNumberFile ();
 
         byte[] bytesArray = sCart.readerArticleNumberFile ();
@@ -65,12 +63,6 @@ public class OrderEmployeeToGuestController implements Initializable {
             this.itemList.add ( item);
         }
 
-        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
-        readActiveUserFile.openFile ();
-        EmployeeAccount account= (EmployeeAccount) readActiveUserFile.readRecords ();
-        readActiveUserFile.closeFile ();
-
-        //I nedan text ska objektet läggas in istället för enskilda variabler
         for (int i = 0; i < itemList.size (); i++) {
             connection1.addGuestOrderToList (account.getUserName (),
                     itemList.get(i).getArticleNumber (), itemList.get(i).getAmountOfItems (), itemList.get(i).getPrice ());
@@ -112,8 +104,5 @@ public class OrderEmployeeToGuestController implements Initializable {
         Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
-    private static java.sql.Date getCurrentDate() {
-        java.util.Date today = new java.util.Date();
-        return new java.sql.Date(today.getTime());
-    }
+
 }

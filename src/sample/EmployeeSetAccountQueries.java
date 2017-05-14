@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by Nikolaj on 2017-04-25.
@@ -12,8 +13,7 @@ public class EmployeeSetAccountQueries extends DBConnection{
     private PreparedStatement searchForPasswordBoss;
     private PreparedStatement eraseEmployee;
     private PreparedStatement logInsertOfNewEmployee;
-
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+    private PreparedStatement getUserLog;
 
     private String correctPassword = null;
     private com.mysql.jdbc.Connection c = null;
@@ -27,6 +27,7 @@ public class EmployeeSetAccountQueries extends DBConnection{
             eraseEmployee = c.prepareStatement ( "UPDATE Employee SET isEmployed=0 WHERE UserName = ?");
             insertNewEmployee = c.prepareStatement ( "insert into Employee values(?, ?, ?, now(), 0, 0, ?, ?, ?,  ?, 1)" );
             logInsertOfNewEmployee = c.prepareStatement ( "INSERT INTO Log(event, Employee_UserName) VALUES (?, ?)" );
+            getUserLog = c.prepareStatement ( "select * from log;" );
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
         }
@@ -125,6 +126,37 @@ public class EmployeeSetAccountQueries extends DBConnection{
         }
     }
 
+    public ArrayList<Log> getLog(){
+
+
+            ArrayList<Log> results = null;
+            ResultSet resultSet = null;
+
+            try {
+
+                    resultSet = getUserLog.executeQuery ();
+
+                results = new ArrayList<> ();
+
+                while (resultSet.next ()) {
+                    results.add ( new Log (
+                            resultSet.getInt ( "logID" ),
+                            resultSet.getString ( "event" ),
+                            resultSet.getString ( "Employee_UserName" ),
+                            resultSet.getTimestamp ( "Time" ))
+                    );
+                }
+                return results;
+
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace ();
+            } finally {
+                close ();
+            }
+
+            return null;
+
+    }
     public void removeEmployee(String userName) {
         try {
             eraseEmployee.setString ( 1, userName );

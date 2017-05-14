@@ -32,11 +32,6 @@
                         <ToggleGroup fx:id="searchByGroup" />
                      </toggleGroup></RadioButton>
                   <RadioButton fx:id="developerRadioButton" layoutX="164.0" layoutY="7.0" mnemonicParsing="false" onAction="#setDeveloperRadioButton" text="Developer" toggleGroup="$searchByGroup" />
-                  <RadioButton fx:id="ascendingOrderRadioButton" layoutX="57.0" layoutY="35.0" mnemonicParsing="false" onAction="#setAscendingOrderRadioButton" selected="true" text="Ascending Order">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="ascendingOrDescendingGroup" />
-                     </toggleGroup></RadioButton>
-                  <RadioButton fx:id="descendingOrderRadioButton" layoutX="181.0" layoutY="35.0" mnemonicParsing="false" onAction="#setDescendingOrderRadioButton" text="Descending Order" toggleGroup="$ascendingOrDescendingGroup" />
                   <Button fx:id="cancelButton" layoutX="687.0" layoutY="132.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                   <Button layoutX="579.0" layoutY="132.0" mnemonicParsing="false" onAction="#help" text="Help" />
                    <Button fx:id="search" layoutX="572.0" layoutY="12.0" mnemonicParsing="false" onAction="#search" text="Search" />

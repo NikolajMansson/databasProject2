@@ -14,13 +14,13 @@ public class SetGameInfoQueries extends DBConnection{
     private PreparedStatement insertNewPlatform;
     private PreparedStatement decreaseItemAmount;
     private PreparedStatement removeGame;
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
 
     private com.mysql.jdbc.Connection c = null;
 
     public SetGameInfoQueries() {
 
         try {
+
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
             insertNewItem = c.prepareStatement ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, price, AmountOfItemsInStock) VALUES ((SELECT Title FROM Game WHERE Title = ?), (SELECT Abbreviation FROM Platform WHERE Abbreviation = ?), ?, ?);" );
             insertNewGame = c.prepareStatement ( "INSERT INTO Game (Title, Genre, Developer, DescriptionOfPlot) VALUES (?, ?, ?, ?);" );

@@ -50,10 +50,7 @@ public class ContactEmployeeController implements Initializable {
     RadioButton surnameRadioButton;
     @FXML
     RadioButton usernameRadioButton;
-    @FXML
-    RadioButton ascendingOrderRadioButton;
-    @FXML
-    RadioButton descendingOrderRadioButton;
+
     @FXML
     TextField removeEmployeeTextField;
     @FXML
@@ -65,30 +62,24 @@ public class ContactEmployeeController implements Initializable {
     private TextField searchfield;
 
 
-
-    public void setDescendingOrderRadioButton(ActionEvent actionEvent) {
-        this.ascending = false;
-    }
-
     private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
 
 
     private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
 
-    private boolean ascending = true;
 
     @FXML
-    public void setSSNRadioButton(ActionEvent ae) {
+    private void setSSNRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.SSN;
     }
 
     @FXML
-    public void setSurnameRadioButton(ActionEvent ae) {
+    private void setSurnameRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.SURNAME;
     }
 
     @FXML
-    public void setUsernameRadioButton(ActionEvent ae) {
+    private void setUsernameRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.USERNAME;
     }
 
@@ -101,31 +92,30 @@ public class ContactEmployeeController implements Initializable {
 
 
     @FXML
-    public void setAscendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = true;
-    }
-
-
-    @FXML
-    public void search(ActionEvent ae) {
+    private void search(ActionEvent ae) {
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
         ContactSearchQueries connection = new ContactSearchQueries ();
+        connection.setDBURL ( account.getUserName (),account.getPassword () );
 
 
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchEmployeeList = connection.getEmployeeDefaultContactSearch ( ascending );
+            this.searchEmployeeList = connection.getEmployeeDefaultContactSearch ( );
 
 
         } else if (typeOfIntrestControll == TypeOfIntrestValue.SSN) {
-            this.searchEmployeeList = connection.getEmployeeContactSSNSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeContactSSNSearch ( searchfield.getText () );
 
 
         } else if (typeOfIntrestControll == TypeOfIntrestValue.USERNAME) {
-            this.searchEmployeeList = connection.getEmployeeContactUserNameSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeContactUserNameSearch ( searchfield.getText () );
 
 
         } else if (typeOfIntrestControll == TypeOfIntrestValue.SURNAME) {
-            this.searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeContactSurnameSearch ( searchfield.getText () );
 
         }
         else{
@@ -146,9 +136,6 @@ public class ContactEmployeeController implements Initializable {
         iUsername.setCellValueFactory ( new PropertyValueFactory<> ( "searchUsername" ) );
         iIsEmployed.setCellValueFactory ( new PropertyValueFactory<> ( "searchEmployed" ) );
 
-
-
-
     }
 
     public void cancel(ActionEvent ae) {
@@ -167,13 +154,18 @@ public class ContactEmployeeController implements Initializable {
         stage.setScene ( scene );
     }
     @FXML
-    public void removeEmployee(ActionEvent ae) {
+    private void removeEmployee(ActionEvent ae) {
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
         EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
+        connection.setDBURL ( account.getUserName (), account.getPassword ());
         String userName = removeEmployeeTextField.getText ();
         connection.removeEmployee ( userName );
     }
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         helpAlert.setTitle("Help Menu");
         helpAlert.getDialogPane().setPrefWidth(450);

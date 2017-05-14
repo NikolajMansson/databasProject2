@@ -35,11 +35,12 @@ public class AddGameToDBController implements Initializable {
 
     }
     @FXML
-    public void addGame(ActionEvent ae) {
+    private void addGame(ActionEvent ae) {
         SetGameInfoQueries connection = new SetGameInfoQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
@@ -47,7 +48,7 @@ public class AddGameToDBController implements Initializable {
     }
 
     @FXML
-    public void addItemToListScene(ActionEvent ae) {
+    private void addItemToListScene(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -82,8 +83,7 @@ public class AddGameToDBController implements Initializable {
 
 
         @FXML
-
-        private void help() {
+        public void help() {
 
             Alert helpAlert = new Alert ( Alert.AlertType.INFORMATION, "" );
 

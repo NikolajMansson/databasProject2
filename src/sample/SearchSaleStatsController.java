@@ -22,7 +22,6 @@ public class SearchSaleStatsController implements Initializable {
 
     @FXML
     TableView<TableEmployeeStatsSearch> tableID;
-
     @FXML
     TableColumn<TableGameSearch, String> iFirstName;
     @FXML
@@ -34,8 +33,7 @@ public class SearchSaleStatsController implements Initializable {
     @FXML
     TableColumn<TableGameSearch, Double> iIncome;
 
-    private ArrayList<TableEmployeeStatsSearch> data = new ArrayList<> ();
-    ArrayList<Employee> searchEmployeeList = null;
+
     @FXML
     Button search;
     @FXML
@@ -46,41 +44,29 @@ public class SearchSaleStatsController implements Initializable {
     RadioButton surnameRadioButton;
     @FXML
     RadioButton usernameRadioButton;
-    @FXML
-    RadioButton ascendingOrderRadioButton;
-    @FXML
-    RadioButton descendingOrderRadioButton;
-
-
 
     @FXML
     private TextField searchfield;
 
-
-
-    public void setDescendingOrderRadioButton(ActionEvent actionEvent) {
-        this.ascending = false;
-    }
+    private ArrayList<TableEmployeeStatsSearch> data = new ArrayList<> ();
+    ArrayList<Employee> searchEmployeeList = null;
 
     private enum TypeOfIntrestValue {SSN, SURNAME, USERNAME}
-
-
     private TypeOfIntrestValue typeOfIntrestControll = TypeOfIntrestValue.SSN;
-
-    private boolean ascending = true;
+    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
 
     @FXML
-    public void setSSNRadioButton(ActionEvent ae) {
+    private void setSSNRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.SSN;
     }
 
     @FXML
-    public void setSurnameRadioButton(ActionEvent ae) {
+    private void setSurnameRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.SURNAME;
     }
 
     @FXML
-    public void setUsernameRadioButton(ActionEvent ae) {
+    private void setUsernameRadioButton(ActionEvent ae) {
         this.typeOfIntrestControll = typeOfIntrestControll.USERNAME;
     }
 
@@ -93,31 +79,29 @@ public class SearchSaleStatsController implements Initializable {
 
 
     @FXML
-    public void setAscendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = true;
-    }
-
-
-    @FXML
-    public void search(ActionEvent ae) {
+    private void search(ActionEvent ae) {
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
         SalesSearchQueries connection = new SalesSearchQueries ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
 
 
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchEmployeeList = connection.getEmployeeDefaultSalesSearch ( ascending );
+            this.searchEmployeeList = connection.getEmployeeDefaultSalesSearch ();
 
 
         } else if ((typeOfIntrestControll == TypeOfIntrestValue.SSN)) {
-            this.searchEmployeeList = connection.getEmployeeSalesSSNSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeSalesSSNSearch ( searchfield.getText ());
 
 
         } else if ((typeOfIntrestControll == TypeOfIntrestValue.USERNAME)) {
-            this.searchEmployeeList = connection.getEmployeeSalesUserNameSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeSalesUserNameSearch ( searchfield.getText ());
 
 
         } else if ((typeOfIntrestControll == TypeOfIntrestValue.SURNAME)) {
-            this.searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText (), ascending );
+            this.searchEmployeeList = connection.getEmployeeSalesSurnameSearch ( searchfield.getText ());
 
 
         }
@@ -159,9 +143,8 @@ public class SearchSaleStatsController implements Initializable {
     }
 
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
-        // Ställer in övre texten
         helpAlert.setTitle("Help Menu");
         // Ställer in bredden
         helpAlert.getDialogPane().setPrefWidth(450);

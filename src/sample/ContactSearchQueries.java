@@ -12,15 +12,14 @@ import java.util.ArrayList;
 public class ContactSearchQueries extends DBConnection{
 
     private PreparedStatement everyEmployeeAsc;
-    private PreparedStatement everyEmployeeDesc;
-    private PreparedStatement employeeUserNameAsc;
-    private PreparedStatement employeeUserNameDesc;
-    private PreparedStatement employeeSSNAsc;
-    private PreparedStatement employeeSSNDesc;
-    private PreparedStatement employeeSurnameAsc;
-    private PreparedStatement employeeSurnameDesc;
 
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
+    private PreparedStatement employeeUserNameAsc;
+
+    private PreparedStatement employeeSSNAsc;
+
+    private PreparedStatement employeeSurnameAsc;
+
+
 
     private com.mysql.jdbc.Connection c = null;
 
@@ -31,19 +30,19 @@ public class ContactSearchQueries extends DBConnection{
 
             everyEmployeeAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee ORDER BY UserName " );
 
-            everyEmployeeDesc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee ORDER BY UserName DESC" );
+
 
             employeeUserNameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE UserName = ? ORDER BY UserName ");
 
-            employeeUserNameDesc = c.prepareStatement( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE UserName = ? ORDER BY UserName DESC" );
+
 
             employeeSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE SSN = ? ORDER BY SSN ");
 
-            employeeSSNDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE SSN = ? ORDER BY SSN DESC");
+
 
             employeeSurnameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE Surname = ? ORDER BY Surname ");
 
-            employeeSurnameDesc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName,isEmployed FROM Employee WHERE Surname = ? ORDER BY Surname DESC");
+
 
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
@@ -51,17 +50,15 @@ public class ContactSearchQueries extends DBConnection{
 
     }
 
-    public ArrayList<Employee> getEmployeeDefaultContactSearch(boolean ascending) {
+    public ArrayList<Employee> getEmployeeDefaultContactSearch() {
 
         ArrayList<Employee> results = null;
         ResultSet resultSet = null;
 
             try {
-                if (ascending == true) {
+
                    resultSet = everyEmployeeAsc.executeQuery ();
-                } else {
-                    resultSet = everyEmployeeDesc.executeQuery ();
-                }
+
 
                 results = new ArrayList<> ();
 
@@ -85,21 +82,15 @@ public class ContactSearchQueries extends DBConnection{
 
         return null;
     }
-    public ArrayList<Employee> getEmployeeContactUserNameSearch(String userName, boolean ascending) {
+    public ArrayList<Employee> getEmployeeContactUserNameSearch(String userName) {
         ArrayList<Employee> results = null;
         ResultSet resultSet = null;
 
             try {
-                if (ascending == true) {
                     employeeUserNameAsc.setString ( 1, userName );
 
                     resultSet = employeeUserNameAsc.executeQuery ();
-                } else {
 
-                    employeeUserNameDesc.setString ( 1, userName );
-
-                    resultSet = employeeUserNameDesc.executeQuery ();
-                }
 
                 results = new ArrayList<> ();
 
@@ -127,21 +118,17 @@ public class ContactSearchQueries extends DBConnection{
 
 
 
-    public ArrayList<Employee> getEmployeeContactSSNSearch(String SSN, boolean ascending) {
+    public ArrayList<Employee> getEmployeeContactSSNSearch(String SSN) {
 
         ArrayList<Employee> results = null;
         ResultSet resultSet = null;
 
             try {
-                if (ascending == true) {
+
                     employeeSSNAsc.setString ( 1, SSN );
 
                     resultSet = employeeSSNAsc.executeQuery ();
-                } else {
-                    employeeSSNDesc.setString ( 1, SSN );
 
-                    resultSet = employeeSSNDesc.executeQuery ();
-                }
 
                 results = new ArrayList<> ();
 
@@ -167,20 +154,15 @@ public class ContactSearchQueries extends DBConnection{
     }
 
 
-    public ArrayList<Employee> getEmployeeContactSurnameSearch(String surname, boolean ascending) {
+    public ArrayList<Employee> getEmployeeContactSurnameSearch(String surname) {
         ArrayList<Employee> results = null;
         ResultSet resultSet = null;
         try {
 
-                if (ascending == true) {
                     employeeSurnameAsc.setString ( 1, surname );
 
                     resultSet = employeeSurnameAsc.executeQuery ();
-                } else {
-                    employeeSurnameDesc.setString ( 1, surname );
 
-                    resultSet = employeeSurnameDesc.executeQuery ();
-                }
 
                 results = new ArrayList<> ();
 

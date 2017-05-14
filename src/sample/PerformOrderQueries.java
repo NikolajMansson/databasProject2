@@ -1,9 +1,9 @@
 package sample;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by Nikolaj on 2017-05-05.
@@ -16,14 +16,12 @@ public class PerformOrderQueries extends DBConnection{
     private PreparedStatement saleToGuest;
     private PreparedStatement getItemBeingSold;
 
-
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
-
     private com.mysql.jdbc.Connection c = null;
 
     public PerformOrderQueries() {
 
         try {
+
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
             increaseMoneyEmployee = c.prepareStatement ( "UPDATE Employee SET Income=Income + ? WHERE UserName = ?;" );
@@ -50,8 +48,6 @@ public class PerformOrderQueries extends DBConnection{
 
 
     public void increaseEmployeeIncome(double price, String userName) {
-BigDecimal value = BigDecimal.valueOf ( price );
-        BigDecimal rounded = value.round(new MathContext ( 2, RoundingMode.CEILING ));
 
         try {
             increaseMoneyEmployee.setDouble ( 1, price);

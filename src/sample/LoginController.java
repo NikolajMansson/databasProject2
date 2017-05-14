@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -18,13 +19,18 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     @FXML
+    private Button quitButton;
+
+    @FXML
     private TextField loginUsername;
     @FXML
     private TextField loginPassword;
+    CartFile cartFile = new CartFile ();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        cartFile.cleanArticleNo ();
+        cartFile.cleanQuantity ();
     }
 
     @FXML
@@ -50,7 +56,7 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene (root);
+            Scene scene = new Scene ( root );
             stage.setScene ( scene );
         }
     }
@@ -85,7 +91,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void loginAsBoss(ActionEvent ae) {
+    private void loginAsBoss(ActionEvent ae) {
         Main main = new Main ();
 
         EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
@@ -108,14 +114,14 @@ public class LoginController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root);
+            Scene scene = new Scene ( root );
             stage.setScene ( scene );
         }
 
     }
 
     @FXML
-    public void guestSearch(ActionEvent ae) {
+    private void guestSearch(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -127,24 +133,25 @@ public class LoginController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
     @FXML
-    private void help(){
-        Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
-        // Ställer in övre texten
-        helpAlert.setTitle("Help Menu");
-        // Ställer in bredden
-        helpAlert.getDialogPane().setPrefWidth(600);
-        // Ställer in mitten texten
-        helpAlert.setHeaderText("This is the login screen");
-        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
-        helpAlert.setContentText("If you are a customer, use the guest button." + System.getProperty("line.separator")
-        + "If you have a membership, enter your username and password, then use the customer button." + System.getProperty("line.separator")
-        + "If you are an employee/boss, enter your username and password, then use the employee button." + System.getProperty("line.separator")
-        + "Press OK to close this window.");
-        helpAlert.showAndWait();
+    public void help() {
+        Alert helpAlert = new Alert ( Alert.AlertType.INFORMATION, "" );
+        helpAlert.setTitle ( "Help Menu" );
+        helpAlert.getDialogPane ().setPrefWidth ( 600 );
+        helpAlert.setHeaderText ( "This is the login screen" );
+        helpAlert.setContentText ( "If you are a customer, use the guest button." + System.getProperty ( "line.separator" )
+                + "If you have a membership, enter your username and password, then use the customer button." + System.getProperty ( "line.separator" )
+                + "If you are an employee/boss, enter your username and password, then use the employee button." + System.getProperty ( "line.separator" )
+                + "Press OK to close this window." );
+        helpAlert.showAndWait ();
+    }
+    @FXML
+    private void quit(){
+        Stage stage = (Stage) quitButton.getScene().getWindow();
+        stage.close();
     }
 }

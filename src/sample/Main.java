@@ -12,10 +12,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load ( getClass ().getResource ( "sceneSearchForGameCustomer.fxml" ) );
+        Parent root = FXMLLoader.load ( getClass ().getResource ( "sceneLogin.fxml" ) );
         primaryStage.setTitle ( "Game Store Shopping" );
         primaryStage.setScene ( new Scene ( root ));
         primaryStage.show ();
+
     }
 
 
@@ -28,4 +29,5 @@ public class Main extends Application {
         createActiveUserFile.startUpload ( account );
 
     }
+
 }

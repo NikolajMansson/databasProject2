@@ -39,9 +39,9 @@ public class GameSearchCustomerController implements Initializable {
     private SearchStatus searchControll = SearchStatus.TITLE;
     ArrayList<SearchResultItem> searchItemList = null;
 
-
+    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
     ItemSearchQueries connection = new ItemSearchQueries ();
-    private boolean ascending = true;
+
     private ArrayList<TableGameSearch> data = new ArrayList<> ();
 
     @Override
@@ -51,48 +51,41 @@ public class GameSearchCustomerController implements Initializable {
 
 
     @FXML
-    public void setGameTitleRadioButton(ActionEvent ae) {
+    private void setGameTitleRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.TITLE;
     }
 
     @FXML
-    public void setDeveloperRadioButton(ActionEvent ae) {
+    private void setDeveloperRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.DEVELOPER;
     }
 
     @FXML
-    public void setPlatformRadioButton(ActionEvent ae) {
+    private void setPlatformRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.PLATFORM;
     }
 
     @FXML
-    public void setAscendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = true;
-    }
-
-    @FXML
-    public void setDescendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = false;
-    }
-
-    @FXML
-    public void search(ActionEvent ae) {
+    private void search(ActionEvent ae) {
         ItemSearchQueries connection = new ItemSearchQueries ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchItemList = connection.getItemDefaultSearch ( ascending );
+            this.searchItemList = connection.getItemDefaultSearch (  );
 
         } else if (searchControll == SearchStatus.TITLE) {
-            this.searchItemList = connection.getItemTitleSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemTitleSearch ( searchfield.getText () );
 
         } else if (searchControll == SearchStatus.PLATFORM) {
-            this.searchItemList = connection.getItemPlatformSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemPlatformSearch ( searchfield.getText () );
 
         } else if (searchControll == SearchStatus.DEVELOPER) {
-            this.searchItemList = connection.getItemDeveloperSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemDeveloperSearch ( searchfield.getText () );
 
-        }
-        else{
+        } else {
             return;
         }
         for (int i = 0; i < searchItemList.size (); i++) {

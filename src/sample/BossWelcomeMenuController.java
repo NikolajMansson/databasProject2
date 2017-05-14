@@ -135,22 +135,6 @@ public class BossWelcomeMenuController implements Initializable {
         stage.setScene ( scene );
     }
 
-    @FXML
-    private void openCart(ActionEvent ae){
-        Node node = (Node) ae.getSource ();
-        Stage stage = (Stage) node.getScene ().getWindow ();
-
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCart.fxml" ) );
-        Parent root = null;
-        try {
-            root = loader.load ();
-        } catch (IOException e) {
-            e.printStackTrace ();
-        }
-
-        Scene scene = new Scene ( root );
-        stage.setScene ( scene );
-    }
 
     @FXML
     private void viewSalesStatistics(ActionEvent ae){
@@ -174,7 +158,7 @@ public class BossWelcomeMenuController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ("sceneSearchFromGameLibraryEmployee.fxml") );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ("sceneSearchForGameEmployee.fxml") );
         Parent root = null;
         try {
             root = loader.load ();
@@ -186,7 +170,7 @@ public class BossWelcomeMenuController implements Initializable {
         stage.setScene ( scene );
     }
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         // Ställer in övre texten
         helpAlert.setTitle("Help Menu");

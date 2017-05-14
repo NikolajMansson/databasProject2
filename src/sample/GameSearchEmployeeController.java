@@ -20,16 +20,12 @@ import java.util.ResourceBundle;
 
 public class GameSearchEmployeeController implements Initializable {
 
-@FXML
-   TextField indexTextField;
+    @FXML
+    TextField indexTextField;
     @FXML
     TextField quantityTextField;
     @FXML
     TextField gameTitleTextField;
-
-
-
-
     @FXML
     TableView<TableGameSearch> tableID;
     @FXML
@@ -44,7 +40,26 @@ public class GameSearchEmployeeController implements Initializable {
     @FXML
     private TextField searchfield;
 
+    ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+
     private CartFile cartFile = new CartFile ();
+
+    @FXML
+    private void viewCart(ActionEvent ae) {
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCart.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+        Scene scene = new Scene ( root );
+        stage.setScene ( scene );
+    }
 
     private enum SearchStatus {TITLE, DEVELOPER, PLATFORM}
 
@@ -53,15 +68,16 @@ public class GameSearchEmployeeController implements Initializable {
 
 
     ItemSearchQueries connection = new ItemSearchQueries ();
-    private boolean ascending = true;
+
     private ArrayList<TableGameSearch> data = new ArrayList<> ();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
     @FXML
-    public void addToCart(ActionEvent ae) {
+    private void addToCart(ActionEvent ae) {
         int articleNumber = Integer.parseInt ( indexTextField.getText () );
         int quantity = Integer.parseInt ( quantityTextField.getText () );
 
@@ -71,52 +87,52 @@ public class GameSearchEmployeeController implements Initializable {
     }
 
     @FXML
-    public void removeGame(ActionEvent ae) {
+    private void removeGame(ActionEvent ae) {
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
         SetGameInfoQueries dbConnection = new SetGameInfoQueries ();
+        dbConnection.setDBURL ( account.getUserName (), account.getPassword () );
         String title = gameTitleTextField.getText ();
         dbConnection.removeGame ( title );
     }
 
     @FXML
-    public void setGameTitleRadioButton(ActionEvent ae) {
+    private void setGameTitleRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.TITLE;
     }
 
     @FXML
-    public void setDeveloperRadioButton(ActionEvent ae) {
+    private void setDeveloperRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.DEVELOPER;
     }
 
     @FXML
-    public void setPlatformRadioButton(ActionEvent ae) {
+    private void setPlatformRadioButton(ActionEvent ae) {
         this.searchControll = SearchStatus.PLATFORM;
     }
 
-    @FXML
-    public void setAscendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = true;
-    }
 
     @FXML
-    public void setDescendingOrderRadioButton(ActionEvent ae) {
-        this.ascending = false;
-    }
+    private void search(ActionEvent ae) {
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
 
-    @FXML
-    public void search(ActionEvent ae) {
         ItemSearchQueries connection = new ItemSearchQueries ();
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
 
         if (searchfield.getText ().equals ( "" )) {
-            this.searchItemList = connection.getItemDefaultSearch ( ascending );
+            this.searchItemList = connection.getItemDefaultSearch ();
 
         } else if (searchControll == SearchStatus.TITLE) {
-            this.searchItemList = connection.getItemTitleSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemTitleSearch ( searchfield.getText () );
 
         } else if (searchControll == SearchStatus.PLATFORM) {
-            this.searchItemList = connection.getItemPlatformSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemPlatformSearch ( searchfield.getText () );
 
         } else if (searchControll == SearchStatus.DEVELOPER) {
-            this.searchItemList = connection.getItemDeveloperSearch ( searchfield.getText (), ascending );
+            this.searchItemList = connection.getItemDeveloperSearch ( searchfield.getText () );
 
         } else {
             return;
@@ -137,7 +153,7 @@ public class GameSearchEmployeeController implements Initializable {
 
 
     @FXML
-    public void cancel(ActionEvent ae){
+    public void cancel(ActionEvent ae) {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -149,25 +165,25 @@ public class GameSearchEmployeeController implements Initializable {
             e.printStackTrace ();
         }
 
-        Scene scene = new Scene ( root);
+        Scene scene = new Scene ( root );
         stage.setScene ( scene );
     }
 
     @FXML
-    private void help(){
-        Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
+    public void help() {
+        Alert helpAlert = new Alert ( Alert.AlertType.INFORMATION, "" );
         // Ställer in övre texten
-        helpAlert.setTitle("Help Menu");
+        helpAlert.setTitle ( "Help Menu" );
         // Ställer in bredden
-        helpAlert.getDialogPane().setPrefWidth(450);
+        helpAlert.getDialogPane ().setPrefWidth ( 450 );
         // Ställer in mitten texten
-        helpAlert.setHeaderText("This is the Employee Search Engine");
+        helpAlert.setHeaderText ( "This is the Employee Search Engine" );
         // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
-        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
-                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
-                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
-                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
-                + "Press OK to close this window.");
-        helpAlert.showAndWait();
+        helpAlert.setContentText ( "Select which category you want to use (SSN, Username or Surname)." + System.getProperty ( "line.separator" )
+                + "Select which order you want (Ascending/Descending)." + System.getProperty ( "line.separator" )
+                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty ( "line.separator" )
+                + "Type your keywords in the field, then press the Search button." + System.getProperty ( "line.separator" )
+                + "Press OK to close this window." );
+        helpAlert.showAndWait ();
     }
 }

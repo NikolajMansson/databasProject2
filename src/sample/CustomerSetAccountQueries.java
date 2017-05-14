@@ -9,10 +9,6 @@ public class CustomerSetAccountQueries extends DBConnection{
 
     private PreparedStatement insertNewCustomer;
     private PreparedStatement searchForPasswordCustomer;
-
-
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
-
     private String correctPassword = null;
     private com.mysql.jdbc.Connection c = null;
 

@@ -33,11 +33,11 @@ public class OrderOptionsController implements Initializable {
     private CustomerStatus customerStatusControll = CustomerStatus.MEMBER;
 
     @FXML
-    public void setMemberRadioButton(ActionEvent ae){
+    private void setMemberRadioButton(ActionEvent ae){
         this.customerStatusControll=CustomerStatus.MEMBER;
     };
     @FXML
-    public void setGuestRadioButton(ActionEvent ae){
+    private void setGuestRadioButton(ActionEvent ae){
         this.customerStatusControll=CustomerStatus.GUEST;
     };
 
@@ -47,7 +47,7 @@ public class OrderOptionsController implements Initializable {
 
     }
     @FXML
-    public void changeScene(ActionEvent ae) {
+    private void changeScene(ActionEvent ae) {
 
 
         if(customerStatusControll==CustomerStatus.GUEST) {

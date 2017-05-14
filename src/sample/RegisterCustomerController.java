@@ -43,7 +43,7 @@ public class RegisterCustomerController implements Initializable {
     private PasswordField password;
 
     @FXML
-    public void add(ActionEvent ae) {
+    private void add(ActionEvent ae) {
         CustomerSetAccountQueries connection = new CustomerSetAccountQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
@@ -71,7 +71,7 @@ public class RegisterCustomerController implements Initializable {
     }
 
     @FXML
-    private void help(){
+    public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
         // Ställer in övre texten
         helpAlert.setTitle("Help Menu");

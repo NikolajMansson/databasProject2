@@ -12,16 +12,9 @@ import java.util.ArrayList;
 public class ItemSearchQueries extends DBConnection{
 
     private PreparedStatement defaultItemAsc;
-    private PreparedStatement defaultItemDesc;
     private PreparedStatement itemTitleAsc;
-    private PreparedStatement itemTitleDesc;
     private PreparedStatement itemPlatformAsc;
-    private PreparedStatement itemPlatformDesc;
     private PreparedStatement itemDeveloperAsc;
-    private PreparedStatement itemDeveloperDesc;
-
-
-    private String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
 
     private com.mysql.jdbc.Connection c = null;
 
@@ -32,20 +25,11 @@ public class ItemSearchQueries extends DBConnection{
 
             defaultItemAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            defaultItemDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
-
             itemTitleAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
-
-            itemTitleDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
 
             itemPlatformAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
 
-            itemPlatformDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
-
             itemDeveloperAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
-
-            itemDeveloperDesc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo DESC" );
-
 
         } catch (SQLException ex) {
             System.err.println ( "the connection fails" );
@@ -53,17 +37,15 @@ public class ItemSearchQueries extends DBConnection{
 
     }
 
-    public ArrayList<SearchResultItem> getItemDefaultSearch(boolean ascending) {
+    public ArrayList<SearchResultItem> getItemDefaultSearch() {
 
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
 
         try {
-            if (ascending == true) {
+
                 resultSet = defaultItemAsc.executeQuery ();
-            } else {
-                resultSet = defaultItemDesc.executeQuery ();
-            }
+
 
             results = new ArrayList<> ();
 
@@ -87,21 +69,15 @@ public class ItemSearchQueries extends DBConnection{
     }
 
 
-    public ArrayList<SearchResultItem> getItemTitleSearch(String text, boolean ascending) {
+    public ArrayList<SearchResultItem> getItemTitleSearch(String text) {
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
         try {
-            if (ascending == true) {
+
                 itemTitleAsc.setString ( 1, text + "%" );
 
                 resultSet = itemTitleAsc.executeQuery ();
-            } else {
 
-                itemTitleDesc.setString ( 1, text + "%" );
-
-                resultSet = itemTitleDesc.executeQuery ();
-
-            }
             results = new ArrayList<> ();
 
             while (resultSet.next ()) {
@@ -123,20 +99,15 @@ public class ItemSearchQueries extends DBConnection{
         return null;
     }
 
-    public ArrayList<SearchResultItem> getItemPlatformSearch(String text, boolean ascending) {
+    public ArrayList<SearchResultItem> getItemPlatformSearch(String text) {
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
         try {
-            if (ascending == true) {
+
                 itemPlatformAsc.setString ( 1, text + "%" );
 
                 resultSet = itemPlatformAsc.executeQuery ();
-            } else {
-                itemPlatformDesc.setString ( 1, text + "%" );
 
-                resultSet = itemPlatformDesc.executeQuery ();
-
-            }
             results = new ArrayList<> ();
 
             while (resultSet.next ()) {
@@ -159,22 +130,16 @@ public class ItemSearchQueries extends DBConnection{
         return null;
     }
 
-    public ArrayList<SearchResultItem> getItemDeveloperSearch(String text, boolean ascending) {
+    public ArrayList<SearchResultItem> getItemDeveloperSearch(String text) {
         ArrayList<SearchResultItem> results = null;
         ResultSet resultSet = null;
         try {
-            if (ascending == true) {
+
 
                 itemDeveloperAsc.setString ( 1, text + "%" );
 
                 resultSet = itemDeveloperAsc.executeQuery ();
-            } else {
 
-                itemDeveloperDesc.setString ( 1, text + "%" );
-
-                resultSet = itemDeveloperDesc.executeQuery ();
-
-            }
 
             results = new ArrayList<> ();
 
