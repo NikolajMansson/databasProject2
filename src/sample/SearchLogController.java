@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class SearchLogController implements Initializable {
@@ -52,11 +53,23 @@ public class SearchLogController implements Initializable {
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
-       // connection.setDBURL ( account.getUserName (), account.getPassword () );
+        connection.setDBURL ( account.getUserName (), account.getPassword () );
         this.searchLogList = connection.getLog();
+
+        int year = Calendar.getInstance().get( Calendar.YEAR);
+        int month = Calendar.getInstance().get( Calendar.MONTH);
+        int day = Calendar.getInstance().get( Calendar.DAY_OF_WEEK_IN_MONTH);
+
+        String yearLine = String.format("%d%d%d", year, month, day);
+        int yearCompare = Integer.parseInt ( yearLine );
 
         for (int i = 0; i < searchLogList.size (); i++) {
             TableLogSearch table = new TableLogSearch ( searchLogList.get ( i ).getLogID (), searchLogList.get ( i ).getEvent (), searchLogList.get ( i ).getBossUserName (), searchLogList.get ( i ).getTime ());
+            int time = Integer.parseInt ( searchLogList.get(i).getTime () );
+            //Om ett år har gått så förstörs logId
+            if((time+10000)<yearCompare){
+                connection.removeLogID ( searchLogList.get(i).getLogID () );
+            }
             data.add ( table );
         }
 
