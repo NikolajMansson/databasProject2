@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -27,13 +28,13 @@
                     </font>
                 </Label>
                 <TextField fx:id="loginUsername" layoutX="176.0" layoutY="92.0" />
-                <TextField fx:id="loginPassword" layoutX="176.0" layoutY="125.0" />
                 <Label layoutX="74.0" layoutY="96.0" text="Username :" />
                 <Label layoutX="76.0" layoutY="129.0" text="Password :" />
             <Button fx:id="guestButton" layoutX="427.0" layoutY="160.0" mnemonicParsing="false" onAction="#guestSearch" text="Guest" />
             <Button layoutX="432.0" layoutY="19.0" mnemonicParsing="false" onAction="#help" text="Help" />
             <Button layoutX="432.0" layoutY="261.0" mnemonicParsing="false" onAction="#loginAsBoss" text="Boss" />
             <Button fx:id="quitButton" layoutX="35.0" layoutY="249.0" mnemonicParsing="false" onAction="#quit" text="Quit" />
+            <PasswordField fx:id="loginPassword" layoutX="176.0" layoutY="125.0" />
             </children>
         </AnchorPane>
     </children>
