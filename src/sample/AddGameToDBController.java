@@ -95,21 +95,41 @@ public class AddGameToDBController implements Initializable {
 
     @FXML
     public void cancel(ActionEvent ae) {
-        Node node = (Node) ae.getSource ();
-        Stage stage = (Stage) node.getScene ().getWindow ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        if (account.getPrivelegelevel () == 0) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
-        Parent root = null;
-        try {
-            root = loader.load ();
-        } catch (IOException e) {
-            e.printStackTrace ();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        } else {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
+
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
         }
 
-        Scene scene = new Scene ( root);
-        stage.setScene ( scene );
     }
-
 
         @FXML
         public void help() {

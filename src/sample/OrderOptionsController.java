@@ -88,7 +88,7 @@ public class OrderOptionsController implements Initializable {
     }
 
     @FXML
-    private void cancel(ActionEvent ae) {
+    public void cancel(ActionEvent ae) {
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
