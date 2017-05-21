@@ -112,7 +112,7 @@ public class SetGameInfoQueries extends DBConnection {
             }
         }
 
-    
+
 
     public void addPlatformToList(String abbreviation, String fullname, String maker) {
 
