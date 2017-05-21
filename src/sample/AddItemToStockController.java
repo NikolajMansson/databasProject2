@@ -3,6 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,11 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Created by Nikolaj on 2017-04-19.
  */
-public class AddItemToStockController {
+public class AddItemToStockController implements Initializable{
     @FXML
     public Button cancel;
     @FXML
@@ -33,18 +37,103 @@ public class AddItemToStockController {
     private TextField makerOfPlatform;
     @FXML
     private TextField amountOfItemsTextField;
+    @FXML
+    private TextField releaseDateTextLabel;
 
+    private int releaseDate = 0;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
     @FXML
     private void add(ActionEvent ae) {
-        SetGameInfoQueries connection = new SetGameInfoQueries ();
+        try {
+            if (releaseDateTextLabel.getText () != null) {
+                this.releaseDate = Integer.parseInt ( releaseDateTextLabel.getText () );
+            }
+        }
+        catch(NumberFormatException e){
+            this.releaseDate = 0;
+        }
+
+        SetGameInfoQueries connection1 = new SetGameInfoQueries ();
+        ItemSearchQueries connection2 = new ItemSearchQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
-        connection.setDBURL ( account.getUserName (), account.getPassword () );
-        connection.addPlatformToList ( abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText () );
-        connection.addItemToList ( abbreviationTextField.getText (), priceTextField.getText (), amountOfItemsTextField.getText (), gameTitle.getText () );
-        connection.close ();
+
+        connection2.setDBURL ( account.getUserName (),account.getPassword () );
+        ArrayList<SearchResultItem> itemList = connection2.getItemDefaultSearch ();
+
+        for(int i = 0; i < itemList.size (); i++){
+          if((itemList.get ( i ).getTitle ().equals ( gameTitle.getText () )&&(itemList.get(i).getAbbreviation ().equals(abbreviationTextField.getText ()))) ){
+        connection1.pushCopies ( itemList.get(i).getAmount () ,itemList.get(i).getArticleNo () );
+              Node node = (Node) ae.getSource ();
+
+              Stage stage = (Stage) node.getScene ().getWindow ();
+              if(account.getPrivelegelevel ()==0) {
+                  FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+                  Parent root = null;
+                  try {
+                      root = loader.load ();
+                  } catch (IOException e) {
+                      e.printStackTrace ();
+                  }
+
+                  Scene scene = new Scene ( root );
+                  stage.setScene ( scene );
+              }
+              else{
+                  FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+                  Parent root = null;
+                  try {
+                      root = loader.load ();
+                  } catch (IOException e) {
+                      e.printStackTrace ();
+                  }
+
+                  Scene scene = new Scene ( root );
+                  stage.setScene ( scene );
+
+              }
+            }
+        }
+
+        connection1.setDBURL ( account.getUserName (), account.getPassword () );
+            connection1.addPlatformToList ( abbreviationTextField.getText (), fullNameOfPlatform.getText (), makerOfPlatform.getText () );
+            connection1.addItemToList ( abbreviationTextField.getText (), priceTextField.getText (), amountOfItemsTextField.getText (), gameTitle.getText (), releaseDate );
+            connection1.close ();
+        Node node = (Node) ae.getSource ();
+
+        Stage stage = (Stage) node.getScene ().getWindow ();
+        if(account.getPrivelegelevel ()==0) {
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+
+        }
+
     }
 
     @FXML
@@ -67,17 +156,14 @@ public class AddItemToStockController {
     @FXML
     public void help(){
         Alert helpAlert = new Alert(Alert.AlertType.INFORMATION, "");
-        // Ställer in övre texten
         helpAlert.setTitle("Help Menu");
-        // Ställer in bredden
         helpAlert.getDialogPane().setPrefWidth(400);
-        // Ställer in mitten texten
         helpAlert.setHeaderText("This is the New Copy Menu");
-        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
         helpAlert.setContentText("Fill in all the fields with appropriate information." + System.getProperty("line.separator")
                 + "Then press the 'add item' button to add the new copy to the server." + System.getProperty("line.separator")
                 + "Press the 'Cancel' button to go back." + System.getProperty("line.separator")
                 + "Press OK to close this window.");
         helpAlert.showAndWait();
     }
+
 }

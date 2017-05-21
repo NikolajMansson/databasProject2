@@ -130,7 +130,7 @@ public class SearchSaleStatsController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -146,11 +146,8 @@ public class SearchSaleStatsController implements Initializable {
     public void help(){
         Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
         helpAlert.setTitle("Help Menu");
-        // Ställer in bredden
         helpAlert.getDialogPane().setPrefWidth(450);
-        // Ställer in mitten texten
         helpAlert.setHeaderText("This is the Employee Search Engine");
-        // Ställer in brödtexten, system.getProperty("line.separator) är radbrytare"
         helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
                 + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
                 + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")

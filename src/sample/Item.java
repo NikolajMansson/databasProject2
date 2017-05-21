@@ -18,7 +18,7 @@ public class Item extends Game {
 
     private String platformAbbreviation = null;
 
-    public Item(int articleNumber, String platformAbbreviation, double price, int amountOfItems, String title, int releaseDate) {
+    public Item(int articleNumber, String platformAbbreviation, double price, String title, int releaseDate) {
         super ( title );
         setArticleNumber ( articleNumber );
         setPlatformAbbreviation ( platformAbbreviation );

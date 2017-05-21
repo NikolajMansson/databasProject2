@@ -12,12 +12,15 @@ public class TableGameSearch {
     private final SimpleStringProperty searchTitle;
     private final SimpleStringProperty searchAbbreviation;
     private final SimpleDoubleProperty searchPrice;
+    private final SimpleIntegerProperty searchAmount;
 
-    public TableGameSearch(int aID, String title, String abbreviation, double price){
+
+    public TableGameSearch(int aID, String title, String abbreviation, double price, int searchAmount){
         this.searchAID = new SimpleIntegerProperty ( aID );
         this.searchTitle = new SimpleStringProperty ( title );
         this.searchAbbreviation = new SimpleStringProperty ( abbreviation );
         this.searchPrice = new SimpleDoubleProperty (price);
+        this.searchAmount = new SimpleIntegerProperty (searchAmount);
     }
 
     public int getSearchAID() {
@@ -76,4 +79,15 @@ public class TableGameSearch {
         return searchPrice;
     }
 
+    public int getSearchAmount() {
+        return searchAmount.get ();
+    }
+
+    public SimpleIntegerProperty searchAmountProperty() {
+        return searchAmount;
+    }
+
+    public void setSearchAmount(int searchAmount) {
+        this.searchAmount.set ( searchAmount );
+    }
 }

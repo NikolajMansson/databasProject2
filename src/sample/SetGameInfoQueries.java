@@ -1,34 +1,42 @@
 package sample;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import javafx.scene.control.Alert;
+
+import java.sql.*;
 
 /**
  * Created by Nikolaj on 2017-04-25.
  */
-public class SetGameInfoQueries extends DBConnection{
+public class SetGameInfoQueries extends DBConnection {
 
     private PreparedStatement insertNewGame;
     private PreparedStatement insertNewItem;
+    private PreparedStatement insertNewItemCollection;
+    private PreparedStatement insertNewItemCollectionRelease;
     private PreparedStatement insertNewPlatform;
-    private PreparedStatement decreaseItemAmount;
     private PreparedStatement removeGame;
 
+    private int releaseDate = 0;
+
     private com.mysql.jdbc.Connection c = null;
+
+    private int primaryKey = 0;
 
     public SetGameInfoQueries() {
 
         try {
-
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
-            insertNewItem = c.prepareStatement ( "INSERT INTO Item(Game_Title, Platform_Abbreviation, price, AmountOfItemsInStock) VALUES ((SELECT Title FROM Game WHERE Title = ?), (SELECT Abbreviation FROM Platform WHERE Abbreviation = ?), ?, ?);" );
+            insertNewItem = c.prepareStatement ( "INSERT INTO Item(ItemCollection_ArticleNo) values(?);" );
+            insertNewItemCollectionRelease = c.prepareStatement ( "insert into ItemCollection(Game_Title, Platform_Abbreviation, Price) values ((SELECT Title FROM Game WHERE Title=?), (SELECT Abbreviation FROM Platform WHERE Abbreviation=?), ?);", insertNewItemCollection.RETURN_GENERATED_KEYS );
+            insertNewItemCollection = c.prepareStatement ( "insert into ItemCollection(Game_Title, Platform_Abbreviation, Price, ReleaseDate) values ((SELECT Title FROM Game WHERE Title=?), (SELECT Abbreviation FROM Platform WHERE Abbreviation=?), ?, ?);", insertNewItemCollection.RETURN_GENERATED_KEYS );
             insertNewGame = c.prepareStatement ( "INSERT INTO Game (Title, Genre, Developer, DescriptionOfPlot) VALUES (?, ?, ?, ?);" );
             insertNewPlatform = c.prepareStatement ( "INSERT INTO Platform VALUES (?, ?, ?);" );
-            decreaseItemAmount = c.prepareStatement ( "UPDATE Item SET AmountOfItemsInStock=AmountOfItemsInStock-? WHERE ArticleNo = ?;" );
-            removeGame = c.prepareStatement ( "UPDATE Item SET AmountOfItemsInStock = 0 WHERE (Game_Title = ?); " );
+            removeGame = c.prepareStatement ( "UPDATE Item SET IsSold=1 WHERE (ItemCollection_ArticleNo = ?); " );
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
+
         }
 
     }
@@ -49,23 +57,83 @@ public class SetGameInfoQueries extends DBConnection{
             insertNewGame.setString ( 4, descriptionOfPlot );
             insertNewGame.executeUpdate ();
 
-        } catch (SQLException ex) {
-            System.err.println ( "error on executing the query" );
+        } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                return;
+            }
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on game" );
+
+            validAlert.showAndWait ();
         }
 
     }
-
-    public void addItemToList(String abbreviation, String price, String amount, String title) {
-
+    public void pushCopies(int amount, int articleID){
         try {
-            insertNewItem.setString ( 1, title );
-            insertNewItem.setString ( 2, abbreviation );
-            insertNewItem.setDouble ( 3, Double.parseDouble ( price ) );
-            insertNewItem.setInt ( 4, Integer.parseInt ( amount ) );
-            insertNewItem.executeUpdate ();
-        } catch (SQLException e) {
+            for (int i = 0; i < amount; i++) {
+                insertNewItem.setInt ( 1, articleID );
+                insertNewItem.executeUpdate ();
+            }
+        }
+        catch(SQLException e){
             e.printStackTrace ();
         }
+    }
+    public void addItemToList(String abbreviation, String price, String amount, String title, int release) {
+        int amountInt = Integer.parseInt ( amount );
+        this.releaseDate = release;
+        if (releaseDate == 0) {
+            try {
+                insertNewItemCollectionRelease.setString ( 1, title );
+                insertNewItemCollectionRelease.setString ( 2, abbreviation );
+                insertNewItemCollectionRelease.setDouble ( 3, Double.parseDouble ( price ) );
+                insertNewItemCollectionRelease.executeUpdate ();
+            } catch (SQLException e) {
+                if (e instanceof SQLIntegrityConstraintViolationException) {
+                    return;
+                }
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on item" );
+
+                validAlert.showAndWait ();
+            }
+        } else {
+            try {
+                insertNewItemCollection.setString ( 1, title );
+                insertNewItemCollection.setString ( 2, abbreviation );
+                insertNewItemCollection.setDouble ( 3, Double.parseDouble ( price ) );
+                insertNewItemCollection.setInt ( 4, releaseDate );
+                insertNewItemCollection.executeUpdate ();
+            } catch (SQLException e) {
+                if (e instanceof SQLIntegrityConstraintViolationException) {
+                    return;
+                }
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on item" );
+
+                validAlert.showAndWait ();
+            }
+        }
+        try {
+            ResultSet rs = insertNewItemCollection.getGeneratedKeys ();
+            if (rs != null && rs.next ()) {
+                this.primaryKey = rs.getInt ( 1 );
+            }
+
+            for (int i = 0; i < amountInt; i++) {
+                insertNewItem.setInt ( 1, primaryKey );
+                insertNewItem.executeUpdate ();
+
+            }
+        } catch (
+                SQLException e)
+
+        {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                return;
+            }
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on item" );
+
+            validAlert.showAndWait ();
+        }
+
     }
 
     public void addPlatformToList(String abbreviation, String fullname, String maker) {
@@ -77,27 +145,25 @@ public class SetGameInfoQueries extends DBConnection{
             insertNewPlatform.executeUpdate ();
 
         } catch (SQLException e) {
-            e.printStackTrace ();
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                return;
+            }
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on platform" );
+
+            validAlert.showAndWait ();
         }
     }
 
-    public void decreaseItemAmount(int amountOfItems, int articleId) {
-        try {
-            decreaseItemAmount.setInt ( 1, amountOfItems );
-            decreaseItemAmount.setInt ( 2, articleId );
-            decreaseItemAmount.executeUpdate ();
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
-    }
-
-    public void removeGame(String title) {
+    public void removeGame(int articleNo) {
 
         try {
-            removeGame.setString ( 1, title );
+            removeGame.setInt ( 1, articleNo );
             removeGame.executeUpdate ();
         } catch (SQLException e) {
-            e.printStackTrace ();
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Not possible to remove game with this title" );
+
+            validAlert.showAndWait ();
+
         }
     }
 }

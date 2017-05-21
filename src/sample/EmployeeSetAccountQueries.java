@@ -1,12 +1,14 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 /**
  * Created by Nikolaj on 2017-04-25.
  */
-public class EmployeeSetAccountQueries extends DBConnection{
+public class EmployeeSetAccountQueries extends DBConnection {
 
     private PreparedStatement insertNewEmployee;
     private PreparedStatement searchForPasswordEmployee;
@@ -14,6 +16,7 @@ public class EmployeeSetAccountQueries extends DBConnection{
     private PreparedStatement eraseEmployee;
     private PreparedStatement logInsertOfNewEmployee;
     private PreparedStatement getUserLog;
+    private PreparedStatement removeFromLog;
 
     private String correctPassword = null;
     private com.mysql.jdbc.Connection c = null;
@@ -21,15 +24,19 @@ public class EmployeeSetAccountQueries extends DBConnection{
     public EmployeeSetAccountQueries() {
 
         try {
+            String DBURL = "jdbc:mysql://127.0.0.1:3306/GameShop?user=root&password=root";
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
             searchForPasswordEmployee = c.prepareStatement ( "SELECT UserPassword FROM Employee WHERE UserName = ? AND PrivilegeLevel=1" );
             searchForPasswordBoss = c.prepareStatement ( "SELECT UserPassword FROM Employee WHERE UserName = ? AND PrivilegeLevel=0" );
-            eraseEmployee = c.prepareStatement ( "UPDATE Employee SET isEmployed=0 WHERE UserName = ?");
+            eraseEmployee = c.prepareStatement ( "UPDATE Employee SET isEmployed=0 WHERE UserName = ?" );
             insertNewEmployee = c.prepareStatement ( "insert into Employee values(?, ?, ?, now(), 0, 0, ?, ?, ?,  ?, 1)" );
-            logInsertOfNewEmployee = c.prepareStatement ( "INSERT INTO Log(event, Employee_UserName) VALUES (?, ?)" );
+            logInsertOfNewEmployee = c.prepareStatement ( "INSERT INTO Log(AddUserName, Employee_UserName) VALUES (?, ?)" );
             getUserLog = c.prepareStatement ( "select * from log;" );
+            removeFromLog = c.prepareStatement ( "delete from log where idLog = ?;" );
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
         }
 
     }
@@ -49,12 +56,22 @@ public class EmployeeSetAccountQueries extends DBConnection{
             insertNewEmployee.setString ( 4, email );
             insertNewEmployee.setString ( 5, username );
             insertNewEmployee.setString ( 6, password );
-            insertNewEmployee.setInt(7, employeeStatus);
+            insertNewEmployee.setInt ( 7, employeeStatus );
             insertNewEmployee.executeUpdate ();
 
 
         } catch (SQLException e) {
-            e.printStackTrace ();
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Account with the username exists. No new account created." );
+
+                validAlert.showAndWait ();
+
+            }
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on person" );
+
+            validAlert.showAndWait ();
+        } finally {
+            close ();
         }
 
     }
@@ -78,18 +95,18 @@ public class EmployeeSetAccountQueries extends DBConnection{
 
             if (correctPassword.equals ( password )) {
                 return true;
-            } else if (!correctPassword.equals( password )){
+            } else if (!correctPassword.equals ( password )) {
                 return false;
             }
 
         } catch (SQLException ex) {
             System.err.println ( "error on executing the query" );
-        }
-        finally {
+        } finally {
             close ();
         }
         return false;
     }
+
     public boolean searchForPasswordBoss(String id, String password) {
         ResultSet rs = null;
         try {
@@ -105,66 +122,74 @@ public class EmployeeSetAccountQueries extends DBConnection{
 
         } catch (SQLException ex) {
             System.err.println ( "error on executing the query" );
-        }
-        finally {
+        } finally {
             close ();
         }
         return false;
     }
 
-    public void logNewEmployee(String newUser, String boss){
-        try{
-            logInsertOfNewEmployee.setString(1, newUser);
-            logInsertOfNewEmployee.setString(2, boss);
+    public void logNewEmployee(String newUser, String boss) {
+        try {
+            logInsertOfNewEmployee.setString ( 1, newUser );
+            logInsertOfNewEmployee.setString ( 2, boss );
             logInsertOfNewEmployee.executeUpdate ();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace ();
-        }
-        finally {
+        } finally {
             close ();
         }
     }
 
-    public ArrayList<Log> getLog(){
+    public ArrayList<Log> getLog() {
 
 
-            ArrayList<Log> results = null;
-            ResultSet resultSet = null;
+        ArrayList<Log> results = null;
+        ResultSet resultSet = null;
 
-            try {
+        try {
 
-                    resultSet = getUserLog.executeQuery ();
+            resultSet = getUserLog.executeQuery ();
 
-                results = new ArrayList<> ();
+            results = new ArrayList<> ();
 
-                while (resultSet.next ()) {
-                    results.add ( new Log (
-                            resultSet.getInt ( "logID" ),
-                            resultSet.getString ( "event" ),
-                            resultSet.getString ( "Employee_UserName" ),
-                            resultSet.getTimestamp ( "Time" ))
-                    );
-                }
-                return results;
-
-            } catch (SQLException sqlException) {
-                sqlException.printStackTrace ();
-            } finally {
-                close ();
+            while (resultSet.next ()) {
+                results.add ( new Log (
+                        resultSet.getInt ( "idLog" ),
+                        resultSet.getString ( "event" ),
+                        resultSet.getString ( "Employee_UserName" ),
+                        resultSet.getTimestamp ( "Time" ) )
+                );
             }
+            return results;
 
-            return null;
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace ();
+        } finally {
+            close ();
+        }
+
+        return null;
 
     }
+
+    public void removeLogID(int logID) {
+        try {
+            removeFromLog.setInt ( 1, logID );
+            logInsertOfNewEmployee.executeUpdate ();
+        } catch (SQLException e) {
+            e.printStackTrace ();
+        } finally {
+            close ();
+        }
+    }
+
     public void removeEmployee(String userName) {
         try {
             eraseEmployee.setString ( 1, userName );
             eraseEmployee.executeUpdate ();
         } catch (SQLException e) {
             e.printStackTrace ();
-        }
-        finally {
+        } finally {
             close ();
         }
     }

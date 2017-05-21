@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,9 +28,9 @@ public class SearchLogController implements Initializable {
     @FXML
     TableColumn<TableGameSearch, Integer> iLogID;
     @FXML
-    TableColumn<TableGameSearch, String> iEvent;
+    TableColumn<TableGameSearch, String> iResponsibleBoss;
     @FXML
-    TableColumn<TableGameSearch, String> iBoss;
+    TableColumn<TableGameSearch, String> iNewUserName;
     @FXML
     TableColumn<TableGameSearch, Integer> iTime;
 
@@ -64,7 +63,7 @@ public class SearchLogController implements Initializable {
         int yearCompare = Integer.parseInt ( yearLine );
 
         for (int i = 0; i < searchLogList.size (); i++) {
-            TableLogSearch table = new TableLogSearch ( searchLogList.get ( i ).getLogID (), searchLogList.get ( i ).getEvent (), searchLogList.get ( i ).getBossUserName (), searchLogList.get ( i ).getTime ());
+            TableLogSearch table = new TableLogSearch ( searchLogList.get ( i ).getLogID (), searchLogList.get ( i ).getResponsibleBoss (), searchLogList.get ( i ).getNewUserName (), searchLogList.get ( i ).getTime ());
             int time = Integer.parseInt ( searchLogList.get(i).getTime () );
             //Om ett år har gått så förstörs logId
             if((time+10000)<yearCompare){
@@ -77,8 +76,8 @@ public class SearchLogController implements Initializable {
         tableID.setItems ( data2 );
 
         iLogID.setCellValueFactory ( new PropertyValueFactory<> ( "searchLogID" ) );
-        iEvent.setCellValueFactory ( new PropertyValueFactory<> ( "searchEvent" ) );
-        iBoss.setCellValueFactory ( new PropertyValueFactory<> ( "searchBossUserName" ) );
+        iResponsibleBoss.setCellValueFactory ( new PropertyValueFactory<> ( "searchResponisbleBoss" ) );
+        iNewUserName.setCellValueFactory ( new PropertyValueFactory<> ( "searchNewUsername" ) );
         iTime.setCellValueFactory ( new PropertyValueFactory<> ( "searchTime" ) );
 
     }
@@ -101,17 +100,5 @@ public class SearchLogController implements Initializable {
         stage.setScene ( scene );
     }
 
-    @FXML
-    public void help(){
-        Alert helpAlert = new Alert (Alert.AlertType.INFORMATION, "");
-        helpAlert.setTitle("Help Menu");
-        helpAlert.getDialogPane().setPrefWidth(450);
-        helpAlert.setHeaderText("This is the Employee Search Engine");
-        helpAlert.setContentText("Select which category you want to use (SSN, Username or Surname)." + System.getProperty("line.separator")
-                + "Select which order you want (Ascending/Descending)." + System.getProperty("line.separator")
-                + "Select which type of employee you are looking for (Boss or Regular Employee)" + System.getProperty("line.separator")
-                + "Type your keywords in the field, then press the Search button." + System.getProperty("line.separator")
-                + "Press OK to close this window.");
-        helpAlert.showAndWait();
-    }
+
 }

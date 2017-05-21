@@ -7,20 +7,15 @@ import javafx.beans.property.SimpleStringProperty;
  * Created by Nikolaj on 2017-05-12.
  */
 public class TableLogSearch {
-    private int logID = 0;
-    private String event = null;
-    private String bossUserName;
-    private String time = null;
-
     private final SimpleIntegerProperty searchLogID;
-    private final SimpleStringProperty searchEvent;
-    private final SimpleStringProperty searchBossUsername;
+    private final SimpleStringProperty searchResponisbleBoss;
+    private final SimpleStringProperty searchNewUsername;
     private final SimpleStringProperty searchTime;
 
-    public TableLogSearch(int logID, String event, String bossUsername, String time){
+    public TableLogSearch(int logID, String responisibleBoss, String newUsername, String time){
         this.searchLogID = new SimpleIntegerProperty ( logID );
-        this.searchEvent = new SimpleStringProperty ( event );
-        this.searchBossUsername = new SimpleStringProperty ( bossUsername );
+        this.searchResponisbleBoss = new SimpleStringProperty ( responisibleBoss );
+        this.searchNewUsername = new SimpleStringProperty ( newUsername );
         this.searchTime = new SimpleStringProperty (time);
     }
 
@@ -28,56 +23,49 @@ public class TableLogSearch {
         return searchLogID.get ();
     }
 
-    public void setSearchLogID(int searchAID) {
-        this.searchLogID.set ( searchAID );
+    public SimpleIntegerProperty searchLogIDProperty() {
+        return searchLogID;
     }
 
-    public String getSearchEvent() {
-        return searchEvent.get ();
-    }
-
-    public SimpleStringProperty searchEventProperty() {
-        return searchEvent;
-    }
-
-    public void setSearchEvent(String searchEvent) {
-        this.searchEvent.set ( searchEvent );
-    }
-
-    public String getSearchBossUsername() {
-        return searchBossUsername.get ();
-    }
-
-    public SimpleStringProperty searchBossUsernameProperty() {
-        return searchBossUsername;
-    }
-
-    public void setSearchBossUsername(String searchBossUsername) {
-        this.searchBossUsername.set ( searchBossUsername);
+    public void setSearchLogID(int searchLogID) {
+        this.searchLogID.set ( searchLogID );
     }
 
     public String getSearchTime() {
         return searchTime.get ();
     }
 
+    public SimpleStringProperty searchTimeProperty() {
+        return searchTime;
+    }
+
     public void setSearchTime(String searchTime) {
         this.searchTime.set ( searchTime );
     }
 
-    public SimpleIntegerProperty searchLogIDProperty() {
-        return searchLogID;
+    public String getSearchResponisbleBoss() {
+        return searchResponisbleBoss.get ();
     }
 
-    public SimpleStringProperty rEventProperty() {
-        return searchEvent;
+    public SimpleStringProperty searchResponisbleBossProperty() {
+        return searchResponisbleBoss;
     }
 
-    public SimpleStringProperty rBossUsernameProperty() {
-        return searchBossUsername;
+    public void setSearchResponisbleBoss(String searchResponisbleBoss) {
+        this.searchResponisbleBoss.set ( searchResponisbleBoss );
     }
 
-    public SimpleStringProperty searchTimeProperty() {
-        return searchTime;
+    public String getSearchNewUsername() {
+        return searchNewUsername.get ();
     }
+
+    public SimpleStringProperty searchNewUsernameProperty() {
+        return searchNewUsername;
+    }
+
+    public void setSearchNewUsername(String searchNewUsername) {
+        this.searchNewUsername.set ( searchNewUsername );
+    }
+
 
 }

@@ -36,8 +36,6 @@ public class RegisterCustomerController implements Initializable {
     private TextField email;
     @FXML
     private TextField username;
-    @FXML
-    private TextField registrationDate;
 
     @FXML
     private PasswordField password;
@@ -50,7 +48,7 @@ public class RegisterCustomerController implements Initializable {
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
-        connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), registrationDate.getText (), email.getText (), username.getText (), password.getText () );
+        connection.addCustomerToList ( ssn.getText (), firstName.getText (), surname.getText (), email.getText (), username.getText (), password.getText () );
     }
 
     @FXML

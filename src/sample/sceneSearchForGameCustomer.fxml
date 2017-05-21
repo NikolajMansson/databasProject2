@@ -21,6 +21,8 @@
                       <TableColumn fx:id="iName" prefWidth="400.0" text="Title" />
                         <TableColumn fx:id="iDate" prefWidth="75.0" text="Abbreviation" />
                         <TableColumn fx:id="iPrice" prefWidth="75.0" text="Price" />
+                        <TableColumn fx:id="iAmount" prefWidth="75.0" text="Copies left" />
+
                     </columns>
                   </TableView>
                </children></AnchorPane>

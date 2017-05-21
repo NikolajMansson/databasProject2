@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SearchLogController">
+   <children>
+      <SplitPane dividerPositions="0.6872909698996655" layoutX="224.0" layoutY="78.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="158.0">
+               <children>
+                  <TableView fx:id="tableID" layoutX="221.0" layoutY="107.0" prefHeight="408.0" prefWidth="798.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="iLogID" prefWidth="127.0" text="Log ID" />
+                      <TableColumn fx:id="iResponsibleBoss" prefWidth="151.0" text="Responsible admin" />
+                        <TableColumn fx:id="iNewUserName" prefWidth="187.0" text="Username of added employee" />
+                        <TableColumn fx:id="iTime" prefWidth="160.0" text="Date" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="151.0" prefWidth="249.0">
+               <children>
+                  <Button fx:id="cancelButton" layoutX="687.0" layoutY="121.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+
+
+
+
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

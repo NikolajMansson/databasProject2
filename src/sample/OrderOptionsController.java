@@ -33,24 +33,30 @@ public class OrderOptionsController implements Initializable {
     private CustomerStatus customerStatusControll = CustomerStatus.MEMBER;
 
     @FXML
-    private void setMemberRadioButton(ActionEvent ae){
-        this.customerStatusControll=CustomerStatus.MEMBER;
-    };
+    private void setMemberRadioButton(ActionEvent ae) {
+        this.customerStatusControll = CustomerStatus.MEMBER;
+    }
+
+    ;
+
     @FXML
-    private void setGuestRadioButton(ActionEvent ae){
-        this.customerStatusControll=CustomerStatus.GUEST;
-    };
+    private void setGuestRadioButton(ActionEvent ae) {
+        this.customerStatusControll = CustomerStatus.GUEST;
+    }
+
+    ;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
     @FXML
     private void changeScene(ActionEvent ae) {
 
 
-        if(customerStatusControll==CustomerStatus.GUEST) {
+        if (customerStatusControll == CustomerStatus.GUEST) {
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -62,11 +68,9 @@ public class OrderOptionsController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root);
+            Scene scene = new Scene ( root );
             stage.setScene ( scene );
-        }
-
-        else if(customerStatusControll==CustomerStatus.MEMBER){
+        } else if (customerStatusControll == CustomerStatus.MEMBER) {
             Node node = (Node) ae.getSource ();
             Stage stage = (Stage) node.getScene ().getWindow ();
 
@@ -78,8 +82,46 @@ public class OrderOptionsController implements Initializable {
                 e.printStackTrace ();
             }
 
-            Scene scene = new Scene ( root);
+            Scene scene = new Scene ( root );
             stage.setScene ( scene );
         }
+    }
+
+    @FXML
+    private void cancel(ActionEvent ae) {
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        if (account.getPrivelegelevel () == 0) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
+
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        } else {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
+
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        }
+
     }
 }

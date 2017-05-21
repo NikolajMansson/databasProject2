@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderOptionsController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.OrderOptionsController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -21,14 +21,14 @@
         <AnchorPane prefHeight="300.0" prefWidth="500.0">
             <children>
                 <Button fx:id="okButton" layoutX="416.0" layoutY="230.0" mnemonicParsing="false" onAction="#changeScene" text="OK" />
-                <Button fx:id="cancelButton" layoutX="324.0" layoutY="230.0" mnemonicParsing="false" text="Cancel" />
+                <Button fx:id="cancelButton" layoutX="324.0" layoutY="230.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                 <Label layoutX="186.0" layoutY="14.0" text="Order type">
                     <font>
                         <Font size="24.0" />
                     </font>
                 </Label>
                 <Label layoutX="36.0" layoutY="96.0" text="Customer status:" />
-                <RadioButton fx:id="memberRadioButton" layoutX="161.0" layoutY="96.0" mnemonicParsing="false" onAction="#setMemberRadioButton" selected="true" text="Member">
+                <RadioButton fx:id="memberRadioButton" layoutX="161.0" layoutY="96.0" mnemonicParsing="false" onAction="#setMemberRadioButton" selected="true" text="Member" toggleGroup="$customerStatusToggleGroup">
                <toggleGroup>
                   <ToggleGroup fx:id="customerStatusToggleGroup" />
                </toggleGroup></RadioButton>

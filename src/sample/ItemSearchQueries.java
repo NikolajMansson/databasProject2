@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,16 +25,19 @@ public class ItemSearchQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
-            defaultItemAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
+            defaultItemAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price, count(IDItem) AS rows, ReleaseDate FROM ItemCollection, Item, Game WHERE ArticleNo=ItemCollection_ArticleNo AND Game_Title = Title AND GuestOrder_OrderNumber IS NULL AND RegularCustomerOrder_OrderNumber IS NULL AND IsSold= 0 GROUP BY ArticleNo;" );
 
-            itemTitleAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Game_Title LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
+            itemTitleAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price, count(IDItem) AS rows, ReleaseDate FROM ItemCollection, Item, Game WHERE ArticleNo=ItemCollection_ArticleNo AND Game_Title = Title AND Game_Title LIKE ? AND GuestOrder_OrderNumber IS NULL AND RegularCustomerOrder_OrderNumber IS NULL AND IsSold= 0 GROUP BY ArticleNo;" );
 
-            itemPlatformAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Platform_Abbreviation LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
+            itemPlatformAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price, count(IDItem) AS rows, ReleaseDate FROM ItemCollection, Item, Game WHERE ArticleNo=ItemCollection_ArticleNo AND Game_Title = Title AND Platform_Abbreviation LIKE ? AND GuestOrder_OrderNumber IS NULL AND RegularCustomerOrder_OrderNumber IS NULL AND IsSold= 0 GROUP BY ArticleNo;" );
 
-            itemDeveloperAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price FROM Item, Game WHERE Title=Game_Title AND Developer LIKE ? AND AmountOfItemsInStock > 0 ORDER BY ArticleNo" );
+            itemDeveloperAsc = c.prepareStatement ( "SELECT ArticleNo, Game_Title, Platform_Abbreviation, Developer, DescriptionOfPlot, Price, count(IDItem) AS rows, ReleaseDate FROM ItemCollection, Item, Game WHERE ArticleNo=ItemCollection_ArticleNo AND Game_Title = Title AND Developer LIKE ? AND GuestOrder_OrderNumber IS NULL AND RegularCustomerOrder_OrderNumber IS NULL AND IsSold= 0 GROUP BY ArticleNo;" );
 
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
+
         }
 
     }
@@ -56,7 +61,10 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Platform_Abbreviation" ),
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
-                        resultSet.getDouble ( "Price" ) ) );
+                        resultSet.getDouble ( "Price" ),
+                        resultSet.getInt ("rows"),
+                        resultSet.getInt("ReleaseDate")
+                ) );
             }
             return results;
         } catch (SQLException sqlException) {
@@ -87,7 +95,9 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Platform_Abbreviation" ),
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
-                        resultSet.getDouble ( "Price" ) ) );
+                        resultSet.getDouble ( "Price" ),
+                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt("ReleaseDate")) );
             }
             return results;
 
@@ -117,7 +127,9 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Platform_Abbreviation" ),
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
-                        resultSet.getDouble ( "Price" ) ) );
+                        resultSet.getDouble ( "Price" ),
+                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt("ReleaseDate")) );
             }
             return results;
 
@@ -150,7 +162,9 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Platform_Abbreviation" ),
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
-                        resultSet.getDouble ( "Price" ) ) );
+                        resultSet.getDouble ( "Price" ),
+                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt("ReleaseDate")) );
             }
             return results;
 

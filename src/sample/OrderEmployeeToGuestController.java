@@ -31,6 +31,14 @@ public class OrderEmployeeToGuestController implements Initializable {
 
     private ArrayList<Item> itemList = new ArrayList<> ();
 
+    private ArrayList<Integer> quantitylist = new ArrayList<> ();
+
+    private double totalPrice = 0;
+
+    CartFile cartFile = new CartFile ();
+
+    private int gamesSold = 0;
+
     LocalDate date = LocalDate.now();
    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
 
@@ -47,45 +55,69 @@ public class OrderEmployeeToGuestController implements Initializable {
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         readActiveUserFile.closeFile ();
-        PerformOrderQueries connection1 = new PerformOrderQueries ();
-        connection1.setDBURL ( account.getUserName (), account.getPassword () );
-        SetGameInfoQueries connection2 = new SetGameInfoQueries ();
-        connection2.setDBURL ( account.getUserName (), account.getPassword () );
-        CartFile sCart = new CartFile();
 
-        byte[] bytesArray2 = sCart.readerArticleNumberFile ();
+        PerformOrderQueries dbConnection = new PerformOrderQueries ();
+        dbConnection.setDBURL ( account.getUserName (), account.getPassword ());
 
-        byte[] bytesArray = sCart.readerArticleNumberFile ();
+        byte[] bytesArray = cartFile.readerArticleNumberFile ();
+        byte[] bytesArray1 = cartFile.readerQuantityFile ();
+        ArrayList<Double> totalItemPrice = new ArrayList<> ();
         for (int i = 0; i < bytesArray.length; i++) {
-
-            Item item = connection1.getSalesItem ( (int) bytesArray[i] );
-            item.setAmountOfItems ( (int)bytesArray2[i] );
-            this.itemList.add ( item);
+            Item item = dbConnection.getSalesItem ( (int) bytesArray[i] );
+            item.setAmountOfItems ( bytesArray1[i] );
+            this.itemList.add ( item );
+            int quantity = bytesArray1[i];
+            quantitylist.add ( quantity );
+            totalItemPrice.add ( item.getPrice () * quantity );
         }
 
+        for(int i = 0; i < quantitylist.size(); i++){
+            this.gamesSold = gamesSold + quantitylist.get(i);
+        }
+        double theTotalPrice = calculateTotalPrice ( totalItemPrice );
+
+        ArrayList<Integer> itemIdList = dbConnection.getItemIDList ( itemList, quantitylist );
+        for(int i = 0; i < itemIdList.size (); i++){
+            System.out.println(itemIdList.get(i));
+        }
         for (int i = 0; i < itemList.size (); i++) {
-            connection1.addGuestOrderToList (account.getUserName (),
-                    itemList.get(i).getArticleNumber (), itemList.get(i).getAmountOfItems (), itemList.get(i).getPrice ());
-            connection1.increaseEmployeeIncome ( itemList.get(i).getPrice (), account.getUserName () );
-            connection1.increaseGameSoldEmployee (1, account.getUserName ());
-            connection2.decreaseItemAmount(1, itemList.get(i).getArticleNumber ());
+            dbConnection.addGuestOrderToList (account.getUserName (),
+                   itemList.get(i).getAmountOfItems (), itemList.get(i).getPrice (), itemList.get(i).getArticleNumber (), itemIdList);
         }
-        sCart.cleanArticleNo ();
-        sCart.cleanQuantity ();
+        dbConnection.increaseEmployeeIncome ( theTotalPrice, account.getUserName () );
+        dbConnection.increaseGameSoldEmployee (gamesSold, account.getUserName ());
+        cartFile.cleanArticleNo ();
+        cartFile.cleanQuantity ();
+        if(account.getPrivelegelevel ()==0) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        Node node = (Node) ae.getSource ();
-        Stage stage = (Stage) node.getScene ().getWindow ();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
-        Parent root = null;
-        try {
-            root = loader.load ();
-        } catch (IOException e) {
-            e.printStackTrace ();
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
         }
+        if(account.getPrivelegelevel ()==1) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        Scene scene = new Scene ( root);
-        stage.setScene ( scene );
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        }
     }
 
     @FXML
@@ -104,5 +136,32 @@ public class OrderEmployeeToGuestController implements Initializable {
         Scene scene = new Scene ( root);
         stage.setScene ( scene );
     }
+    private double calculateTotalPrice(ArrayList<Double> totalItemPriceList) {
+        for (int i = 0; i < totalItemPriceList.size (); i++) {
+            double itemPrice = totalItemPriceList.get ( i );
+            this.totalPrice = totalPrice + itemPrice;
+        }
+        return totalPrice;
+    }
 
+    @FXML
+    public void logout(ActionEvent ae){
+
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
+
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneLogin.fxml" ) );
+            Parent root = null;
+
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+
+
+    }
 }

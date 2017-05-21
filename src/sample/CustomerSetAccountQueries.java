@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 
 /**
@@ -19,11 +21,13 @@ public class CustomerSetAccountQueries extends DBConnection{
         try {
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
             searchForPasswordCustomer = c.prepareStatement ( "SELECT UserPassword FROM Customer WHERE UserName = ?" );
-            insertNewCustomer = c.prepareStatement ( "INSERT INTO Customer(SSN, FirstName, Surname, RegistrationDate, UserName, UserPassword, Email) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            insertNewCustomer = c.prepareStatement ( "INSERT INTO Customer(SSN, FirstName, Surname, UserName, UserPassword, Email) VALUES (?, ?, ?, ?, ?, ?)");
 
 
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
         }
 
     }
@@ -36,22 +40,29 @@ public class CustomerSetAccountQueries extends DBConnection{
         }
     }
 
-    public void addCustomerToList(String ssn, String firstName, String surname, String registrationDate, String email, String username, String password) {
+    public void addCustomerToList(String ssn, String firstName, String surname, String email, String username, String password) {
 
 
             try {
                 insertNewCustomer.setInt ( 1, Integer.parseInt ( ssn ) );
                 insertNewCustomer.setString ( 2, firstName );
                 insertNewCustomer.setString ( 3, surname );
-                insertNewCustomer.setInt ( 4, Integer.parseInt ( registrationDate ) );
-                insertNewCustomer.setString ( 5, username );
-                insertNewCustomer.setString ( 6, password );
-                insertNewCustomer.setString ( 7, email );
+                insertNewCustomer.setString ( 4, username );
+                insertNewCustomer.setString ( 5, password );
+                insertNewCustomer.setString ( 6, email );
                 insertNewCustomer.executeUpdate ();
 
-        } catch (SQLException e) {
-            e.printStackTrace ();
-        }
+        }catch (SQLException e) {
+                if(e instanceof SQLIntegrityConstraintViolationException){
+                    Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Account with the username exists. No new account created." );
+
+                    validAlert.showAndWait ();
+
+                }
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on person" );
+
+                validAlert.showAndWait ();
+            }
             finally {
                 close ();
             }

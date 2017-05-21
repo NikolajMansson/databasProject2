@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +34,9 @@ public class SalesSearchQueries extends DBConnection{
             employeeSurnameAsc = c.prepareStatement("SELECT FirstName, Surname, EmploymentDate, GamesSold, Income, UserName FROM Employee WHERE Surname = ? ORDER BY Surname");
 
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
         }
 
     }

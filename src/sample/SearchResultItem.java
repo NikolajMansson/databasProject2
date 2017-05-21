@@ -10,14 +10,18 @@ public class SearchResultItem {
     private String developer = null;
     private String descriptionOfPlot = null;
     private double price = 0;
+    private int amount = 0;
+    private int releaseDate = 0;
 
-    public SearchResultItem(int articleNo, String title, String abbreviation, String developer, String descriptionOfPlot, double price) {
+    public SearchResultItem(int articleNo, String title, String abbreviation, String developer, String descriptionOfPlot, double price, int amount, int releaseDate) {
         setArticleNo ( articleNo );
         setTitle ( title );
         setAbbreviation ( abbreviation );
         setDeveloper ( developer );
         setDescriptionOfPlot ( descriptionOfPlot );
         setPrice ( price );
+        setAmount(amount);
+        setReleaseDate ( releaseDate );
     }
 
     public int getArticleNo() {
@@ -66,5 +70,20 @@ public class SearchResultItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    public int getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(int releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

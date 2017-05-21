@@ -30,6 +30,8 @@ public class GameSearchCustomerController implements Initializable {
     TableColumn<TableGameSearch, String> iDate;
     @FXML
     TableColumn<TableGameSearch, Double> iPrice;
+    @FXML
+    TableColumn<TableGameSearch, Integer> iAmount;
 
     @FXML
     private TextField searchfield;
@@ -89,7 +91,7 @@ public class GameSearchCustomerController implements Initializable {
             return;
         }
         for (int i = 0; i < searchItemList.size (); i++) {
-            TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice () );
+            TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice (), searchItemList.get(i).getAmount () );
             data.add ( table );
         }
 
@@ -100,6 +102,8 @@ public class GameSearchCustomerController implements Initializable {
         iName.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchTitle" ) );
         iDate.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchAbbreviation" ) );
         iPrice.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Double> ( "searchPrice" ) );
+        iAmount.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Integer> ( "searchAmount" ) );
+
     }
 
     @FXML

@@ -37,86 +37,126 @@ public class LoginController implements Initializable {
     @FXML
     private void loginAsEmployee(ActionEvent ae) {
         Main main = new Main ();
+        try {
+            EmployeeSetAccountQueries employeeSetAccountQueries = new EmployeeSetAccountQueries ();
+            boolean testUserIdPassword = employeeSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
+            if (testUserIdPassword == true) {
 
-        EmployeeSetAccountQueries employeeSetAccountQueries = new EmployeeSetAccountQueries ();
-        boolean testUserIdPassword = employeeSetAccountQueries.searchForPasswordEmployee ( loginUsername.getText (), loginPassword.getText () );
-        if (testUserIdPassword == true) {
+                EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 1 );
 
-            EmployeeAccount account = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 1 );
+                main.setMyUser ( account );
 
-            main.setMyUser ( account );
+                Node node = (Node) ae.getSource ();
+                Stage stage = (Stage) node.getScene ().getWindow ();
 
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
+                FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+                Parent root = null;
+                try {
+                    root = loader.load ();
+                } catch (IOException e) {
+                    e.printStackTrace ();
+                }
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
-            Parent root = null;
-            try {
-                root = loader.load ();
-            } catch (IOException e) {
-                e.printStackTrace ();
+                Scene scene = new Scene ( root );
+                stage.setScene ( scene );
+            } else if (testUserIdPassword == false) {
+
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid username and password" );
+
+                validAlert.showAndWait ();
             }
 
-            Scene scene = new Scene ( root );
-            stage.setScene ( scene );
+        } catch (NullPointerException n) {
+
+            Alert nullAlert = new Alert ( Alert.AlertType.ERROR, "Enter a username and password" );
+
+            nullAlert.showAndWait ();
+
         }
     }
 
     @FXML
     private void loginAsCustomer(ActionEvent ae) {
         Main main = new Main ();
+        try {
+            CustomerSetAccountQueries customerSetAccountQueries = new CustomerSetAccountQueries ();
+            boolean testUserIdPassword = customerSetAccountQueries.searchForPasswordCustomer ( loginUsername.getText (), loginPassword.getText () );
+            if (testUserIdPassword == true) {
 
-        CustomerSetAccountQueries customerSetAccountQueries = new CustomerSetAccountQueries ();
-        boolean testUserIdPassword = customerSetAccountQueries.searchForPasswordCustomer ( loginUsername.getText (), loginPassword.getText () );
-        if (testUserIdPassword == true) {
+                CustomerAccount account = new CustomerAccount ( loginUsername.getText (), loginPassword.getText () );
 
-            CustomerAccount account = new CustomerAccount ( loginUsername.getText (), loginPassword.getText () );
+                main.setMyUser ( account );
 
-            main.setMyUser ( account );
+                Node node = (Node) ae.getSource ();
+                Stage stage = (Stage) node.getScene ().getWindow ();
 
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
+                FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCustomerWelcomeMenu.fxml" ) );
+                Parent root = null;
+                try {
+                    root = loader.load ();
+                } catch (IOException e) {
+                    e.printStackTrace ();
+                }
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneCustomerWelcomeMenu.fxml" ) );
-            Parent root = null;
-            try {
-                root = loader.load ();
-            } catch (IOException e) {
-                e.printStackTrace ();
+                Scene scene = new Scene ( root );
+                stage.setScene ( scene );
+            } else if (testUserIdPassword == false) {
+
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid username and password" );
+
+                validAlert.showAndWait ();
             }
 
-            Scene scene = new Scene ( root );
-            stage.setScene ( scene );
-        }
+        } catch (NullPointerException n) {
 
+            Alert nullAlert = new Alert ( Alert.AlertType.ERROR, "Enter a username and password" );
+
+            nullAlert.showAndWait ();
+
+        }
     }
+
 
     @FXML
     private void loginAsBoss(ActionEvent ae) {
         Main main = new Main ();
+        try {
 
-        EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
-        boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordBoss ( loginUsername.getText (), loginPassword.getText () );
-        if (testUserIdPassword == true) {
+            EmployeeSetAccountQueries bossSetAccountQueries = new EmployeeSetAccountQueries ();
+            boolean testUserIdPassword = bossSetAccountQueries.searchForPasswordBoss ( loginUsername.getText (), loginPassword.getText () );
+            if (testUserIdPassword == true) {
 
-            EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 0 );
+                EmployeeAccount bossAccount = new EmployeeAccount ( loginUsername.getText (), loginPassword.getText (), 0 );
 
-            main.setMyUser ( bossAccount );
+                main.setMyUser ( bossAccount );
 
 
-            Node node = (Node) ae.getSource ();
-            Stage stage = (Stage) node.getScene ().getWindow ();
+                Node node = (Node) ae.getSource ();
+                Stage stage = (Stage) node.getScene ().getWindow ();
 
-            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
-            Parent root = null;
-            try {
-                root = loader.load ();
-            } catch (IOException e) {
-                e.printStackTrace ();
+                FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+                Parent root = null;
+                try {
+                    root = loader.load ();
+                } catch (IOException e) {
+                    e.printStackTrace ();
+                }
+
+                Scene scene = new Scene ( root );
+                stage.setScene ( scene );
+            } else if (testUserIdPassword == false) {
+
+                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid username and password" );
+
+                validAlert.showAndWait ();
             }
 
-            Scene scene = new Scene ( root );
-            stage.setScene ( scene );
+        } catch (NullPointerException n) {
+
+            Alert nullAlert = new Alert ( Alert.AlertType.ERROR, "Enter a username and password" );
+
+            nullAlert.showAndWait ();
+
         }
 
     }
@@ -126,7 +166,7 @@ public class LoginController implements Initializable {
         Node node = (Node) ae.getSource ();
         Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchFromGameCustomer.fxml" ) );
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneSearchForGameCustomer.fxml" ) );
         Parent root = null;
         try {
             root = loader.load ();
@@ -150,9 +190,10 @@ public class LoginController implements Initializable {
                 + "Press OK to close this window." );
         helpAlert.showAndWait ();
     }
+
     @FXML
-    private void quit(){
-        Stage stage = (Stage) quitButton.getScene().getWindow();
-        stage.close();
+    private void quit() {
+        Stage stage = (Stage) quitButton.getScene ().getWindow ();
+        stage.close ();
     }
 }

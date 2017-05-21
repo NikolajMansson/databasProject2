@@ -45,6 +45,35 @@ public class AddGameToDBController implements Initializable {
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addGameToList ( gameTitle.getText (), genre.getText (), developer.getText (), description.getText () );
         connection.close ();
+        Node node = (Node) ae.getSource ();
+
+        Stage stage = (Stage) node.getScene ().getWindow ();
+        if(account.getPrivelegelevel ()==0) {
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        }
+        else{
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+
+        }
+
     }
 
     @FXML

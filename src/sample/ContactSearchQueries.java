@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,23 +31,15 @@ public class ContactSearchQueries extends DBConnection{
             this.c = (com.mysql.jdbc.Connection) DriverManager.getConnection ( DBURL );
 
             everyEmployeeAsc = c.prepareStatement ( "SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee ORDER BY UserName " );
-
-
-
             employeeUserNameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE UserName = ? ORDER BY UserName ");
-
-
-
             employeeSSNAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE SSN = ? ORDER BY SSN ");
-
-
-
             employeeSurnameAsc = c.prepareStatement("SELECT SSN, FirstName, Surname, Email, UserName, isEmployed FROM Employee WHERE Surname = ? ORDER BY Surname ");
 
-
-
         } catch (SQLException ex) {
-            System.err.println ( "the connection fails" );
+            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "No connection to database" );
+
+            validAlert.showAndWait ();
+
         }
 
     }

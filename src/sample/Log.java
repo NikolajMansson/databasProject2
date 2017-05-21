@@ -10,15 +10,15 @@ import java.util.Date;
  */
 public class Log {
     private int logID = 0;
-    private String event = null;
-    private String employeeUserName;
+    private String responsibleBoss = null;
+    private String newUserName;
     private String time = null;
     Date date = new Date ();
 
-    Log(int logID, String event, String employeeUserName, Timestamp timestamp) {
+    Log(int logID, String event, String bossUserName, Timestamp timestamp) {
         setLogID ( logID );
-        setEvent ( event );
-        setEmployeeUserName ( employeeUserName );
+        setResponsibleBoss ( event );
+        setNewUserName ( bossUserName );
         date.setTime ( timestamp.getTime () );
         this.time = new SimpleDateFormat ( "yyyyMMdd" ).format ( date );
         setTime ( time );
@@ -32,20 +32,20 @@ public class Log {
         this.logID = logID;
     }
 
-    public String getEvent() {
-        return event;
+    public String getResponsibleBoss() {
+        return responsibleBoss;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setResponsibleBoss(String responsibleBoss) {
+        this.responsibleBoss = responsibleBoss;
     }
 
-    public String getEmployeeUserName() {
-        return employeeUserName;
+    public String getNewUserName() {
+        return newUserName;
     }
 
-    public void setEmployeeUserName(String employeeUserName) {
-        this.employeeUserName = employeeUserName;
+    public void setNewUserName(String employeeUserName) {
+        this.newUserName = employeeUserName;
     }
 
     public String getTime() {

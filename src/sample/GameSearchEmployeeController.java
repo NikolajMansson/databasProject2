@@ -25,7 +25,7 @@ public class GameSearchEmployeeController implements Initializable {
     @FXML
     TextField quantityTextField;
     @FXML
-    TextField gameTitleTextField;
+    TextField articleNoTextField;
     @FXML
     TableView<TableGameSearch> tableID;
     @FXML
@@ -36,6 +36,10 @@ public class GameSearchEmployeeController implements Initializable {
     TableColumn<TableGameSearch, String> iDate;
     @FXML
     TableColumn<TableGameSearch, Double> iPrice;
+    @FXML
+    TableColumn<TableGameSearch, Integer> iAmount;
+
+
 
     @FXML
     private TextField searchfield;
@@ -93,8 +97,8 @@ public class GameSearchEmployeeController implements Initializable {
         readActiveUserFile.closeFile ();
         SetGameInfoQueries dbConnection = new SetGameInfoQueries ();
         dbConnection.setDBURL ( account.getUserName (), account.getPassword () );
-        String title = gameTitleTextField.getText ();
-        dbConnection.removeGame ( title );
+        int articleNo = Integer.parseInt ( articleNoTextField.getText () );
+        dbConnection.removeGame ( articleNo );
     }
 
     @FXML
@@ -138,7 +142,7 @@ public class GameSearchEmployeeController implements Initializable {
             return;
         }
         for (int i = 0; i < searchItemList.size (); i++) {
-            TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice () );
+            TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice (), searchItemList.get(i).getAmount () );
             data.add ( table );
         }
 
@@ -149,24 +153,46 @@ public class GameSearchEmployeeController implements Initializable {
         iName.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchTitle" ) );
         iDate.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, String> ( "searchAbbreviation" ) );
         iPrice.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Double> ( "searchPrice" ) );
+        iAmount.setCellValueFactory ( new PropertyValueFactory<TableGameSearch, Integer> ( "searchAmount" ) );
     }
 
 
     @FXML
     public void cancel(ActionEvent ae) {
-        Node node = (Node) ae.getSource ();
-        Stage stage = (Stage) node.getScene ().getWindow ();
+        ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
+        readActiveUserFile.openFile ();
+        Account account = readActiveUserFile.readRecords ();
+        readActiveUserFile.closeFile ();
+        if(account.getPrivelegelevel ()==0) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
-        Parent root = null;
-        try {
-            root = loader.load ();
-        } catch (IOException e) {
-            e.printStackTrace ();
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
         }
+        if(account.getPrivelegelevel ()==1) {
+            Node node = (Node) ae.getSource ();
+            Stage stage = (Stage) node.getScene ().getWindow ();
 
-        Scene scene = new Scene ( root );
-        stage.setScene ( scene );
+            FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneEmployeeWelcomeMenu.fxml" ) );
+            Parent root = null;
+            try {
+                root = loader.load ();
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+
+            Scene scene = new Scene ( root );
+            stage.setScene ( scene );
+        }
     }
 
     @FXML
