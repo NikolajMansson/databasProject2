@@ -70,8 +70,6 @@ public class EmployeeSetAccountQueries extends DBConnection {
             Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on person" );
 
             validAlert.showAndWait ();
-        } finally {
-            close ();
         }
 
     }
@@ -135,8 +133,6 @@ public class EmployeeSetAccountQueries extends DBConnection {
             logInsertOfNewEmployee.executeUpdate ();
         } catch (SQLException e) {
             e.printStackTrace ();
-        } finally {
-            close ();
         }
     }
 
@@ -155,7 +151,7 @@ public class EmployeeSetAccountQueries extends DBConnection {
             while (resultSet.next ()) {
                 results.add ( new Log (
                         resultSet.getInt ( "idLog" ),
-                        resultSet.getString ( "event" ),
+                        resultSet.getString ( "AddUsername" ),
                         resultSet.getString ( "Employee_UserName" ),
                         resultSet.getTimestamp ( "Time" ) )
                 );

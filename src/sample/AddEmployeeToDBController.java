@@ -59,17 +59,29 @@ public class AddEmployeeToDBController implements Initializable {
     }
 
     @FXML
-    private void add() {
+    private void add(ActionEvent ae) {
         EmployeeSetAccountQueries connection = new EmployeeSetAccountQueries ();
         ReadActiveUserFile readActiveUserFile = new ReadActiveUserFile ();
         readActiveUserFile.openFile ();
         Account account = readActiveUserFile.readRecords ();
         connection.setDBURL ( account.getUserName (), account.getPassword () );
         readActiveUserFile.closeFile ();
-        connection.setDBURL ( account.getUserName (), account.getPassword () );
         connection.addEmployeeToList ( ssn.getText (), firstName.getText (), surname.getText (),
                 email.getText (), username.getText (), password.getText (), employeeStatus  );
         connection.logNewEmployee ( account.getUserName (), username.getText ());
+        Node node = (Node) ae.getSource ();
+        Stage stage = (Stage) node.getScene ().getWindow ();
+
+        FXMLLoader loader = new FXMLLoader ( getClass ().getResource ( "sceneBossWelcomeMenu.fxml" ) );
+        Parent root = null;
+        try {
+            root = loader.load ();
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
+        Scene scene = new Scene ( root );
+        stage.setScene ( scene );
     }
 
     @FXML

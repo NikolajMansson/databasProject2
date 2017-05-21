@@ -81,28 +81,28 @@ public class SetGameInfoQueries extends DBConnection {
     public void addItemToList(String abbreviation, String price, String amount, String title, int release) {
         int amountInt = Integer.parseInt ( amount );
         this.releaseDate = release;
-        if (releaseDate == 0) {
-            try {
-                insertNewItemCollectionRelease.setString ( 1, title );
-                insertNewItemCollectionRelease.setString ( 2, abbreviation );
-                insertNewItemCollectionRelease.setDouble ( 3, Double.parseDouble ( price ) );
-                insertNewItemCollectionRelease.executeUpdate ();
-            } catch (SQLException e) {
-                if (e instanceof SQLIntegrityConstraintViolationException) {
-                    return;
-                }
-                Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on item" );
 
-                validAlert.showAndWait ();
-            }
-        } else {
             try {
                 insertNewItemCollection.setString ( 1, title );
                 insertNewItemCollection.setString ( 2, abbreviation );
                 insertNewItemCollection.setDouble ( 3, Double.parseDouble ( price ) );
                 insertNewItemCollection.setInt ( 4, releaseDate );
                 insertNewItemCollection.executeUpdate ();
-            } catch (SQLException e) {
+                ResultSet rs = insertNewItemCollection.getGeneratedKeys ();
+
+                if (rs != null && rs.next ()) {
+                    this.primaryKey = rs.getInt ( 1 );
+                }
+
+                for (int i = 0; i < amountInt; i++) {
+                    insertNewItem.setInt ( 1, primaryKey );
+                    insertNewItem.executeUpdate ();
+
+                }
+            } catch (
+                    SQLException e)
+
+            {
                 if (e instanceof SQLIntegrityConstraintViolationException) {
                     return;
                 }
@@ -111,30 +111,8 @@ public class SetGameInfoQueries extends DBConnection {
                 validAlert.showAndWait ();
             }
         }
-        try {
-            ResultSet rs = insertNewItemCollection.getGeneratedKeys ();
-            if (rs != null && rs.next ()) {
-                this.primaryKey = rs.getInt ( 1 );
-            }
 
-            for (int i = 0; i < amountInt; i++) {
-                insertNewItem.setInt ( 1, primaryKey );
-                insertNewItem.executeUpdate ();
-
-            }
-        } catch (
-                SQLException e)
-
-        {
-            if (e instanceof SQLIntegrityConstraintViolationException) {
-                return;
-            }
-            Alert validAlert = new Alert ( Alert.AlertType.ERROR, "Enter a valid info on item" );
-
-            validAlert.showAndWait ();
-        }
-
-    }
+    
 
     public void addPlatformToList(String abbreviation, String fullname, String maker) {
 
