@@ -96,7 +96,7 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
                         resultSet.getDouble ( "Price" ),
-                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt ( "rows" ),
                         resultSet.getInt("ReleaseDate")) );
             }
             return results;
@@ -128,7 +128,7 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
                         resultSet.getDouble ( "Price" ),
-                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt ( "rows" ),
                         resultSet.getInt("ReleaseDate")) );
             }
             return results;
@@ -163,7 +163,7 @@ public class ItemSearchQueries extends DBConnection{
                         resultSet.getString ( "Developer" ),
                         resultSet.getString ( "DescriptionOfPlot" ),
                         resultSet.getDouble ( "Price" ),
-                        resultSet.getInt ( "ArticleNo" ),
+                        resultSet.getInt ( "rows" ),
                         resultSet.getInt("ReleaseDate")) );
             }
             return results;
