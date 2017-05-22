@@ -90,6 +90,7 @@ public class GameSearchCustomerController implements Initializable {
         } else {
             return;
         }
+        data.clear();
         for (int i = 0; i < searchItemList.size (); i++) {
             TableGameSearch table = new TableGameSearch ( searchItemList.get ( i ).getArticleNo (), searchItemList.get ( i ).getTitle (), searchItemList.get ( i ).getAbbreviation (), searchItemList.get ( i ).getPrice (), searchItemList.get(i).getAmount () );
             data.add ( table );

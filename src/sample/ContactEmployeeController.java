@@ -121,6 +121,7 @@ public class ContactEmployeeController implements Initializable {
         else{
             return;
         }
+        data.clear();
         for (int i = 0; i < searchEmployeeList.size (); i++) {
             TableContactEmployeeSearch table = new TableContactEmployeeSearch ( searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getSSN (), searchEmployeeList.get ( i ).getEmail (), searchEmployeeList.get(i).getEmployeeAccount ().getUserName (), searchEmployeeList.get(i).getIsEmployed () );
             data.add ( table );

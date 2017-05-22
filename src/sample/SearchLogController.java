@@ -61,7 +61,7 @@ public class SearchLogController implements Initializable {
 
         String yearLine = String.format("%d%d%d", year, month, day);
         int yearCompare = Integer.parseInt ( yearLine );
-
+        data.clear();
         for (int i = 0; i < searchLogList.size (); i++) {
             TableLogSearch table = new TableLogSearch ( searchLogList.get ( i ).getLogID (), searchLogList.get ( i ).getResponsibleBoss (), searchLogList.get ( i ).getNewUserName (), searchLogList.get ( i ).getTime ());
             int time = Integer.parseInt ( searchLogList.get(i).getTime () );

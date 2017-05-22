@@ -109,6 +109,7 @@ public class SearchSaleStatsController implements Initializable {
         else{
             return;
         }
+        data.clear();
         for (int i = 0; i < searchEmployeeList.size (); i++) {
             TableEmployeeStatsSearch table = new TableEmployeeStatsSearch ( searchEmployeeList.get ( i ).getFirstName (), searchEmployeeList.get ( i ).getSurname (), searchEmployeeList.get ( i ).getEmploymentDate (), searchEmployeeList.get ( i ).getGamesSold (), searchEmployeeList.get(i).getIncome () );
             data.add ( table );
